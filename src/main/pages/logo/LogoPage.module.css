@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f6f8; /* light background similar to many modern UIs */
+    min-height: 100vh;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #111827; /* dark gray for text */
+  }
+  
+  .graphSection {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .chartContainer {
+    position: relative;
+    height: 300px; /* adjust height to your liking */
+    width: 100%;
+  }
+  
+  .watchlistSection {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .watchlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .watchlist li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .watchlist li:last-child {
+    border-bottom: none;
+  }
+  

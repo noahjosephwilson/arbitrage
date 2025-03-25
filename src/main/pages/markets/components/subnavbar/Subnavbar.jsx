@@ -1,7 +1,6 @@
 "use client";
-
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import styles from './Subnavbar.module.css';
 
 const categoryData = [
@@ -35,8 +34,21 @@ const routes = {
 };
 
 function Subnavbar() {
-  const [activeCategory, setActiveCategory] = useState(categoryData[0].name);
   const router = useRouter();
+  const pathname = usePathname();
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  useEffect(() => {
+    // Check the current pathname to set the active category
+    const matchingCategory = Object.keys(routes).find(
+      (category) => routes[category] === pathname
+    );
+    if (matchingCategory) {
+      setActiveCategory(matchingCategory);
+    } else {
+      setActiveCategory("All");
+    }
+  }, [pathname]);
 
   const handleCategoryClick = (categoryName) => {
     setActiveCategory(categoryName);
@@ -48,7 +60,6 @@ function Subnavbar() {
 
   return (
     <div className={styles.subnavbar}>
-      {/* Top row: Main Categories */}
       <div className={styles.topRow}>
         {categoryData.map((category) => (
           <button

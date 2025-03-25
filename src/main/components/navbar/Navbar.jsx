@@ -2,32 +2,43 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { AiOutlineSearch, AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+import { useRouter, usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleToggle = () => {
     setIsMobileNavOpen(!isMobileNavOpen);
+  };
+
+  const handleMarketsClick = (e) => {
+    // If the current route is any markets page, redirect to the "All" tab
+    if (pathname.startsWith('/main/markets')) {
+      e.preventDefault();
+      router.push('/main/markets/all');
+    }
   };
 
   return (
     <nav className={styles.navbar}>
       {/* Left Section: Logo and Nav Links */}
       <div className={styles.leftSection}>
-        <Link href="/main/markets/all">
+        <Link href="/main/logo">
           <span className={styles.logo}>Arbitrage</span>
         </Link>
         <ul className={`${styles.navLinks} ${isMobileNavOpen ? styles.active : ''}`}>
           <li>
-            <Link href="/main/markets/all">Markets</Link>
+            <Link href="/main/markets/all" onClick={handleMarketsClick}>
+              Markets
+            </Link>
           </li>
           <li>
             <Link href="/main/portfolio">Portfolio</Link>
           </li>
-          <li>
-            <Link href="/main/live">Live</Link>
-          </li>
+          {/* Removed the Live button */}
           <li>
             <Link href="/main/create">Create</Link>
           </li>

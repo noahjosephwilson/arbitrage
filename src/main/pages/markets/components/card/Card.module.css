@@ -1,16 +1,23 @@
-.cardLink {
-  text-decoration: none;
-  display: block;
+/* Wrapper now provides equal left/right padding */
+.cardWrapper {
+  padding: 0 8px;
 }
 
+/* Card styling: Use flex layout for vertical spacing */
 .card {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
+  min-height: 300px; /* Adjust as needed */
   background-color: #fff;
   border-radius: 16px;
   overflow: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin: 16px; /* Consistent separation */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 /* Header */
@@ -18,34 +25,35 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
+  padding: 12px; /* Reduced padding */
 }
 .headerLeft {
   display: flex;
   align-items: center;
 }
 .cardImage {
-  width: 60px;
-  height: 60px;
+  width: 50px;  /* Adjusted size for a smaller card */
+  height: 50px; /* Adjusted size for a smaller card */
   object-fit: cover;
   border-radius: 8px;
-  margin-right: 16px;
+  margin-right: 12px;
 }
 .cardTitle {
-  font-size: 1.2rem;
+  font-size: 1.2rem; /* Slightly reduced font size */
   font-weight: 700;
   color: #222;
   margin: 0;
 }
 .cardPercentage {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #222;
 }
 
 /* Body */
 .cardBody {
-  padding: 16px;
+  padding: 12px; /* Reduced padding */
+  margin-top: 12px; /* Adjusted margin */
 }
 
 /* Binary layout styles */
@@ -62,7 +70,7 @@
 }
 .optionButton {
   width: 100%;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   padding: 14px 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -135,7 +143,7 @@
   pointer-events: none;
 }
 .itemPercentage {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #333;
   text-align: center;
@@ -147,7 +155,7 @@
 
 /* Multi-option button styles (updated) */
 .multiyesButton {
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 6px 12px;
   border: 1px solid #00c28e;
   border-radius: 8px;
@@ -155,6 +163,7 @@
   color: #fff;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  width: 60px;
 }
 .multiyesButton:hover {
   background-color: #fff;
@@ -162,7 +171,7 @@
   color: #00c28e;
 }
 .multinoButton {
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 6px 12px;
   border: 1px solid #dc3545;
   border-radius: 8px;
@@ -170,6 +179,7 @@
   color: #fff;
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  width: 60px;
 }
 .multinoButton:hover {
   background-color: #fff;
@@ -182,16 +192,61 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
+  padding: 12px; /* Reduced padding */
   font-size: 1rem;
   font-weight: 600;
   color: #222;
   background-color: #fff;
 }
 .totalAmount {
+  font-size: 1.1rem;
 }
-.plusSign {
-  font-size: 1.5rem;
-  color: #888;
+
+/* 
+  TOGGLE ICON 
+  We now use a separate container (.iconCircle) and inner icon (.plusIcon / .checkIcon)
+*/
+
+/* Outer circle: container for the icon */
+.iconCircle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.iconCircle:hover {
+  background-color: #eee;  /* Gray circle on hover */
+}
+
+/* Inner icon: always stays black */
+.plusIcon,
+.checkIcon {
+  width: 80%;
+  height: 80%;
+  background-color: #000;
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Plus icon mask */
+.plusIcon {
+  mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2h6Z" /></svg>');
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2h6Z" /></svg>');
+}
+
+/* Check icon mask */
+.checkIcon {
+  mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23FFF" d="M9 16.172 4.929 12.1l-1.414 1.415L9 19 21 7l-1.414-1.414L9 16.172Z"/></svg>');
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23FFF" d="M9 16.172 4.929 12.1l-1.414 1.415L9 19 21 7l-1.414-1.414L9 16.172Z"/></svg>');
 }

@@ -1,0 +1,39 @@
+.subcategories {
+  display: flex;
+  align-items: center;
+  /* Reduced top padding (from 8px to 4px),
+     increased bottom padding (from 0 to 12px),
+     added left padding (16px) for more space */
+  padding: 0px 0px 12px 12px;
+}
+
+.subcategoryList {
+  display: flex;
+  gap: 16px;
+  margin-top: -10px;
+}
+
+.subcategoryItem {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #777;
+  padding: 6px 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 20px;
+}
+
+.subcategoryItem:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.activeSubcategory {
+  background-color: #00c28e;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 50px;
+  padding: 8px 16px;
+  transition: background 0.2s ease, color 0.2s ease;
+}

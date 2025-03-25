@@ -1,0 +1,73 @@
+.subnavbar {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 24px;
+  padding-left: 20px; /* Left padding for overall alignment */
+}
+
+/* Top row styles */
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 12px 0;
+}
+
+.topRowItem {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 4px;
+  font-size: 18px;
+  color: #555;
+  transition: color 0.2s ease-in-out;
+}
+
+.topRowItem:hover {
+  color: #000;
+}
+
+.activeCategory {
+  font-weight: 600;
+  color: #000;
+  border-bottom: 3px solid #000;
+}
+
+/* Bottom row styles (unused in this version) */
+.bottomRow {
+  display: flex;
+  align-items: center;
+  padding: 8px 0 0;
+}
+
+.subcategoryList {
+  display: flex;
+  gap: 16px;
+}
+
+.subcategoryItem {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #777;
+  padding: 6px 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 20px; /* Subtle rounding for non-active state */
+}
+
+.subcategoryItem:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.activeSubcategory {
+  background-color: #00c28e; /* New green color */
+  color: #fff;             /* White text for contrast */
+  font-weight: 500;
+  border-radius: 50px;       /* Large radius to create a circle/pill shape */
+  padding: 8px 16px;         /* Adjust padding for a balanced look */
+  transition: background 0.2s ease, color 0.2s ease;
+}

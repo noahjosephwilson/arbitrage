@@ -1,0 +1,152 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: #fff;
+    font-family: sans-serif;
+    position: relative;
+  }
+  
+  /* Left Section: Logo + Nav links */
+  .leftSection {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .logo {
+    color: #00c28e;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+  
+  /* Desktop Nav Links */
+  .navLinks {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navLinks li {
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .navLinks li:hover {
+    color: #00c28e;
+  }
+  
+  /* Right Section: Contains Search and Auth Buttons */
+  .rightSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Search Bar */
+  .searchContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 400px;
+    max-width: 800px; /* increased for a larger search box */
+  }
+  
+  .searchIcon {
+    position: absolute;
+    left: 10px;
+    color: #999;
+    font-size: 1.2rem;
+  }
+  
+  .searchInput {
+    width: 100%;
+    padding: 0.5rem 2.5rem; /* space for the icon */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Auth Buttons */
+  .authButtons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .loginBtn,
+  .signupBtn {
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .loginBtn {
+    background-color: transparent;
+    color: #333;
+  }
+  
+  .loginBtn:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .signupBtn {
+    background-color: #00c28e;
+    color: #fff;
+    border-radius: 20px;
+  }
+  
+  .signupBtn:hover {
+    background-color: #00b17f;
+  }
+  
+  /* Hamburger Menu Button (hidden on desktop by default) */
+  .mobileToggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  /* Responsive (Mobile) Styling */
+  @media (max-width: 768px) {
+    .rightSection {
+      flex-direction: column;
+    }
+    
+    /* Optionally, you can hide the search bar on mobile */
+    .searchContainer {
+      display: none;
+    }
+  
+    .mobileToggle {
+      display: block;
+    }
+    
+    /* Mobile Drawer Menu for nav links */
+    .navLinks {
+      position: absolute;
+      top: 70px; /* just below the navbar */
+      right: 0;
+      background-color: #fff;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .navLinks.active {
+      transform: translateX(0);
+    }
+  }
+  

@@ -1,0 +1,197 @@
+.cardLink {
+  text-decoration: none;
+  display: block;
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+.cardImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 16px;
+}
+.cardTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+.cardPercentage {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Body */
+.cardBody {
+  padding: 16px;
+}
+
+/* Binary layout styles */
+.optionsRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.optionColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.optionButton {
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 14px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  text-align: center;
+}
+
+/* Updated button styles to match active green and red */
+.yesButton {
+  background-color: #00c28e;
+  border: 1px solid #00c28e;
+  color: #fff;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.yesButton:hover {
+  background-color: #fff;
+  border-color: #00c28e;
+  color: #00c28e;
+}
+
+.noButton {
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+  color: #fff;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.noButton:hover {
+  background-color: #fff;
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.optionValue {
+  margin-top: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+.startMoney {
+  color: #222;
+}
+.endMoney {
+  color: #00c28e;
+}
+
+/* List layout styles */
+.itemRow {
+  display: grid;
+  grid-template-columns: 1fr 60px auto;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.itemName {
+  font-size: 1.2rem;
+  color: #444;
+  position: relative;
+}
+.withMore {
+  height: 1.5em;
+}
+.moreText {
+  position: absolute;
+  font-size: 0.8rem;
+  color: #888;
+  left: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  pointer-events: none;
+}
+.itemPercentage {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+.votingButtons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Multi-option button styles (updated) */
+.multiyesButton {
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border: 1px solid #00c28e;
+  border-radius: 8px;
+  background-color: #00c28e;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.multiyesButton:hover {
+  background-color: #fff;
+  border-color: #00c28e;
+  color: #00c28e;
+}
+.multinoButton {
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border: 1px solid #dc3545;
+  border-radius: 8px;
+  background-color: #dc3545;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.multinoButton:hover {
+  background-color: #fff;
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+/* Footer */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  background-color: #fff;
+}
+.totalAmount {
+}
+.plusSign {
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+}

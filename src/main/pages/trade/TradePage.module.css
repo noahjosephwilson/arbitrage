@@ -1,0 +1,36 @@
+.tradePage {
+  width: 100vw;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+
+/* Flex container for full-width layout (currently not used) */
+/*
+.pageContainer {
+  display: flex;
+  width: 100%;
+  padding: 24px;
+  gap: 24px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #333;
+}
+*/
+
+/* Left column (Graph) styling (currently not used) */
+/*
+.chartContainer {
+  flex: 7;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+}
+*/
+
+/* Right column (Buy component) */
+.rightPanel {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

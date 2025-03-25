@@ -1,0 +1,138 @@
+.container {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .itemsGrid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    width: 100%;
+    padding: 0 10px;
+  }
+  
+  /* Shared card styles (fallback or extra cases) */
+  .card {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .cardHeader {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+  }
+  
+  .cardImage {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 16px;
+  }
+  
+  .cardTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #222;
+    margin: 0;
+  }
+  
+  /* Body */
+  .cardBody {
+    padding: 16px;
+  }
+  
+  .itemRow {
+    display: grid;
+    grid-template-columns: 1fr 60px auto;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .itemRow:last-child {
+    margin-bottom: 0;
+  }
+  
+  .itemName {
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .itemPercentage {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+  }
+  
+  .votingButtons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  /* Vote buttons */
+  .voteButton {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .voteButton:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+  }
+  
+  .yesButton {
+    background-color: #e6f7e6;
+    border-color: #00c28e;
+    color: #00c28e;
+  }
+  
+  .yesButton:hover {
+    background-color: #cce5cc;
+  }
+  
+  .noButton {
+    background-color: #fdecea;
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+  
+  .noButton:hover {
+    background-color: #f8d7da;
+  }
+  
+  /* Footer */
+  .cardFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    background-color: #fff;
+  }
+  
+  .totalAmount {
+  }
+  
+  .plusSign {
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+  }
+  

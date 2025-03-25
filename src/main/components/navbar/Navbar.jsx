@@ -1,8 +1,11 @@
 "use client";
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { AiOutlineSearch, AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useRouter, usePathname } from 'next/navigation';
+import { auth } from "@/firebaseConfig"; // adjust the path as needed
+import { signOut } from "firebase/auth";
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
@@ -19,6 +22,16 @@ const Navbar = () => {
     if (pathname.startsWith('/main/markets')) {
       e.preventDefault();
       router.push('/main/markets/all');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      // Optionally redirect after logout
+      router.push('/landing/landingmarkets/all');
+    } catch (error) {
+      console.error("Error logging out:", error);
     }
   };
 
@@ -62,6 +75,10 @@ const Navbar = () => {
           <Link href="/registration/signup">
             <button className={styles.signupBtn}>Sign up</button>
           </Link>
+          {/* Logout button added */}
+          <button onClick={handleLogout} className={styles.logoutBtn}>
+            Log out
+          </button>
         </div>
       </div>
 

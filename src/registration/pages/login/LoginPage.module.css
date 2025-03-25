@@ -185,3 +185,36 @@
     font-size: 1.4rem;
   }
   
+  .forgotPasswordContainer {
+    text-align: right;
+    margin-bottom: 0rem;
+  }
+  
+  .forgotPasswordLink {
+    font-size: 1.2rem;
+    color: #00c28e;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .forgotPasswordLink:hover {
+    color: #008f70;
+  }  
+  
+  .noAccount {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: #444;
+  }
+  
+  .signupLink {
+    color: #00c28e;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .signupLink:hover {
+    color: #008f70;
+  }
+  

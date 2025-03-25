@@ -185,3 +185,20 @@
 .socialIcon {
   font-size: 1.4rem;
 }
+
+.alreadyAccount {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  color: #444;
+}
+
+.loginLink {
+  color: #00c28e;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.loginLink:hover {
+  color: #008f70;
+}

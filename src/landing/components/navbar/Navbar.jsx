@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       {/* Left Section: Logo */}
       <div className={styles.leftSection}>
-        <Link href="/landing">
+        <Link href="/landing/landingmarkets/all">
           <span className={styles.logo}>Arbitrage</span>
         </Link>
       </div>
@@ -26,7 +26,7 @@ const Navbar = () => {
           <AiOutlineSearch className={styles.searchIcon} />
           <input
             type="text"
-            placeholder="Search members or profiles"
+            placeholder="Search markets"
             className={styles.searchInput}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}

@@ -3,7 +3,7 @@
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-bottom: 24px;
-  padding-left: 20px; /* Left padding for overall alignment */
+  padding: 5px 35px 0px 35px;
 }
 
 /* Top row styles */
@@ -21,7 +21,7 @@
   cursor: pointer;
   padding: 8px 4px;
   font-size: 20px;
-  color: #555;
+  color: #aaa;
   transition: color 0.2s ease-in-out;
 }
 
@@ -32,7 +32,6 @@
 .activeCategory {
   font-weight: 600;
   color: #000;
-  border-bottom: 3px solid #000;
 }
 
 /* Bottom row styles (unused in this version) */

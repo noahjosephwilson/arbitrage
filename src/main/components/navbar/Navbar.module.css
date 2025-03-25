@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1rem;
   background-color: #fff;
   font-family: sans-serif;
   position: relative;
+  padding: 15px 35px 5px 35px;
 }
 
 /* Left Section: Logo and Nav Links */
@@ -21,6 +21,11 @@
   font-size: 2.5rem;
 }
 
+.logo:hover {
+  color: #00b17f; /* Change logo color on hover */
+  cursor: pointer;
+}
+
 /* Navigation Links List */
 .navLinks {
   display: flex;
@@ -33,7 +38,7 @@
 .navLinks li a {
   text-decoration: none;
   color: #333;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   transition: color 0.3s ease;
 }
 
@@ -41,7 +46,7 @@
   color: #00c28e;
 }
 
-/* Right Section: Search and Auth Buttons */
+/* Right Section: Search, Auth Buttons and Icons */
 .rightSection {
   display: flex;
   align-items: center;
@@ -98,51 +103,89 @@
   gap: 0.5rem;
 }
 
-/* Common Button Styles */
-.loginBtn,
-.signupBtn,
-.logoutBtn {
+/* Add Funds Button */
+.addFundsBtn {
+  background-color: #00c28e;
+  color: #fff;
+  width: 140px;
+  height: 55px;
   border: none;
   cursor: pointer;
   font-weight: 500;
   font-size: 1.25rem;
-  padding: 0.5rem 1rem;
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 
-/* Login Button */
-.loginBtn {
-  background-color: transparent;
-  color: #333;
-  width: 90px;
-  height: 55px;
-}
-
-.loginBtn:hover {
-  background-color: #f2f2f2;
-}
-
-/* Signup Button */
-.signupBtn {
-  background-color: #00c28e;
-  color: #fff;
-  width: 100px;
-  height: 55px;
-}
-
-.signupBtn:hover {
+.addFundsBtn:hover {
   background-color: #00b17f;
 }
 
-/* Logout Button */
-.logoutBtn {
-  background-color: #ff4d4f;
-  color: #fff;
-  width: 100px;
-  height: 55px;
+/* Hamburger and Leaderboard Container */
+.hamburgerContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.logoutBtn:hover {
-  background-color: #ff7875;
+/* Common Icon Button Container */
+.iconButton {
+  width: 50px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  background-color: #e0e0e0;
+}
+
+/* Leaderboard Icon */
+.leaderboardIcon {
+  font-size: 2.5rem;
+  color: #00c28e;
+}
+
+/* Hamburger Icon */
+.hamburgerIcon {
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.mobileMenu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobileMenu li {
+  margin: 0.5rem 0;
+}
+
+.mobileMenu li a,
+.mobileMenu li button {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 0;
 }

@@ -1,17 +1,15 @@
 import React from "react";
-import Stat from "./components/allstats/stat/Stat";
-import Navbar from "./components/navbar/Navbar";
-import styles from "./PortfolioPage.module.css";
+import Stat from "@/main/pages/portfolio/components/allstats/stat/Stat";
+import styles from "./Allstats.module.css";
 
-const PortfolioPage = () => {
-  // Example change values – these could come from props or state
+const Allstats = () => {
+  // Example change values – these could be passed as props or set via state
   const portfolioChange = "+$25.50";
   const cashChange = "+$10.00";
   const profitLossChange = "-$5.75";
 
   return (
     <div className={styles.container}>
-      {/* TOP SECTION: PORTFOLIO, CASH, PROFIT/LOSS */}
       <div className={styles.topSection}>
         <Stat 
           title="PORTFOLIO" 
@@ -32,16 +30,8 @@ const PortfolioPage = () => {
           change={profitLossChange} 
         />
       </div>
-
-      {/* NAVBAR for Positions / Open Orders / History */}
-      <Navbar />
-
-      {/* POSITIONS SECTION */}
-      <div className={styles.positionsSection}>
-        <div className={styles.emptyState}>No positions found.</div>
-      </div>
     </div>
   );
 };
 
-export default PortfolioPage;
+export default Allstats;

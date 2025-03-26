@@ -1,42 +1,81 @@
+/*******************************
+  Page Container
+*******************************/
 .container {
-    padding: 24px 36px 24px 36px;
-    background-color: white;
-    min-height: 100vh;
-  }
-  
-  .title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #111827;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .table th,
-  .table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .table th {
-    background-color: #f3f4f6;
-    color: #374151;
-    font-weight: 600;
-  }
-  
-  .table tr:hover {
-    background-color: #f1f5f9;
-  }
-  
-  .table tr:last-child td {
-    border-bottom: none;
-  }
-  
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 24px 36px 24px 36px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  font-family: sans-serif;
+  color: #222;
+}
+
+/*******************************
+  Top Section (Stat Cards)
+*******************************/
+.topSection {
+  display: flex;
+  flex-wrap: nowrap;  /* Force all cards to be on one line */
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure each card takes equal space */
+.topSection > * {
+  flex: 1;
+}
+
+/*******************************
+  Tabs (Positions / Open Orders / History)
+*******************************/
+.tabs {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+.tabButton {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0 0 0.25rem 0;
+  outline: none;
+  transition: color 0.2s ease;
+}
+
+.tabButton:hover {
+  color: #000;
+}
+
+.activeTab {
+  color: #000;
+  font-weight: 600;
+  border-bottom: 3px solid #0070f3;
+}
+
+/*******************************
+  Positions Section
+*******************************/
+.positionsSection {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  min-height: 250px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.emptyState {
+  color: #999;
+  font-size: 1.1rem;
+  text-align: center;
+}

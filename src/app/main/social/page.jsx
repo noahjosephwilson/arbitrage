@@ -1,10 +1,10 @@
 import React from 'react';
-import CreatePage from '@/main/pages/create/CreatePage';
+import SocialPage from '@/main/pages/social/SocialPage';
 
 export default function Page() {
   return (
     <div>
-      <CreatePage />
+      <SocialPage />
     </div>
   );
 }

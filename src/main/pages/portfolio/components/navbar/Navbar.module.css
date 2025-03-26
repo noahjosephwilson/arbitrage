@@ -1,0 +1,39 @@
+.navbar {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem; /* Increased margin to allow space for the underline */
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .tabButton {
+    position: relative;
+    background: transparent;
+    border: none;
+    font-size: 1.3rem;
+    color: #666;
+    cursor: pointer;
+    padding: 0 0 0.25rem 0;
+    outline: none;
+    transition: color 0.2s ease;
+  }
+  
+  .tabButton:hover {
+    color: #000;
+  }
+  
+  .activeTab {
+    color: #000;
+    font-weight: 600;
+    /* Remove the default border-bottom so we can use the pseudo-element */
+  }
+  
+  .activeTab::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #00c28e;
+    bottom: -1px; /* Moves the underline down relative to the text */
+  }
+  

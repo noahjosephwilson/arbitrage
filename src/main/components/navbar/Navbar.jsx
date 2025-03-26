@@ -86,10 +86,10 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/main/portfolio">Portfolio</Link>
+              <Link href="/main/portfolio/positions">Portfolio</Link>
             </li>
             <li>
-              <Link href="/main/create">Create</Link>
+              <Link href="/main/social">Social</Link>
             </li>
           </ul>
         </div>

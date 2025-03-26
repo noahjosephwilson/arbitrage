@@ -1,0 +1,46 @@
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 24px 36px 24px 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+  }
+  
+  
+  /* Flex container to align text and number side by side */
+  .cardContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .cardText {
+    /* Additional styling can go here if needed */
+  }
+  
+  /* Title (Header) */
+  .cardHeader {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Descriptor text just under the title */
+  .cardSub {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Main value positioned on the right */
+  .cardValue {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  

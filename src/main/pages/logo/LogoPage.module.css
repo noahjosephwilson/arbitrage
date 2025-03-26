@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
-    padding: 24px 36px 24px 36px; /* 20px on the right */
+    padding: 24px 36px 24px 36px;
     background-color: #ffffff; /* all white background */
     min-height: 100vh;
   }

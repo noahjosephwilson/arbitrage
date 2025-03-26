@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from 'react';
-import styles from './CreatePage.module.css';
+import styles from './SocialPage.module.css';
 
-const CreatePage = () => {
+const SocialPage = () => {
   const [marketName, setMarketName] = useState("");
   const [description, setDescription] = useState("");
   const [outcomes, setOutcomes] = useState([""]);
@@ -77,4 +77,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default SocialPage;

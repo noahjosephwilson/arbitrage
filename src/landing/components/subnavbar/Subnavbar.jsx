@@ -39,7 +39,6 @@ function Subnavbar() {
   const [activeCategory, setActiveCategory] = useState("All");
 
   useEffect(() => {
-    // Check the current pathname to set the active category
     const matchingCategory = Object.keys(routes).find(
       (category) => routes[category] === pathname
     );
@@ -73,6 +72,8 @@ function Subnavbar() {
           </button>
         ))}
       </div>
+      {/* Optional: Include a full-width line if desired */}
+      <div className={styles.fullWidthLine}></div>
     </div>
   );
 }

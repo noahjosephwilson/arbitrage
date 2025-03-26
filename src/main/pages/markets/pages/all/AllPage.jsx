@@ -1,5 +1,4 @@
 "use client";
-
 import React from 'react';
 import Card from '@/main/pages/markets/components/card/Card';
 import Subcategories from '@/main/pages/markets/components/subcategories/Subcategories';

@@ -1,14 +1,19 @@
-import React from 'react';
-import Filter from './components/filter/Filter'; // Adjust the import path as needed
-import styles from './PositionsPage.module.css';
+import React from "react";
+import Filter from "./components/filter/Filter";
+import styles from "./PositionsPage.module.css";
 
 const PositionsPage = () => {
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Available Positions</h1>
-      {/* Render the Filter component */}
+    <>
+      {/* Render the Filter outside the container */}
       <Filter />
-    </div>
+
+      {/* Main page container for the rest of the content */}
+      <div className={styles.container}>
+        <h1 className={styles.title}>Available Positions</h1>
+        {/* ...other content... */}
+      </div>
+    </>
   );
 };
 

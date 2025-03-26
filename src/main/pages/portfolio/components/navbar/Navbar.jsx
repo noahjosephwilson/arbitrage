@@ -1,31 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
-  const [activeTab, setActiveTab] = useState("positions");
+  const pathname = usePathname();
 
   return (
     <div className={styles.navbar}>
-      <button
-        className={`${styles.tabButton} ${activeTab === "positions" ? styles.activeTab : ""}`}
-        onClick={() => setActiveTab("positions")}
-      >
-        Positions
-      </button>
-      <button
-        className={`${styles.tabButton} ${activeTab === "openOrders" ? styles.activeTab : ""}`}
-        onClick={() => setActiveTab("openOrders")}
-      >
-        Open Orders
-      </button>
-      <button
-        className={`${styles.tabButton} ${activeTab === "history" ? styles.activeTab : ""}`}
-        onClick={() => setActiveTab("history")}
-      >
-        History
-      </button>
+      <Link href="/main/portfolio/positions">
+        <button
+          className={`${styles.tabButton} ${
+            pathname === "/main/portfolio/positions" ? styles.activeTab : ""
+          }`}
+        >
+          Positions
+        </button>
+      </Link>
+      <Link href="/main/portfolio/openorders">
+        <button
+          className={`${styles.tabButton} ${
+            pathname === "/main/portfolio/openorders" ? styles.activeTab : ""
+          }`}
+        >
+          Open Orders
+        </button>
+      </Link>
+      <Link href="/main/portfolio/history">
+        <button
+          className={`${styles.tabButton} ${
+            pathname === "/main/portfolio/history" ? styles.activeTab : ""
+          }`}
+        >
+          History
+        </button>
+      </Link>
     </div>
   );
 };

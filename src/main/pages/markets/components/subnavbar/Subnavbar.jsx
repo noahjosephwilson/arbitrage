@@ -13,7 +13,7 @@ const categoryData = [
   { name: 'Economics' },
   { name: 'Companies' },
   { name: 'Financials' },
-  { name: 'Tech & Science' },
+  { name: 'Tech' },
   { name: 'Health' },
   { name: 'World' },
 ];
@@ -28,7 +28,7 @@ const routes = {
   Economics: '/main/markets/economics',
   Companies: '/main/markets/companies',
   Financials: '/main/markets/financials',
-  "Tech & Science": '/main/markets/tech',
+  Tech: '/main/markets/tech',
   Health: '/main/markets/health',
   World: '/main/markets/world',
 };
@@ -39,7 +39,6 @@ function Subnavbar() {
   const [activeCategory, setActiveCategory] = useState("All");
 
   useEffect(() => {
-    // Check the current pathname to set the active category
     const matchingCategory = Object.keys(routes).find(
       (category) => routes[category] === pathname
     );
@@ -73,6 +72,8 @@ function Subnavbar() {
           </button>
         ))}
       </div>
+      {/* Full width line replacing the topRow border */}
+      <div className={styles.fullWidthLine}></div>
     </div>
   );
 }

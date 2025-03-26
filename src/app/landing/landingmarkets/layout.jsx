@@ -1,13 +1,14 @@
 import React from 'react';
 import Subnavbar from '@/landing/components/subnavbar/Subnavbar';
+import styles from './layout.module.css';
 
 const Layout = ({ children }) => {
   return (
     <div>
-      <subheader>
+      <div className={styles.subheader}>
         <Subnavbar />
-      </subheader>
-      <main>
+      </div>
+      <main className={styles.main}>
         {children}
       </main>
     </div>

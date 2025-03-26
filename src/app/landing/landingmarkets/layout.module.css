@@ -1,0 +1,15 @@
+.subheader {
+    /* Fixed below the Navbar (which is 60px tall) */
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    z-index: 900;
+    background: white;
+  }
+  
+  .main {
+    /* Push content down by the Subnavbar’s height (50px) */
+    margin-top: 50px;
+  }
+  

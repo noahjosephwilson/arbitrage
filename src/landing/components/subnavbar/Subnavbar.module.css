@@ -2,21 +2,27 @@
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-bottom: 24px;
-  padding: 5px 35px 0px 35px;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE 10+ */
-  user-select: none;         /* Standard */
+  padding: 24px 35px 0 35px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  /* Fixed positioning */
+  position: fixed;
+  top: 60px;         /* Adjust: this places it just below the fixed Navbar */
+  left: 0;
+  right: 0;
+  background: white;  /* Ensures background covers content scrolling underneath */
+  z-index: 900;
 }
 
-/* Top row styles */
+/* Top row styles without border */
 .topRow {
   display: flex;
   align-items: center;
   gap: 24px;
-  border-bottom: 2px solid #e0e0e0;
-  padding: 4px 0;
+  padding: 8px 0;
 }
 
 .topRowItem {
@@ -38,7 +44,16 @@
   color: #000;
 }
 
-/* Bottom row styles (unused in this version) */
+/* Full width line styles */
+.fullWidthLine {
+  position: relative;
+  left: -35px;             /* Offset the left padding */
+  width: calc(100% + 70px);  /* Add back both left and right padding */
+  border-bottom: 2px solid #e0e0e0;
+  margin-top: 0px;        /* Adjust to move the line upward */
+}
+
+/* (Unused) Bottom row styles */
 .bottomRow {
   display: flex;
   align-items: center;
@@ -58,7 +73,7 @@
   color: #777;
   padding: 6px 8px;
   transition: background 0.2s ease, color 0.2s ease;
-  border-radius: 20px; /* Subtle rounding for non-active state */
+  border-radius: 20px;
 }
 
 .subcategoryItem:hover {
@@ -67,10 +82,10 @@
 }
 
 .activeSubcategory {
-  background-color: #00c28e; /* New green color */
-  color: #fff;             /* White text for contrast */
+  background-color: #00c28e;
+  color: #fff;
   font-weight: 500;
-  border-radius: 50px;       /* Large radius to create a circle/pill shape */
-  padding: 8px 16px;         /* Adjust padding for a balanced look */
+  border-radius: 50px;
+  padding: 8px 16px;
   transition: background 0.2s ease, color 0.2s ease;
 }

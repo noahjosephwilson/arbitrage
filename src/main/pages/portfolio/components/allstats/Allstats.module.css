@@ -3,9 +3,10 @@
 *******************************/
 .container {
     width: 100%;
-    min-height: 100vh;
     margin: 0;
-    padding: 24px 36px;
+    padding: 0px 36px;
+    padding-top: 48px;
+    padding-bottom: 18px;
     box-sizing: border-box;
     background-color: #ffffff;
     font-family: sans-serif;

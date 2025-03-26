@@ -1,19 +1,48 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { AiOutlineSearch, AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { MdLeaderboard } from 'react-icons/md';
 import { useRouter, usePathname } from 'next/navigation';
 import { auth } from "@/firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import Submenu from './components/submenu/Submenu'; // Adjust path if needed
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState(null);
+
+  // For navigation
   const router = useRouter();
   const pathname = usePathname();
+
+  // Ref to detect clicks outside the hamburger + submenu
+  const hamburgerWrapperRef = useRef(null);
+
+  useEffect(() => {
+    // Listen for clicks outside the hamburgerWrapper when submenu is open
+    function handleClickOutside(event) {
+      if (
+        hamburgerWrapperRef.current &&
+        !hamburgerWrapperRef.current.contains(event.target)
+      ) {
+        setShowMenu(false);
+      }
+    }
+
+    if (showMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    // Cleanup on unmount or when showMenu changes
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMenu]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -22,9 +51,7 @@ const Navbar = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleClear = () => {
-    setSearchValue('');
-  };
+  const handleClear = () => setSearchValue('');
 
   const handleMarketsClick = (e) => {
     if (pathname.startsWith('/main/markets')) {
@@ -41,7 +68,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     await signOut(auth);
     setShowMenu(false);
-    router.push('/'); // Redirect as needed after logout
+    router.push('/');
   };
 
   return (
@@ -51,19 +78,21 @@ const Navbar = () => {
         <Link href="/main/logo">
           <span className={styles.logo}>Arbitrage</span>
         </Link>
-        <ul className={styles.navLinks}>
-          <li>
-            <Link href="/main/markets/all" onClick={handleMarketsClick}>
-              Markets
-            </Link>
-          </li>
-          <li>
-            <Link href="/main/portfolio">Portfolio</Link>
-          </li>
-          <li>
-            <Link href="/main/create">Create</Link>
-          </li>
-        </ul>
+        <div className={styles.navLinksContainer}>
+          <ul className={styles.navLinks}>
+            <li>
+              <Link href="/main/markets/all" onClick={handleMarketsClick}>
+                Markets
+              </Link>
+            </li>
+            <li>
+              <Link href="/main/portfolio">Portfolio</Link>
+            </li>
+            <li>
+              <Link href="/main/create">Create</Link>
+            </li>
+          </ul>
+        </div>
       </div>
 
       {/* Right Section: Search and Icons */}
@@ -91,51 +120,37 @@ const Navbar = () => {
             </button>
           )}
         </div>
+
         <div className={styles.hamburgerContainer}>
           <Link href="/leaderboard">
             <div className={styles.iconButton}>
               <MdLeaderboard className={styles.leaderboardIcon} />
             </div>
           </Link>
-          <div 
-            className={styles.iconButton} 
-            onClick={() => setShowMenu(!showMenu)}
+
+          {/* IMPORTANT: Attach the ref here so we can detect outside clicks */}
+          <div
+            className={styles.hamburgerWrapper}
+            ref={hamburgerWrapperRef}
           >
-            <AiOutlineMenu className={styles.hamburgerIcon} />
+            <div
+              className={styles.iconButton}
+              onClick={() => setShowMenu(!showMenu)}
+            >
+              <AiOutlineMenu className={styles.hamburgerIcon} />
+            </div>
+
+            {showMenu && (
+              <Submenu
+                user={user}
+                onClose={() => setShowMenu(false)}
+                handleAddFunds={handleAddFunds}
+                handleLogout={handleLogout}
+              />
+            )}
           </div>
         </div>
       </div>
-      {showMenu && (
-        <div className={styles.mobileMenu}>
-          <ul>
-            <li>
-              <Link href="/main/markets/all" onClick={() => setShowMenu(false)}>
-                Markets
-              </Link>
-            </li>
-            <li>
-              <Link href="/main/portfolio" onClick={() => setShowMenu(false)}>
-                Portfolio
-              </Link>
-            </li>
-            <li>
-              <Link href="/main/create" onClick={() => setShowMenu(false)}>
-                Create
-              </Link>
-            </li>
-            {user && (
-              <>
-                <li>
-                  <button onClick={handleAddFunds}>Add Funds</button>
-                </li>
-                <li>
-                  <button onClick={handleLogout}>Logout</button>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-      )}
     </nav>
   );
 };

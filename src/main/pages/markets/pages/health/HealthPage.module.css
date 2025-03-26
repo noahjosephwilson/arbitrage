@@ -3,6 +3,10 @@
     margin: 0;
     padding: 0 36px 0 0;
     box-sizing: border-box;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE 10+ */
+    user-select: none;         /* Standard */
   }
   
   .itemsGrid {

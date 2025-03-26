@@ -1,16 +1,17 @@
 .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
-    padding: 20px;
-    background-color: #f4f6f8; /* light background similar to many modern UIs */
+    padding: 24px 36px 24px 36px; /* 20px on the right */
+    background-color: #ffffff; /* all white background */
     min-height: 100vh;
   }
   
-  .sectionTitle {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #111827; /* dark gray for text */
+  .leftColumn {
+    flex: 7; /* approximately 70% of the width */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
   
   .graphSection {
@@ -18,19 +19,47 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    color: #00c28e;
   }
   
   .chartContainer {
     position: relative;
-    height: 300px; /* adjust height to your liking */
+    height: 300px; /* adjust height as needed */
     width: 100%;
   }
   
-  .watchlistSection {
+  .newsCardsSection {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
+  }
+  
+  .newsCardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .newsCard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+  }
+  
+  .watchlistSection {
+    flex: 3; /* approximately 30% of the width */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #111827;
   }
   
   .watchlist {

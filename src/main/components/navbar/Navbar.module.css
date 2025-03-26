@@ -6,6 +6,10 @@
   font-family: sans-serif;
   position: relative;
   padding: 15px 35px 5px 35px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE 10+ */
+  user-select: none;         /* Standard */
 }
 
 /* Left Section: Logo and Nav Links */
@@ -22,11 +26,14 @@
 }
 
 .logo:hover {
-  color: #00b17f; /* Change logo color on hover */
+  color: #00b17f;
   cursor: pointer;
 }
 
-/* Navigation Links List */
+.navLinksContainer {
+  /* Make sure there's no forced width or flex that might shift things */
+}
+
 .navLinks {
   display: flex;
   gap: 1.5rem;
@@ -46,19 +53,19 @@
   color: #00c28e;
 }
 
-/* Right Section: Search, Auth Buttons and Icons */
+/* Right Section: Search, Auth Buttons, Icons */
 .rightSection {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Search Bar Container */
+/* Search Container */
 .searchContainer {
   display: flex;
   align-items: center;
   position: relative;
-  width: 500px;
+  width: 500px; /* Adjust as needed */
   max-width: 800px;
   background-color: #F5F5F5;
   transition: background-color 0.3s ease;
@@ -70,7 +77,6 @@
   background-color: #fff;
 }
 
-/* Search Icon */
 .searchIcon {
   position: absolute;
   left: 10px;
@@ -78,7 +84,6 @@
   font-size: 1.2rem;
 }
 
-/* Clear Icon (x) */
 .clearIcon {
   position: absolute;
   right: 10px;
@@ -87,7 +92,6 @@
   cursor: pointer;
 }
 
-/* Search Input */
 .searchInput {
   width: 100%;
   padding: 1rem 3rem;
@@ -96,14 +100,12 @@
   font-size: 1.2rem;
 }
 
-/* Auth Buttons Container */
 .authButtons {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* Add Funds Button */
 .addFundsBtn {
   background-color: #00c28e;
   color: #fff;
@@ -121,14 +123,23 @@
   background-color: #00b17f;
 }
 
-/* Hamburger and Leaderboard Container */
+/* Container for hamburger & leaderboard icons */
 .hamburgerContainer {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Common Icon Button Container */
+/* IMPORTANT: This wrapper must be relative and inline-block 
+   so the submenu can be absolutely positioned inside. */
+   .hamburgerWrapper {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+
+/* Icon button styling */
 .iconButton {
   width: 50px;
   height: 60px;
@@ -144,48 +155,12 @@
   background-color: #e0e0e0;
 }
 
-/* Leaderboard Icon */
 .leaderboardIcon {
   font-size: 2.5rem;
   color: #00c28e;
 }
 
-/* Hamburger Icon */
 .hamburgerIcon {
   font-size: 1.8rem;
   color: #333;
-}
-
-/* Mobile Menu */
-.mobileMenu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  z-index: 10;
-}
-
-.mobileMenu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.mobileMenu li {
-  margin: 0.5rem 0;
-}
-
-.mobileMenu li a,
-.mobileMenu li button {
-  text-decoration: none;
-  color: #333;
-  font-size: 1.2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem 0;
 }

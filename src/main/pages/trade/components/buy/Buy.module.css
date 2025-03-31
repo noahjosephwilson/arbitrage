@@ -175,7 +175,7 @@
   border: 1px solid var(--border-default);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  padding: 8px 0;
+  padding: 0px 0;
   width: 200px;
   visibility: hidden;
   opacity: 0;

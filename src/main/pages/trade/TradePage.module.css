@@ -2,20 +2,24 @@
   width: 100vw;
   background-color: #fff;
   overflow-x: hidden;
+  padding: 0 0 120px 0;
 }
 
 .pageContainer {
   display: flex;
   width: 100%;
-  padding: 0px 24px 0px 24px;
-  gap: 24px;
+  padding: 0 35px;
+  gap: 64px; /* Reduced gap between panels */
 }
 
+/* Increase the flex value for the left panel to make it wider,
+   and remove any left margin to push it further left */
 .leftPanel {
-  flex: 7;
-  /* Remove border, background, and padding for a full-width graph */
+  flex: 9;
+  margin-left: -15px;
 }
 
+/* Right panel remains unchanged */
 .rightPanel {
   flex: 3;
   display: flex;

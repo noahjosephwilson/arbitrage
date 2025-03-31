@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Header.module.css";
-import { FaRegComment, FaRegShareSquare, FaRegHeart } from "react-icons/fa";
+import { FaRegComment, FaRegHeart } from "react-icons/fa";
+import { FiShare } from "react-icons/fi";
 
 const Header = ({ imageSrc, title }) => {
   return (
@@ -13,9 +14,9 @@ const Header = ({ imageSrc, title }) => {
 
       {/* Right: React Icons */}
       <div className={styles.headerIcons}>
-        <FaRegComment className={styles.icon} />
-        <FaRegShareSquare className={styles.icon} />
-        <FaRegHeart className={styles.icon} />
+        <FaRegComment className={`${styles.icon} ${styles.commentIcon}`} />
+        <FiShare className={`${styles.icon} ${styles.shareIcon}`} />
+        <FaRegHeart className={`${styles.icon} ${styles.heartIcon}`} />
       </div>
     </div>
   );

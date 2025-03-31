@@ -196,7 +196,7 @@ const Buy = () => {
             />
           </label>
           <label className={styles.inputRow}>
-            <span className={styles.inputLabel}>Limit price</span>
+            <span className={styles.inputLabel}>Limit Price</span>
             <div className={styles.centsInputContainer}>
               <input
                 type="text"
@@ -283,7 +283,7 @@ const Buy = () => {
             />
           </label>
           <label className={styles.inputRow}>
-            <span className={styles.inputLabel}>Stop price</span>
+            <span className={styles.inputLabel}>Stop Price</span>
             <div className={styles.centsInputContainer}>
               <input
                 type="text"
@@ -456,8 +456,7 @@ const Buy = () => {
       {/* Pick a side */}
       <div className={styles.pickSideRow}>
         <span className={styles.pickSideLabel}>Pick a side</span>
-        <span className={styles.infoIcon} title="More info about picking a side">
-          i
+        <span title="More info about picking a side">
         </span>
       </div>
 

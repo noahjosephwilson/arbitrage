@@ -15,7 +15,6 @@ import {
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
 
-// Register Chart.js components.
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,15 +26,57 @@ ChartJS.register(
   Legend
 );
 
-// Initial structured stock data.
-const initialStockData = [
+// Define four sets of example data.
+const data6H = [
   { timestamp: '2025-03-30T10:00:00', price: 103 },
   { timestamp: '2025-03-30T10:05:00', price: 120 },
   { timestamp: '2025-03-30T10:10:00', price: 150 },
   { timestamp: '2025-03-30T10:15:00', price: 130 },
-  { timestamp: '2025-03-30T10:20:00', price: 178 },
-  { timestamp: '2025-03-30T10:55:00', price: 160 }
+  { timestamp: '2025-03-30T10:20:00', price: 78 },
+  { timestamp: '2025-03-30T10:55:00', price: 60 },
 ];
+
+const data1D = [
+  { timestamp: '2025-03-30T09:00:00', price: 100 },
+  { timestamp: '2025-03-30T10:00:00', price: 105 },
+  { timestamp: '2025-03-30T11:00:00', price: 110 },
+  { timestamp: '2025-03-30T12:00:00', price: 120 },
+  { timestamp: '2025-03-30T13:00:00', price: 115 },
+  { timestamp: '2025-03-30T14:00:00', price: 130 },
+  { timestamp: '2025-03-30T15:00:00', price: 125 },
+  { timestamp: '2025-03-30T16:00:00', price: 135 },
+];
+
+const data1W = [
+  { timestamp: '2025-03-24T10:00:00', price: 95 },
+  { timestamp: '2025-03-25T10:00:00', price: 100 },
+  { timestamp: '2025-03-26T10:00:00', price: 110 },
+  { timestamp: '2025-03-27T10:00:00', price: 105 },
+  { timestamp: '2025-03-28T10:00:00', price: 115 },
+  { timestamp: '2025-03-29T10:00:00', price: 120 },
+  { timestamp: '2025-03-30T10:00:00', price: 130 },
+];
+
+const dataAll = [
+  { timestamp: '2025-03-01T10:00:00', price: 90 },
+  { timestamp: '2025-03-05T10:00:00', price: 95 },
+  { timestamp: '2025-03-10T10:00:00', price: 100 },
+  { timestamp: '2025-03-15T10:00:00', price: 105 },
+  { timestamp: '2025-03-20T10:00:00', price: 110 },
+  { timestamp: '2025-03-25T10:00:00', price: 115 },
+  { timestamp: '2025-03-30T10:00:00', price: 120 },
+  { timestamp: '2025-04-04T10:00:00', price: 125 },
+  { timestamp: '2025-04-09T10:00:00', price: 130 },
+  { timestamp: '2025-04-14T10:00:00', price: 135 },
+];
+
+// Map intervals to datasets.
+const dataSets = {
+  "6H": data6H,
+  "1D": data1D,
+  "1W": data1W,
+  "All": dataAll,
+};
 
 export default function Graph() {
   const chartRef = useRef(null);
@@ -43,12 +84,11 @@ export default function Graph() {
   const vLineRef = useRef(null);
   const labelRef = useRef(null);
 
-  // State for the stock data.
-  const [stockData, setStockData] = useState(initialStockData);
-  // Store hover index for crosshair info.
+  // Initialize with the "All" dataset.
+  const [selectedInterval, setSelectedInterval] = useState('All');
+  const [stockData, setStockData] = useState(dataSets['All']);
   const [hoverIndex, setHoverIndex] = useState(null);
 
-  // Convert structured data into arrays needed by the chart.
   const getChartArrays = useCallback(() => {
     const dataArray = stockData.map(item => item.price);
     const timeLabels = stockData.map(item => item.timestamp);
@@ -92,6 +132,27 @@ export default function Graph() {
   const xRange = xMax - xMin;
   const extendedXMax = xMax + xRange * 0.03;
 
+  // Determine overall change from the start to the end of the data.
+  const baseline = dataArray[0];
+  const endValue = dataArray[dataArray.length - 1];
+  const overallDiff = endValue - baseline;
+  const chartColor = overallDiff >= 0 ? '#00c28e' : '#dc3545';
+
+  // Button color will mirror the overall graph change.
+  const buttonColor = chartColor;
+
+  // Set displayedValue with fallback in case dataArray is empty.
+  const currentIndex = dataArray.length > 0 ? (hoverIndex === null ? dataArray.length - 1 : hoverIndex) : 0;
+  const displayedValue = dataArray.length > 0 ? dataArray[currentIndex] : 0;
+
+  // Determine time scale options based on the selected interval.
+  const isTimeScale = selectedInterval === "6H" || selectedInterval === "1D";
+  const timeUnit = isTimeScale ? 'minute' : 'day';
+  const tooltipFormat = isTimeScale ? 'hh:mm a' : 'MMM d';
+  const displayFormats = isTimeScale
+    ? { minute: 'hh:mm a', hour: 'hh:mm a' }
+    : { day: 'MMM d' };
+
   // Prepare chart data.
   const chartData = {
     labels: timeLabels,
@@ -99,8 +160,8 @@ export default function Graph() {
       {
         data: dataArray,
         fill: false,
-        backgroundColor: '#00c28e',
-        borderColor: '#00c28e',
+        backgroundColor: chartColor,
+        borderColor: chartColor,
         stepped: true,
         tension: 0,
         // Only show a circle on the final datapoint.
@@ -110,24 +171,24 @@ export default function Graph() {
     ],
   };
 
-  // Chart configuration options.
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     backgroundColor: '#fff',
+    animation: false, // Disable animations
     scales: {
       x: {
         type: 'time',
         time: {
-          unit: 'minute',
-          tooltipFormat: 'HH:mm',
-          displayFormats: { minute: 'HH:mm' },
+          unit: timeUnit,
+          tooltipFormat: tooltipFormat,
+          displayFormats: displayFormats,
         },
         min: new Date(xMin),
         max: new Date(extendedXMax),
         title: { display: false },
         grid: { display: false, drawBorder: false },
-        ticks: { autoSkip: true, maxTicksLimit: 4, font: { size: 18 } },
+        ticks: { autoSkip: true, maxTicksLimit: isTimeScale ? 4 : 7, font: { size: 18 } },
       },
       y: {
         title: { display: false },
@@ -155,33 +216,6 @@ export default function Graph() {
     hover: { mode: 'nearest', intersect: false },
   };
 
-  // Function to fetch live data from your AWS endpoint.
-  // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint.
-  async function fetchLiveStockData() {
-    try {
-      const response = await fetch('YOUR_API_ENDPOINT');
-      const newData = await response.json();
-      // Expect newData to be an array of objects: { timestamp: string, price: number }
-      setStockData(newData);
-    } catch (error) {
-      console.error('Error fetching live stock data:', error);
-    }
-  }
-
-  // Poll for new data every 5 seconds.
-  useEffect(() => {
-    const interval = setInterval(fetchLiveStockData, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Determine current index (defaulting to the last datapoint).
-  const currentIndex = hoverIndex === null ? dataArray.length - 1 : hoverIndex;
-  const displayedValue = dataArray[currentIndex];
-  const baseline = dataArray[0];
-  const difference = displayedValue - baseline;
-  const arrowSymbol = difference >= 0 ? '▲' : '▼';
-  const absDiff = Math.abs(difference).toFixed(1);
-
   // Chart crosshair functionality for interactivity.
   useEffect(() => {
     const chart = chartRef.current;
@@ -193,14 +227,11 @@ export default function Graph() {
       const canvasRect = canvas.getBoundingClientRect();
       const containerRect = containerRef.current.getBoundingClientRect();
       const eventX = event.clientX - canvasRect.left;
-      const eventY = event.clientY - canvasRect.top;
 
       // Hide crosshair if mouse is outside chart area.
       if (
         eventX < chartArea.left ||
-        eventX > chartArea.right ||
-        eventY < chartArea.top ||
-        eventY > chartArea.bottom
+        eventX > chartArea.right
       ) {
         if (vLineRef.current) vLineRef.current.style.display = 'none';
         if (labelRef.current) labelRef.current.style.display = 'none';
@@ -240,15 +271,28 @@ export default function Graph() {
       }
       setHoverIndex(snappedIndex);
 
-      // Update the hover label with the formatted time.
-      const xScale = scales.x;
-      const continuousTimeValue = xScale.getValueForPixel(eventX);
-      const formattedTime = new Date(continuousTimeValue).toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
+      // Format the hover label based on the selected interval.
+      const timeValue = new Date(scales.x.getValueForPixel(eventX));
+      let formattedLabel;
+      if (selectedInterval === '6H' || selectedInterval === '1D') {
+        // For 6H and 1D, show full date and time with minutes, seconds, and AM/PM.
+        formattedLabel = timeValue.toLocaleString([], {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+        });
+      } else {
+        // For 1W and All, show the date and the hour with AM/PM.
+        const dateStr = timeValue.toLocaleDateString([], { month: 'short', day: 'numeric' });
+        const timeStr = timeValue.toLocaleTimeString([], { hour: 'numeric', hour12: true });
+        formattedLabel = `${dateStr} at ${timeStr}`;
+      }
+      
       if (labelRef.current) {
-        labelRef.current.textContent = formattedTime;
+        labelRef.current.textContent = formattedLabel;
         labelRef.current.style.left = `${relativeX}px`;
         labelRef.current.style.top = `${canvasRect.top + chartArea.top - containerRect.top - 30}px`;
         labelRef.current.style.display = 'block';
@@ -267,7 +311,13 @@ export default function Graph() {
       canvas.removeEventListener('mousemove', updateCrosshair);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [chartData]);
+  }, [chartData, selectedInterval]);
+
+  // Update chart data when a different interval is selected.
+  const handleIntervalChange = (label) => {
+    setSelectedInterval(label);
+    setStockData(dataSets[label]);
+  };
 
   return (
     <div className={styles.outerContainer}>
@@ -275,8 +325,8 @@ export default function Graph() {
       <div className={styles.infoContainer}>
         <span className={styles.bigNumber}>{displayedValue}</span>
         <span className={styles.forecastText}>forecast</span>
-        <span className={difference >= 0 ? styles.deltaPositive : styles.deltaNegative}>
-          {arrowSymbol}{absDiff}
+        <span className={overallDiff >= 0 ? styles.deltaPositive : styles.deltaNegative}>
+          {overallDiff >= 0 ? '▲' : '▼'}{Math.abs(overallDiff).toFixed(1)}
         </span>
       </div>
       {/* Chart container */}
@@ -284,6 +334,23 @@ export default function Graph() {
         <Line ref={chartRef} data={chartData} options={chartOptions} />
         <div ref={vLineRef} className={styles.hoverLine} />
         <div ref={labelRef} className={styles.hoverLabel} />
+      </div>
+      {/* Interval options with dynamic colors */}
+      <div className={styles.intervalOptions}>
+        {["6H", "1D", "1W", "All"].map((label) => (
+          <button 
+            key={label}
+            className={styles.intervalButton}
+            onClick={() => handleIntervalChange(label)}
+            style={
+              selectedInterval === label
+                ? { backgroundColor: buttonColor, color: 'black', borderColor: buttonColor }
+                : { color: buttonColor }
+            }
+          >
+            {label}
+          </button>
+        ))}
       </div>
     </div>
   );

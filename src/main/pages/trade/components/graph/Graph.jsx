@@ -1,198 +1,289 @@
 "use client";
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import styles from './Graph.module.css';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  TimeScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip as ChartTooltip,
+  Legend,
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
+import { Line } from 'react-chartjs-2';
 
-import React, { useMemo, useState } from "react";
-import styles from "./Graph.module.css";
+// Register Chart.js components.
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  TimeScale,
+  PointElement,
+  LineElement,
+  Title,
+  ChartTooltip,
+  Legend
+);
 
-export default function Graph({
-  datasets = {},
-  currentChance = 84,
-  delta = -0.4,
-}) {
-  // Overall SVG dimensions and margins
-  const width = 600;
-  const height = 300;
-  const margin = { top: 10, right: 40, bottom: 20, left: 20 };
+// Initial structured stock data.
+const initialStockData = [
+  { timestamp: '2025-03-30T10:00:00', price: 103 },
+  { timestamp: '2025-03-30T10:05:00', price: 120 },
+  { timestamp: '2025-03-30T10:10:00', price: 150 },
+  { timestamp: '2025-03-30T10:15:00', price: 130 },
+  { timestamp: '2025-03-30T10:20:00', price: 178 },
+  { timestamp: '2025-03-30T10:55:00', price: 160 }
+];
 
-  // Available time ranges
-  const availableRanges = ["6H", "1D", "1W", "1M", "ALL"];
-  // Default to "ALL" so that sample data spanning months is visible initially.
-  const [selectedRange, setSelectedRange] = useState("ALL");
+export default function Graph() {
+  const chartRef = useRef(null);
+  const containerRef = useRef(null);
+  const vLineRef = useRef(null);
+  const labelRef = useRef(null);
 
-  // Get the dataset for the current selected range (or empty array if not provided)
-  const currentData = datasets[selectedRange] || [];
+  // State for the stock data.
+  const [stockData, setStockData] = useState(initialStockData);
+  // Store hover index for crosshair info.
+  const [hoverIndex, setHoverIndex] = useState(null);
 
-  // Process current data: convert date strings to timestamps and sort chronologically
-  const processedData = useMemo(() => {
-    return currentData
-      .map((d) => ({
-        ...d,
-        timestamp: new Date(d.date).getTime(),
-      }))
-      .sort((a, b) => a.timestamp - b.timestamp);
-  }, [currentData]);
+  // Convert structured data into arrays needed by the chart.
+  const getChartArrays = useCallback(() => {
+    const dataArray = stockData.map(item => item.price);
+    const timeLabels = stockData.map(item => item.timestamp);
+    return { dataArray, timeLabels };
+  }, [stockData]);
 
-  // Map processed data into plotting points { x, y }
-  const sortedData = useMemo(() => {
-    return processedData.map((d) => ({
-      x: d.timestamp,
-      y: d.value,
-    }));
-  }, [processedData]);
+  const { dataArray, timeLabels } = getChartArrays();
 
-  // Compute dynamic x-domain
-  const minX = sortedData.length ? sortedData[0].x : 0;
-  const maxX = sortedData.length ? sortedData[sortedData.length - 1].x : 1;
+  // Compute y‑axis boundaries.
+  const minValue = Math.min(...dataArray);
+  const maxValue = Math.max(...dataArray);
+  const range = maxValue - minValue;
+  const adjustedMin = minValue - range * 0.03;
+  const adjustedMax = maxValue + range * 0.03;
 
-  // Compute dynamic y-domain (fallback to 0–1)
-  let minY = sortedData.length ? Math.min(...sortedData.map((d) => d.y)) : 0;
-  let maxY = sortedData.length ? Math.max(...sortedData.map((d) => d.y)) : 1;
-  if (minY === maxY) {
-    minY -= 0.05;
-    maxY += 0.05;
+  // Helper to calculate a “nice” tick step.
+  const niceNum = (range, round) => {
+    const exponent = Math.floor(Math.log10(range));
+    const fraction = range / Math.pow(10, exponent);
+    let niceFraction;
+    if (round) {
+      if (fraction < 1.5) niceFraction = 1;
+      else if (fraction < 3) niceFraction = 2;
+      else if (fraction < 7) niceFraction = 5;
+      else niceFraction = 10;
+    } else {
+      if (fraction <= 1) niceFraction = 1;
+      else if (fraction <= 2) niceFraction = 2;
+      else if (fraction <= 5) niceFraction = 5;
+      else niceFraction = 10;
+    }
+    return niceFraction * Math.pow(10, exponent);
+  };
+  const idealTicks = 6;
+  const tickStep = niceNum((adjustedMax - adjustedMin) / (idealTicks - 1), true);
+
+  // Compute x‑axis boundaries.
+  const xValues = timeLabels.map(label => new Date(label).getTime());
+  const xMin = Math.min(...xValues);
+  const xMax = Math.max(...xValues);
+  const xRange = xMax - xMin;
+  const extendedXMax = xMax + xRange * 0.03;
+
+  // Prepare chart data.
+  const chartData = {
+    labels: timeLabels,
+    datasets: [
+      {
+        data: dataArray,
+        fill: false,
+        backgroundColor: '#00c28e',
+        borderColor: '#00c28e',
+        stepped: true,
+        tension: 0,
+        // Only show a circle on the final datapoint.
+        pointRadius: dataArray.map((_, idx) => (idx === dataArray.length - 1 ? 5 : 0)),
+        pointHoverRadius: dataArray.map((_, idx) => (idx === dataArray.length - 1 ? 5 : 0)),
+      },
+    ],
+  };
+
+  // Chart configuration options.
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    backgroundColor: '#fff',
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'minute',
+          tooltipFormat: 'HH:mm',
+          displayFormats: { minute: 'HH:mm' },
+        },
+        min: new Date(xMin),
+        max: new Date(extendedXMax),
+        title: { display: false },
+        grid: { display: false, drawBorder: false },
+        ticks: { autoSkip: true, maxTicksLimit: 4, font: { size: 18 } },
+      },
+      y: {
+        title: { display: false },
+        suggestedMin: adjustedMin,
+        suggestedMax: adjustedMax,
+        ticks: { stepSize: tickStep, font: { size: 18 } },
+        position: 'right',
+        grid: {
+          display: true,
+          drawOnChartArea: true,
+          drawTicks: false,
+          drawBorder: false,
+          borderColor: 'transparent',
+          borderDash: [5, 5],
+          borderDashOffset: 0,
+          lineWidth: 1,
+          color: 'rgba(0, 0, 0, 0.1)',
+        },
+      },
+    },
+    plugins: {
+      tooltip: { enabled: false },
+      legend: { display: false },
+    },
+    hover: { mode: 'nearest', intersect: false },
+  };
+
+  // Function to fetch live data from your AWS endpoint.
+  // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint.
+  async function fetchLiveStockData() {
+    try {
+      const response = await fetch('YOUR_API_ENDPOINT');
+      const newData = await response.json();
+      // Expect newData to be an array of objects: { timestamp: string, price: number }
+      setStockData(newData);
+    } catch (error) {
+      console.error('Error fetching live stock data:', error);
+    }
   }
-  const yRange = maxY - minY;
-  minY -= yRange * 0.05;
-  maxY += yRange * 0.05;
 
-  // Scale functions: data values -> SVG coordinates
-  const scaleX = (val) => {
-    if (maxX === minX) return margin.left;
-    const usableWidth = width - margin.left - margin.right;
-    return margin.left + ((val - minX) / (maxX - minX)) * usableWidth;
-  };
+  // Poll for new data every 5 seconds.
+  useEffect(() => {
+    const interval = setInterval(fetchLiveStockData, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const scaleY = (val) => {
-    if (maxY === minY) return height - margin.bottom;
-    const usableHeight = height - margin.top - margin.bottom;
-    return height - margin.bottom - ((val - minY) / (maxY - minY)) * usableHeight;
-  };
+  // Determine current index (defaulting to the last datapoint).
+  const currentIndex = hoverIndex === null ? dataArray.length - 1 : hoverIndex;
+  const displayedValue = dataArray[currentIndex];
+  const baseline = dataArray[0];
+  const difference = displayedValue - baseline;
+  const arrowSymbol = difference >= 0 ? '▲' : '▼';
+  const absDiff = Math.abs(difference).toFixed(1);
 
-  // Build the SVG path for the red line
-  const linePath = useMemo(() => {
-    if (!sortedData.length) return "";
-    return sortedData
-      .map((point, i) => {
-        const x = scaleX(point.x);
-        const y = scaleY(point.y);
-        return i === 0 ? `M${x},${y}` : `L${x},${y}`;
-      })
-      .join(" ");
-  }, [sortedData]);
+  // Chart crosshair functionality for interactivity.
+  useEffect(() => {
+    const chart = chartRef.current;
+    if (!chart) return;
+    const canvas = chart.canvas;
+    const updateCrosshair = (event) => {
+      const { chartArea, scales } = chart;
+      if (!chartArea) return;
+      const canvasRect = canvas.getBoundingClientRect();
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const eventX = event.clientX - canvasRect.left;
+      const eventY = event.clientY - canvasRect.top;
 
-  // Create axis ticks (5 ticks for each axis)
-  const numYTicks = 5;
-  const yTicks = useMemo(() => {
-    const ticks = [];
-    for (let i = 0; i < numYTicks; i++) {
-      ticks.push(minY + (i * (maxY - minY)) / (numYTicks - 1));
-    }
-    return ticks;
-  }, [minY, maxY]);
+      // Hide crosshair if mouse is outside chart area.
+      if (
+        eventX < chartArea.left ||
+        eventX > chartArea.right ||
+        eventY < chartArea.top ||
+        eventY > chartArea.bottom
+      ) {
+        if (vLineRef.current) vLineRef.current.style.display = 'none';
+        if (labelRef.current) labelRef.current.style.display = 'none';
+        setHoverIndex(null);
+        return;
+      }
 
-  const numXTicks = 5;
-  const xTicks = useMemo(() => {
-    const ticks = [];
-    for (let i = 0; i < numXTicks; i++) {
-      ticks.push(minX + (i * (maxX - minX)) / (numXTicks - 1));
-    }
-    return ticks;
-  }, [minX, maxX]);
+      const meta = chart.getDatasetMeta(0);
+      if (!meta.data || meta.data.length === 0) return;
 
-  // Format x-axis tick labels as time (e.g. "12:13 PM")
-  const formatTime = (timestamp) => {
-    const d = new Date(timestamp);
-    return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-  };
+      // Hide if mouse is to the right of the last datapoint.
+      const lastDataPointX = meta.data[meta.data.length - 1].x;
+      if (eventX >= lastDataPointX) {
+        if (vLineRef.current) vLineRef.current.style.display = 'none';
+        if (labelRef.current) labelRef.current.style.display = 'none';
+        setHoverIndex(null);
+        return;
+      }
 
-  // Last data point for drawing the red dot
-  const lastPoint = sortedData[sortedData.length - 1];
+      // Position the vertical crosshair.
+      const relativeX = canvasRect.left + eventX - containerRect.left;
+      if (vLineRef.current) {
+        vLineRef.current.style.left = `${relativeX}px`;
+        vLineRef.current.style.top = `${canvasRect.top + chartArea.top - containerRect.top}px`;
+        vLineRef.current.style.height = `${chartArea.bottom - chartArea.top}px`;
+        vLineRef.current.style.display = 'block';
+      }
+
+      // Snap to the nearest datapoint.
+      let snappedIndex = 0;
+      for (let i = 0; i < meta.data.length; i++) {
+        if (eventX >= meta.data[i].x) {
+          snappedIndex = i;
+        } else {
+          break;
+        }
+      }
+      setHoverIndex(snappedIndex);
+
+      // Update the hover label with the formatted time.
+      const xScale = scales.x;
+      const continuousTimeValue = xScale.getValueForPixel(eventX);
+      const formattedTime = new Date(continuousTimeValue).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      if (labelRef.current) {
+        labelRef.current.textContent = formattedTime;
+        labelRef.current.style.left = `${relativeX}px`;
+        labelRef.current.style.top = `${canvasRect.top + chartArea.top - containerRect.top - 30}px`;
+        labelRef.current.style.display = 'block';
+      }
+    };
+
+    const handleMouseLeave = () => {
+      if (vLineRef.current) vLineRef.current.style.display = 'none';
+      if (labelRef.current) labelRef.current.style.display = 'none';
+      setHoverIndex(null);
+    };
+
+    canvas.addEventListener('mousemove', updateCrosshair);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    return () => {
+      canvas.removeEventListener('mousemove', updateCrosshair);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [chartData]);
 
   return (
-    <div className={styles.graphContainer}>
-      {/* Top header labels */}
-      <div className={styles.headerRow}>
-        <div className={styles.chanceInfo}>
-          <span className={styles.chanceValue}>{currentChance}% chance</span>
-          {delta < 0 ? (
-            <span className={styles.deltaDown}>▼ {Math.abs(delta)}</span>
-          ) : (
-            <span className={styles.deltaUp}>▲ {Math.abs(delta)}</span>
-          )}
-        </div>
+    <div className={styles.outerContainer}>
+      {/* Info section displaying the current stock value */}
+      <div className={styles.infoContainer}>
+        <span className={styles.bigNumber}>{displayedValue}</span>
+        <span className={styles.forecastText}>forecast</span>
+        <span className={difference >= 0 ? styles.deltaPositive : styles.deltaNegative}>
+          {arrowSymbol}{absDiff}
+        </span>
       </div>
-
-      {/* Main SVG chart */}
-      <svg
-        className={styles.chart}
-        viewBox={`0 0 ${width} ${height}`}
-        preserveAspectRatio="none"
-      >
-        {/* Horizontal grid lines with right-aligned y-axis percentage labels */}
-        {yTicks.map((tickVal, i) => {
-          const y = scaleY(tickVal);
-          return (
-            <g key={`y-grid-${i}`}>
-              <line
-                x1={margin.left}
-                x2={width - margin.right}
-                y1={y}
-                y2={y}
-                stroke="#eee"
-              />
-              <text
-                x={width - 5}
-                y={y - 2}
-                textAnchor="end"
-                fill="#999"
-                fontSize="12"
-              >
-                {(tickVal * 100).toFixed(0)}%
-              </text>
-            </g>
-          );
-        })}
-        {/* The red line */}
-        <path d={linePath} fill="none" stroke="#db2c2c" strokeWidth="2" />
-        {/* Red dot at the last data point */}
-        {lastPoint && (
-          <circle
-            cx={scaleX(lastPoint.x)}
-            cy={scaleY(lastPoint.y)}
-            r="4"
-            fill="#db2c2c"
-          />
-        )}
-        {/* Bottom x-axis time labels */}
-        {xTicks.map((tickVal, i) => {
-          const x = scaleX(tickVal);
-          return (
-            <text
-              key={`x-tick-${i}`}
-              x={x}
-              y={height - 5}
-              textAnchor="middle"
-              fill="#666"
-              fontSize="12"
-            >
-              {formatTime(tickVal)}
-            </text>
-          );
-        })}
-      </svg>
-
-      {/* Time range buttons */}
-      <div className={styles.buttonRow}>
-        {availableRanges.map((range) => (
-          <button
-            key={range}
-            onClick={() => setSelectedRange(range)}
-            className={`${styles.rangeButton} ${
-              selectedRange === range ? styles.active : ""
-            }`}
-          >
-            {range}
-          </button>
-        ))}
+      {/* Chart container */}
+      <div ref={containerRef} className={styles.chartContainer}>
+        <Line ref={chartRef} data={chartData} options={chartOptions} />
+        <div ref={vLineRef} className={styles.hoverLine} />
+        <div ref={labelRef} className={styles.hoverLabel} />
       </div>
     </div>
   );

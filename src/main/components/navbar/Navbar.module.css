@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: var(--white);
   font-family: sans-serif;
   position: relative;
-  padding: 15px 35px 5px 35px;
+  padding: 15px 35px 15px 35px;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* IE 10+ */
@@ -20,13 +20,13 @@
 }
 
 .logo {
-  color: #00c28e;
+  color: var(--primary-green);
   font-weight: bold;
   font-size: 2.5rem;
 }
 
 .logo:hover {
-  color: #00b17f;
+  color: var(--primary-green-hover);
   cursor: pointer;
 }
 
@@ -44,13 +44,13 @@
 
 .navLinks li a {
   text-decoration: none;
-  color: #333;
+  color: var(--navlink-text); /* now uses #333 */
   font-size: 1.25rem;
   transition: color 0.3s ease;
 }
 
 .navLinks li a:hover {
-  color: #00c28e;
+  color: var(--primary-green);
 }
 
 /* Right Section: Search, Auth Buttons, Icons */
@@ -67,27 +67,27 @@
   position: relative;
   width: 500px; /* Adjust as needed */
   max-width: 800px;
-  background-color: #F5F5F5;
+  background-color: var(--search-bg);
   transition: background-color 0.3s ease;
   border-radius: 8px;
 }
 
 .searchContainer:hover,
 .searchContainer:focus-within {
-  background-color: #fff;
+  background-color: var(--white);
 }
 
 .searchIcon {
   position: absolute;
   left: 10px;
-  color: black;
+  color: var(--black);
   font-size: 1.2rem;
 }
 
 .clearIcon {
   position: absolute;
   right: 10px;
-  color: black;
+  color: var(--black);
   font-size: 1.2rem;
   cursor: pointer;
 }
@@ -95,7 +95,7 @@
 .searchInput {
   width: 100%;
   padding: 1rem 3rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--search-input-border);
   border-radius: 8px;
   font-size: 1.2rem;
 }
@@ -107,8 +107,8 @@
 }
 
 .addFundsBtn {
-  background-color: #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);
+  color: var(--white);
   width: 140px;
   height: 55px;
   border: none;
@@ -120,7 +120,7 @@
 }
 
 .addFundsBtn:hover {
-  background-color: #00b17f;
+  background-color: var(--primary-green-hover);
 }
 
 /* Container for hamburger & leaderboard icons */
@@ -132,12 +132,11 @@
 
 /* IMPORTANT: This wrapper must be relative and inline-block 
    so the submenu can be absolutely positioned inside. */
-   .hamburgerWrapper {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  
+.hamburgerWrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
 
 /* Icon button styling */
 .iconButton {
@@ -152,15 +151,15 @@
 }
 
 .iconButton:hover {
-  background-color: #e0e0e0;
+  background-color: var(--icon-hover-bg);
 }
 
 .leaderboardIcon {
   font-size: 2.5rem;
-  color: #00c28e;
+  color: var(--primary-green);
 }
 
 .hamburgerIcon {
   font-size: 1.8rem;
-  color: #333;
+  color: var(--text-dark);
 }

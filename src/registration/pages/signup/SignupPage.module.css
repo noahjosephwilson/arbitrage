@@ -4,15 +4,15 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #00c28e; /* Solid green */
+  background: var(--primary-green); /* Solid green */
   padding: 2rem;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Centered card with increased padding and modern shadow */
 .card {
   position: relative;
-  background-color: #fff;
+  background-color: var(--white);
   max-width: 500px;
   width: 100%;
   padding: 3rem 2.5rem;
@@ -26,7 +26,7 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  color: #00c28e;
+  color: var(--primary-green);
   text-decoration: none;
   font-weight: 500;
   font-size: 1.2rem;
@@ -34,7 +34,7 @@
 }
 
 .backButton:hover {
-  color: #008f70;
+  color: var(--primary-green-darker);
 }
 
 /* Header styling */
@@ -43,7 +43,7 @@
 }
 
 .logo {
-  color: #00c28e;
+  color: var(--primary-green);
   font-size: 3rem;
   font-weight: 700;
   letter-spacing: 0.05rem;
@@ -53,7 +53,7 @@
 .title {
   font-size: 2rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 2rem;
 }
 
@@ -73,7 +73,7 @@
   display: block;
   margin-bottom: 0.6rem;
   font-weight: 500;
-  color: #444;
+  color: var(--text-secondary);
   font-size: 1.1rem;
 }
 
@@ -81,7 +81,7 @@
 .inputField {
   width: 100%;
   padding: 1.2rem 1.4rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-default);
   border-radius: 8px;
   font-size: 1.2rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -89,7 +89,7 @@
 
 .inputField:focus {
   outline: none;
-  border-color: #00c28e;
+  border-color: var(--primary-green);
   box-shadow: 0 0 10px rgba(0, 194, 142, 0.2);
 }
 
@@ -97,8 +97,8 @@
 .submitBtn {
   width: 100%;
   padding: 1.2rem;
-  background-color: #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);
+  color: var(--white);
   border: none;
   border-radius: 30px;
   font-weight: 600;
@@ -108,7 +108,7 @@
 }
 
 .submitBtn:hover {
-  background-color: #00b17f;
+  background-color: var(--primary-green-hover);
   transform: translateY(-3px);
 }
 
@@ -122,12 +122,12 @@
 .divider {
   flex: 1;
   height: 1px;
-  background: #ddd;
+  background: var(--divider-color);
 }
 
 .dividerText {
   margin: 0 1.2rem;
-  color: #888;
+  color: var(--text-muted);
   font-size: 1rem;
 }
 
@@ -146,40 +146,40 @@
   padding: 1rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 8px;
-  background-color: #f7f7f7;
+  background-color: var(--social-btn-bg);
   cursor: pointer;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   font-size: 1.1rem;
 }
 
 .socialBtn:hover {
-  background-color: #eee;
+  background-color: var(--social-btn-hover);
 }
 
 /* Google button with a darker, richer orange */
 .googleBtn {
-  color: black;
-  border-color: black;
+  color: var(--black);
+  border-color: var(--black);
 }
 
 /* Apple button: text and border set to black; icon inherits or can be adjusted separately */
 .appleBtn {
-  color: #000;
-  border-color: #000;
+  color: var(--black);
+  border-color: var(--black);
 }
 .appleBtn .socialIcon {
   /* Apple icon will be black (or adjust if desired) */
-  color: #000;
+  color: var(--black);
 }
 
 /* PayPal button: text and border set to black, with the icon retaining a distinct color */
 .paypalBtn {
-  color: #000;
-  border-color: #000;
+  color: var(--black);
+  border-color: var(--black);
 }
 .paypalBtn .socialIcon {
   /* Using PayPal blue for the icon */
-  color: #003087;
+  color: var(--paypal-icon);
 }
 
 .socialIcon {
@@ -189,16 +189,16 @@
 .alreadyAccount {
   margin-top: 1.5rem;
   font-size: 1.2rem;
-  color: #444;
+  color: var(--text-secondary);
 }
 
 .loginLink {
-  color: #00c28e;
+  color: var(--primary-green);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .loginLink:hover {
-  color: #008f70;
+  color: var(--primary-green-darker);
 }

@@ -1,101 +1,286 @@
 "use client";
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styles from './LogoPage.module.css';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  TimeScale,
   PointElement,
   LineElement,
   Title,
-  Tooltip,
+  Tooltip as ChartTooltip,
   Legend,
 } from 'chart.js';
+import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
 
-// Register necessary Chart.js components
+// Register Chart.js components.
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  TimeScale,
   PointElement,
   LineElement,
   Title,
-  Tooltip,
+  ChartTooltip,
   Legend
 );
 
-const sampleData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  datasets: [
-    {
-      label: 'Stock Price',
-      data: [100, 120, 150, 130, 170, 160],
-      fill: false,
-      backgroundColor: '#00c28e',
-      borderColor: '#00c28e',
-      tension: 0.3,
+// Initial structured stock data.
+const initialStockData = [
+  { timestamp: '2025-03-30T10:00:00', price: 103 },
+  { timestamp: '2025-03-30T10:05:00', price: 120 },
+  { timestamp: '2025-03-30T10:10:00', price: 150 },
+  { timestamp: '2025-03-30T10:15:00', price: 130 },
+  { timestamp: '2025-03-30T10:20:00', price: 178 },
+  { timestamp: '2025-03-30T10:55:00', price: 160 }
+];
+
+export default function LogoPage() {
+  const chartRef = useRef(null);
+  const containerRef = useRef(null);
+  const vLineRef = useRef(null);
+  const labelRef = useRef(null);
+  
+  // State to store the stock data in a structured format.
+  const [stockData, setStockData] = useState(initialStockData);
+  
+  // Convert structured data into arrays for the chart.
+  const dataArray = stockData.map(item => item.price);
+  const timeLabels = stockData.map(item => item.timestamp);
+  
+  // Compute y‑axis boundaries.
+  const minValue = Math.min(...dataArray);
+  const maxValue = Math.max(...dataArray);
+  const range = maxValue - minValue;
+  const adjustedMin = minValue - range * 0.03;
+  const adjustedMax = maxValue + range * 0.03;
+  
+  // Helper for a “nice” tick step.
+  function niceNum(range, round) {
+    const exponent = Math.floor(Math.log10(range));
+    const fraction = range / Math.pow(10, exponent);
+    let niceFraction;
+    if (round) {
+      if (fraction < 1.5) niceFraction = 1;
+      else if (fraction < 3) niceFraction = 2;
+      else if (fraction < 7) niceFraction = 5;
+      else niceFraction = 10;
+    } else {
+      if (fraction <= 1) niceFraction = 1;
+      else if (fraction <= 2) niceFraction = 2;
+      else if (fraction <= 5) niceFraction = 5;
+      else niceFraction = 10;
+    }
+    return niceFraction * Math.pow(10, exponent);
+  }
+  const idealTicks = 6;
+  const tickStep = niceNum((adjustedMax - adjustedMin) / (idealTicks - 1), true);
+  
+  // Compute x‑axis boundaries.
+  const xValues = timeLabels.map(label => new Date(label).getTime());
+  const xMin = Math.min(...xValues);
+  const xMax = Math.max(...xValues);
+  const xRange = xMax - xMin;
+  const extendedXMax = xMax + xRange * 0.03;
+  
+  // Prepare chart data.
+  const chartData = {
+    labels: timeLabels,
+    datasets: [
+      {
+        data: dataArray,
+        fill: false,
+        backgroundColor: '#00c28e',
+        borderColor: '#00c28e',
+        stepped: true,
+        tension: 0,
+        // Only show a circle on the final datapoint.
+        pointRadius: dataArray.map((_, idx) => (idx === dataArray.length - 1 ? 5 : 0)),
+        pointHoverRadius: dataArray.map((_, idx) => (idx === dataArray.length - 1 ? 5 : 0)),
+      },
+    ],
+  };
+  
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    backgroundColor: '#fff',
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'minute',
+          tooltipFormat: 'HH:mm',
+          displayFormats: { minute: 'HH:mm' },
+        },
+        min: new Date(xMin),
+        max: new Date(extendedXMax),
+        title: { display: false },
+        grid: { display: false, drawBorder: false },
+        ticks: { autoSkip: true, maxTicksLimit: 4, font: { size: 18 } },
+      },
+      y: {
+        title: { display: false },
+        suggestedMin: adjustedMin,
+        suggestedMax: adjustedMax,
+        ticks: { stepSize: tickStep, font: { size: 18 } },
+        position: 'right',
+        grid: {
+          display: true,
+          drawOnChartArea: true,
+          drawTicks: false,
+          drawBorder: false,
+          borderColor: 'transparent',
+          borderDash: [5, 5],
+          borderDashOffset: 0,
+          lineWidth: 1,
+          color: 'rgba(0, 0, 0, 0.1)',
+        },
+      },
     },
-  ],
-};
-
-const sampleOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    x: { display: true },
-    y: { display: true },
-  },
-};
-
-const LogoPage = () => {
+    plugins: {
+      tooltip: { enabled: false },
+      legend: { display: false },
+    },
+    hover: { mode: 'nearest', intersect: false },
+  };
+  
+  // For hover info: default to the last datapoint.
+  const [hoverIndex, setHoverIndex] = useState(null);
+  const currentIndex = hoverIndex === null ? dataArray.length - 1 : hoverIndex;
+  const displayedValue = dataArray[currentIndex];
+  
+  // Delta arrow: compare to the first datapoint.
+  const baseline = dataArray[0];
+  const difference = displayedValue - baseline;
+  const arrowSymbol = difference >= 0 ? '▲' : '▼';
+  const absDiff = Math.abs(difference).toFixed(1);
+  
+  // Function to fetch live data from your AWS endpoint.
+  // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint.
+  async function fetchLiveStockData() {
+    try {
+      const response = await fetch('YOUR_API_ENDPOINT');
+      const newData = await response.json();
+      // Expecting newData to be an array of objects: { timestamp: string, price: number }
+      setStockData(newData);
+    } catch (error) {
+      console.error('Error fetching live stock data:', error);
+    }
+  }
+  
+  // Poll for new data every 5 seconds.
+  useEffect(() => {
+    const interval = setInterval(fetchLiveStockData, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  
+  // Chart crosshair for interactivity.
+  useEffect(() => {
+    const chart = chartRef.current;
+    if (!chart) return;
+    const canvas = chart.canvas;
+  
+    const updateCrosshair = (event) => {
+      const { chartArea, scales } = chart;
+      if (!chartArea) return;
+      const canvasRect = canvas.getBoundingClientRect();
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const eventX = event.clientX - canvasRect.left;
+      const eventY = event.clientY - canvasRect.top;
+  
+      // Hide if the mouse is outside the chart area.
+      if (
+        eventX < chartArea.left ||
+        eventX > chartArea.right ||
+        eventY < chartArea.top ||
+        eventY > chartArea.bottom
+      ) {
+        if (vLineRef.current) vLineRef.current.style.display = 'none';
+        if (labelRef.current) labelRef.current.style.display = 'none';
+        setHoverIndex(null);
+        return;
+      }
+  
+      const meta = chart.getDatasetMeta(0);
+      if (!meta.data || meta.data.length === 0) return;
+  
+      // Hide the crosshair if mouse is to the right of the last datapoint.
+      const lastDataPointX = meta.data[meta.data.length - 1].x;
+      if (eventX >= lastDataPointX) {
+        if (vLineRef.current) vLineRef.current.style.display = 'none';
+        if (labelRef.current) labelRef.current.style.display = 'none';
+        setHoverIndex(null);
+        return;
+      }
+  
+      // Position the vertical line at the raw mouse x.
+      const relativeX = canvasRect.left + eventX - containerRect.left;
+      if (vLineRef.current) {
+        vLineRef.current.style.left = `${relativeX}px`;
+        vLineRef.current.style.top = `${canvasRect.top + chartArea.top - containerRect.top}px`;
+        vLineRef.current.style.height = `${chartArea.bottom - chartArea.top}px`;
+        vLineRef.current.style.display = 'block';
+      }
+  
+      // Snap to the nearest datapoint.
+      let snappedIndex = 0;
+      for (let i = 0; i < meta.data.length; i++) {
+        if (eventX >= meta.data[i].x) {
+          snappedIndex = i;
+        } else {
+          break;
+        }
+      }
+      setHoverIndex(snappedIndex);
+  
+      // Update the hover label with formatted time.
+      const xScale = scales.x;
+      const continuousTimeValue = xScale.getValueForPixel(eventX);
+      const formattedTime = new Date(continuousTimeValue).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      if (labelRef.current) {
+        labelRef.current.textContent = formattedTime;
+        labelRef.current.style.left = `${relativeX}px`;
+        labelRef.current.style.top = `${canvasRect.top + chartArea.top - containerRect.top - 30}px`;
+        labelRef.current.style.display = 'block';
+      }
+    };
+  
+    const handleMouseLeave = () => {
+      if (vLineRef.current) vLineRef.current.style.display = 'none';
+      if (labelRef.current) labelRef.current.style.display = 'none';
+      setHoverIndex(null);
+    };
+  
+    canvas.addEventListener('mousemove', updateCrosshair);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+    return () => {
+      canvas.removeEventListener('mousemove', updateCrosshair);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [chartData]);
+  
   return (
-    <div className={styles.container}>
-      <div className={styles.leftColumn}>
-        <div className={styles.graphSection}>
-          <h2 className={styles.sectionTitle}>Market Overview</h2>
-          <div className={styles.chartContainer}>
-            <Line data={sampleData} options={sampleOptions} />
-          </div>
-        </div>
-        <div className={styles.newsCardsSection}>
-          <h2 className={styles.sectionTitle}>Latest News</h2>
-          <div className={styles.newsCardsContainer}>
-            <div className={styles.newsCard}>
-              <h3>Tech Stocks Rally</h3>
-              <p>
-                Tech stocks saw significant gains today, with several leading companies reporting strong earnings.
-              </p>
-              <span>2 hrs ago</span>
-            </div>
-            <div className={styles.newsCard}>
-              <h3>Market Update</h3>
-              <p>
-                The market is experiencing increased volatility amid global economic uncertainties.
-              </p>
-              <span>4 hrs ago</span>
-            </div>
-            <div className={styles.newsCard}>
-              <h3>New IPO Announced</h3>
-              <p>
-                A promising new IPO is set to debut, generating buzz among investors.
-              </p>
-              <span>1 day ago</span>
-            </div>
-            {/* Add more news cards as needed */}
-          </div>
-        </div>
+    <div className={styles.outerContainer}>
+      {/* Info section */}
+      <div className={styles.infoContainer}>
+        <span className={styles.bigNumber}>{displayedValue}</span>
+        <span className={styles.forecastText}>forecast</span>
+        <span className={difference >= 0 ? styles.deltaPositive : styles.deltaNegative}>
+          {arrowSymbol}{absDiff}
+        </span>
       </div>
-      <div className={styles.watchlistSection}>
-        <h2 className={styles.sectionTitle}>Your Watchlist</h2>
-        <ul className={styles.watchlist}>
-          <li>AAPL - Apple Inc.</li>
-          <li>TSLA - Tesla Inc.</li>
-          <li>AMZN - Amazon.com Inc.</li>
-          {/* Add more stocks as needed */}
-        </ul>
+      {/* Chart container */}
+      <div ref={containerRef} className={styles.chartContainer}>
+        <Line ref={chartRef} data={chartData} options={chartOptions} />
+        <div ref={vLineRef} className={styles.hoverLine} />
+        <div ref={labelRef} className={styles.hoverLabel} />
       </div>
     </div>
   );
-};
-
-export default LogoPage;
+}

@@ -1,116 +1,114 @@
 .submenu {
-    position: absolute;
-    top: calc(100% + 20px);
-    right: 0;
-    z-index: 9999;
-    width: 400px; /* Increased width so top items fit comfortably */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px 16px 20px 16px;
-    font-family: sans-serif; /* Adjust to match your site */
-  }
-  
-  /* Top row: three items spaced evenly */
-  .topRow {
-    display: flex;
-    justify-content: space-evenly; /* equal spacing on sides and between items */
-    margin-bottom: 12px;
-    gap: 30px;
-  }
-  
-  /* Wrap the icon + label vertically */
-  .topItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Circle behind the icon */
-  .iconCircle {
-    width: 70px;
-    height: 70px;
-    background-color: #72d6a3; /* Adjust your green shade */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
+  position: absolute;
+  top: calc(100% + 20px);
+  right: 0;
+  z-index: 9999;
+  width: 400px; /* Increased width so top items fit comfortably */
+  background-color: var(--white);
+  border: 1px solid var(--footer-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px 16px 20px 16px;
+  font-family: var(--font-sans);
+}
 
-  .iconCircle:hover {
-    background-color: #00b17f;
-  }
-  
-  /* Remove the generic SVG sizing so individual classes can control size */
-  .iconCircle svg {
-    color: black;
-  }
-  
-  /* Custom icon sizes */
-  .trophyIcon {
-    width: 55%;
-    height: 55%;
-  }
-  
-  .plusCircleIcon {
-    width: 90%;
-    height: 90%;
-  }
-  
-  .giftIcon {
-    width: 55%;
-    height: 55%;
-  }
-  
-  /* Top label text below the icon */
-  .topItemLabel {
-    font-size: 18px;
-    color: black;
-    padding-bottom: 10px;
-  }
-  
-  /* Makes the entire top item clickable */
-  .topRowButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit; /* Keep the text color */
-  }
-  
-  /* Divider line */
-  .divider {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 0;
-    margin-bottom: 8px;
-  }
-  
-  /* Bottom list container */
-  .bottomList {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .menuItem {
-    display: block;
-    width: calc(100% + 32px); /* 16px extra on each side */
-    margin-left: -16px;      /* offset the left padding of the container */
-    padding: 12px 16px;      /* add horizontal padding for the text */
-    background: none;
-    border: none;
-    text-align: left;
-    font-size: 20px;
-    color: black;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-  }
-  
-  .menuItem:hover {
-    background-color: #f0f0f0;
-  }
-  
-  
+/* Top row: three items spaced evenly */
+.topRow {
+  display: flex;
+  justify-content: space-evenly; /* equal spacing on sides and between items */
+  margin-bottom: 12px;
+  gap: 30px;
+}
+
+/* Wrap the icon + label vertically */
+.topItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Circle behind the icon */
+.iconCircle {
+  width: 70px;
+  height: 70px;
+  background-color: var(--submenu-icon-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.iconCircle:hover {
+  background-color: var(--primary-green-hover);
+}
+
+/* Remove the generic SVG sizing so individual classes can control size */
+.iconCircle svg {
+  color: var(--black);
+}
+
+/* Custom icon sizes */
+.trophyIcon {
+  width: 55%;
+  height: 55%;
+}
+
+.plusCircleIcon {
+  width: 90%;
+  height: 90%;
+}
+
+.giftIcon {
+  width: 55%;
+  height: 55%;
+}
+
+/* Top label text below the icon */
+.topItemLabel {
+  font-size: 18px;
+  color: var(--black);
+  padding-bottom: 10px;
+}
+
+/* Makes the entire top item clickable */
+.topRowButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit; /* Keep the text color */
+}
+
+/* Divider line */
+.divider {
+  border: none;
+  border-top: 1px solid var(--footer-border);
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+/* Bottom list container */
+.bottomList {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuItem {
+  display: block;
+  width: calc(100% + 32px); /* 16px extra on each side */
+  margin-left: -16px;      /* offset the left padding of the container */
+  padding: 12px 16px;      /* add horizontal padding for the text */
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 20px;
+  color: var(--submenu-text);  /* set text color to gray (#777) */
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.menuItem:hover {
+  background-color: var(--bg-hover);
+}

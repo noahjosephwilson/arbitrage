@@ -8,10 +8,10 @@
   width: 100%;
   max-width: 600px;
   min-height: 300px; /* Adjust as needed */
-  background-color: #fff;
+  background-color: var(--white);
   border-radius: 16px;
   overflow: hidden;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   margin: 16px; /* Consistent separation */
   display: flex;
@@ -27,10 +27,12 @@
   justify-content: space-between;
   padding: 12px; /* Reduced padding */
 }
+
 .headerLeft {
   display: flex;
   align-items: center;
 }
+
 .cardImage {
   width: 50px;  /* Adjusted size for a smaller card */
   height: 50px; /* Adjusted size for a smaller card */
@@ -38,16 +40,18 @@
   border-radius: 8px;
   margin-right: 12px;
 }
+
 .cardTitle {
   font-size: 1.2rem; /* Slightly reduced font size */
   font-weight: 700;
-  color: #222;
+  color: var(--text-dark);
   margin: 0;
 }
+
 .cardPercentage {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #222;
+  color: var(--text-dark);
   padding-left: 10px;
 }
 
@@ -63,20 +67,22 @@
   justify-content: space-between;
   gap: 16px;
 }
+
 .optionColumn {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .optionButton {
   width: 100%;
   font-size: 1.2rem;
   padding: 14px 20px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-default);
   border-radius: 8px;
-  background-color: #fff;
-  color: #333;
+  background-color: var(--white);
+  color: var(--text-secondary);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
   text-align: center;
@@ -84,27 +90,29 @@
 
 /* Updated button styles to match active green and red */
 .yesButton {
-  background-color: #00c28e;
-  border: 1px solid #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);
+  border: 1px solid var(--primary-green);
+  color: var(--white);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
+
 .yesButton:hover {
-  background-color: #fff;
-  border-color: #00c28e;
-  color: #00c28e;
+  background-color: var(--white);
+  border-color: var(--primary-green);
+  color: var(--primary-green);
 }
 
 .noButton {
-  background-color: #dc3545;
-  border: 1px solid #dc3545;
-  color: #fff;
+  background-color: var(--danger-red);
+  border: 1px solid var(--danger-red);
+  color: var(--white);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
+
 .noButton:hover {
-  background-color: #fff;
-  border-color: #dc3545;
-  color: #dc3545;
+  background-color: var(--white);
+  border-color: var(--danger-red);
+  color: var(--danger-red);
 }
 
 .optionValue {
@@ -112,11 +120,13 @@
   font-weight: 600;
   text-align: center;
 }
+
 .startMoney {
-  color: #222;
+  color: var(--text-dark);
 }
+
 .endMoney {
-  color: #00c28e;
+  color: var(--primary-green);
 }
 
 /* List layout styles */
@@ -126,29 +136,34 @@
   align-items: center;
   margin-bottom: 12px;
 }
+
 .itemName {
   font-size: 1.2rem;
-  color: #444;
+  color: var(--text-secondary);
   position: relative;
 }
+
 .withMore {
   height: 1.5em;
 }
+
 .moreText {
   position: absolute;
   font-size: 0.8rem;
-  color: #888;
+  color: var(--text-muted);
   left: 0;
   top: 100%;
   margin-top: 0.5rem;
   pointer-events: none;
 }
+
 .itemPercentage {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
   text-align: center;
 }
+
 .votingButtons {
   display: flex;
   gap: 8px;
@@ -158,34 +173,37 @@
 .multiyesButton {
   font-size: 1rem;
   padding: 6px 12px;
-  border: 1px solid #00c28e;
+  border: 1px solid var(--primary-green);
   border-radius: 8px;
-  background-color: #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);
+  color: var(--white);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   width: 60px;
 }
+
 .multiyesButton:hover {
-  background-color: #fff;
-  border-color: #00c28e;
-  color: #00c28e;
+  background-color: var(--white);
+  border-color: var(--primary-green);
+  color: var(--primary-green);
 }
+
 .multinoButton {
   font-size: 1rem;
   padding: 6px 12px;
-  border: 1px solid #dc3545;
+  border: 1px solid var(--danger-red);
   border-radius: 8px;
-  background-color: #dc3545;
-  color: #fff;
+  background-color: var(--danger-red);
+  color: var(--white);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   width: 60px;
 }
+
 .multinoButton:hover {
-  background-color: #fff;
-  border-color: #dc3545;
-  color: #dc3545;
+  background-color: var(--white);
+  border-color: var(--danger-red);
+  color: var(--danger-red);
 }
 
 /* Footer */
@@ -196,9 +214,10 @@
   padding: 12px; /* Reduced padding */
   font-size: 1rem;
   font-weight: 600;
-  color: #222;
-  background-color: #fff;
+  color: var(--text-dark);
+  background-color: var(--white);
 }
+
 .totalAmount {
   font-size: 1.1rem;
 }
@@ -212,7 +231,7 @@
 .iconCircle {
   width: 28px;
   height: 28px;
-  border: 1px solid black;
+  border: 1px solid var(--black);
   border-radius: 50%;
   background-color: transparent;
   display: flex;
@@ -223,7 +242,7 @@
 }
 
 .iconCircle:hover {
-  background-color: #eee;  /* Gray circle on hover */
+  background-color: var(--gray-light);
 }
 
 /* Inner icon: always stays black */
@@ -231,7 +250,7 @@
 .checkIcon {
   width: 80%;
   height: 80%;
-  background-color: #000;
+  background-color: var(--black);
   mask-position: center;
   mask-size: contain;
   mask-repeat: no-repeat;

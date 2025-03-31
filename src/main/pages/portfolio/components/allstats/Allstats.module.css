@@ -2,29 +2,28 @@
   Page Container
 *******************************/
 .container {
-    width: 100%;
-    margin: 0;
-    padding: 0px 36px;
-    padding-top: 48px;
-    padding-bottom: 18px;
-    box-sizing: border-box;
-    background-color: #ffffff;
-    font-family: sans-serif;
-    color: #222;
-  }
-  
-  /*******************************
-    Top Section (Stat Cards)
-  *******************************/
-  .topSection {
-    display: flex;
-    flex-wrap: nowrap;  /* Force all cards to be on one line */
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Ensure each card takes equal space */
-  .topSection > * {
-    flex: 1;
-  }
-  
+  width: 100%;
+  margin: 0;
+  padding: 0px 36px;
+  padding-top: 48px;
+  padding-bottom: 18px;
+  box-sizing: border-box;
+  background-color: var(--white);
+  font-family: var(--font-sans);
+  color: var(--text-dark);
+}
+
+/*******************************
+  Top Section (Stat Cards)
+*******************************/
+.topSection {
+  display: flex;
+  flex-wrap: nowrap;  /* Force all cards to be on one line */
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure each card takes equal space */
+.topSection > * {
+  flex: 1;
+}

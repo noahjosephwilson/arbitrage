@@ -7,9 +7,9 @@
   margin: 0;
   padding: 24px 36px 24px 36px;
   box-sizing: border-box;
-  background-color: #ffffff;
-  font-family: sans-serif;
-  color: #222;
+  background-color: var(--white);
+  font-family: var(--font-sans);
+  color: var(--text-dark);
 }
 
 /*******************************
@@ -34,7 +34,7 @@
   display: flex;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--border-light);
   padding-bottom: 0.5rem;
 }
 
@@ -42,7 +42,7 @@
   background: transparent;
   border: none;
   font-size: 1.1rem;
-  color: #666;
+  color: var(--text-muted);
   cursor: pointer;
   padding: 0 0 0.25rem 0;
   outline: none;
@@ -50,21 +50,21 @@
 }
 
 .tabButton:hover {
-  color: #000;
+  color: var(--text-dark);
 }
 
 .activeTab {
-  color: #000;
+  color: var(--text-dark);
   font-weight: 600;
-  border-bottom: 3px solid #0070f3;
+  border-bottom: 3px solid var(--active-tab);
 }
 
 /*******************************
   Positions Section
 *******************************/
 .positionsSection {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: var(--white);
+  border: 1px solid var(--border-default);
   border-radius: 8px;
   min-height: 250px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
@@ -75,7 +75,7 @@
 }
 
 .emptyState {
-  color: #999;
+  color: var(--empty-text);
   font-size: 1.1rem;
   text-align: center;
 }

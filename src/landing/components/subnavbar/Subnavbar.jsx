@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import styles from './Subnavbar.module.css';
+import styles from '../../../main/pages/markets/components/subnavbar/Subnavbar.module.css';
 
 const categoryData = [
   { name: 'All' },

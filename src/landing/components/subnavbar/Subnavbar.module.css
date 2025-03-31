@@ -13,7 +13,7 @@
   top: 60px;         /* Adjust: this places it just below the fixed Navbar */
   left: 0;
   right: 0;
-  background: white;  /* Ensures background covers content scrolling underneath */
+  background: var(--white);  /* equals #ffffff */
   z-index: 900;
 }
 
@@ -31,17 +31,17 @@
   cursor: pointer;
   padding: 8px 4px;
   font-size: 20px;
-  color: #aaa;
+  color: var(--text-light);  /* equals #aaa */
   transition: color 0.2s ease-in-out;
 }
 
 .topRowItem:hover {
-  color: #000;
+  color: var(--black);  /* equals #000 */
 }
 
 .activeCategory {
   font-weight: 600;
-  color: #000;
+  color: var(--black);  /* equals #000 */
 }
 
 /* Full width line styles */
@@ -49,8 +49,8 @@
   position: relative;
   left: -35px;             /* Offset the left padding */
   width: calc(100% + 70px);  /* Add back both left and right padding */
-  border-bottom: 2px solid #e0e0e0;
-  margin-top: 0px;        /* Adjust to move the line upward */
+  border-bottom: 2px solid var(--border-light); /* equals #e0e0e0 */
+  margin-top: 0px;         /* Adjust to move the line upward */
 }
 
 /* (Unused) Bottom row styles */
@@ -70,20 +70,20 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  color: #777;
+  color: var(--text-subcategory);  /* equals #777 */
   padding: 6px 8px;
   transition: background 0.2s ease, color 0.2s ease;
   border-radius: 20px;
 }
 
 .subcategoryItem:hover {
-  background-color: #f0f0f0;
-  color: #000;
+  background-color: var(--gray-hover); /* equals #f0f0f0 */
+  color: var(--text-subcategory);        /* remains gray (#777) on hover */
 }
 
 .activeSubcategory {
-  background-color: #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);  /* equals #00c28e */
+  color: var(--white);                       /* equals #fff */
   font-weight: 500;
   border-radius: 50px;
   padding: 8px 16px;

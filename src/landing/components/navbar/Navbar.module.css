@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 35px 5px 35px;
-  background-color: #fff;
+  padding: 15px 35px 15px 35px;
+  background-color: var(--white);
   font-family: sans-serif;
   
   /* Fixed at top */
@@ -21,14 +21,14 @@
 }
 
 .logo {
-  color: #00c28e;
+  color: var(--primary-green); /* equals #00c28e */
   font-weight: bold;
   font-size: 2.5rem;
   cursor: pointer;
 }
 
 .logo:hover {
-  color: #00b17f;
+  color: var(--primary-green-hover); /* now equals #00b17f */
 }
 
 .rightSection {
@@ -43,27 +43,27 @@
   position: relative;
   width: 500px;
   max-width: 800px;
-  background-color: #F5F5F5;
+  background-color: var(--search-bg); /* equals #F5F5F5 */
   transition: background-color 0.3s ease;
   border-radius: 8px;
 }
 
 .searchContainer:hover,
 .searchContainer:focus-within {
-  background-color: #fff;
+  background-color: var(--white);
 }
 
 .searchIcon {
   position: absolute;
   left: 10px;
-  color: black;
+  color: var(--black);
   font-size: 1.2rem;
 }
 
 .clearIcon {
   position: absolute;
   right: 10px;
-  color: black;
+  color: var(--black);
   font-size: 1.2rem;
   cursor: pointer;
 }
@@ -71,7 +71,7 @@
 .searchInput {
   width: 100%;
   padding: 1rem 3rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--search-input-border); /* equals #ccc */
   border-radius: 8px;
   font-size: 1.2rem;
 }
@@ -95,22 +95,22 @@
 
 .loginBtn {
   background-color: transparent;
-  color: #333;
+  color: var(--login-text); /* equals #333 */
   width: 90px;
   height: 55px;
 }
 
 .loginBtn:hover {
-  background-color: #f2f2f2;
+  background-color: var(--hover-bg); /* equals #f2f2f2 */
 }
 
 .signupBtn {
-  background-color: #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);
+  color: var(--white);
   width: 100px;
   height: 55px;
 }
 
 .signupBtn:hover {
-  background-color: #00b17f;
+  background-color: var(--primary-green-hover);
 }

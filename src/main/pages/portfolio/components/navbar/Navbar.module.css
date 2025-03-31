@@ -14,39 +14,37 @@
   right: 36px;
   bottom: 0;
   height: 1px; /* adjust as needed */
-  background-color: #ccc;
+  background-color: var(--border);
 }
 
-  
-  .tabButton {
-    position: relative;
-    background: transparent;
-    border: none;
-    font-size: 1.3rem;
-    color: #666;
-    cursor: pointer;
-    padding: 0 0 0.25rem 0;
-    outline: none;
-    transition: color 0.2s ease;
-  }
-  
-  .tabButton:hover {
-    color: #000;
-  }
-  
-  .activeTab {
-    color: #000;
-    font-weight: 600;
-    /* Remove the default border-bottom so we can use the pseudo-element */
-  }
-  
-  .activeTab::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background-color: #00c28e;
-    bottom: -1px; /* Moves the underline down relative to the text */
-  }
-  
+.tabButton {
+  position: relative;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0 0.25rem 0;
+  outline: none;
+  transition: color 0.2s ease;
+}
+
+.tabButton:hover {
+  color: var(--text-dark);
+}
+
+.activeTab {
+  color: var(--text-dark);
+  font-weight: 600;
+  /* Remove the default border-bottom so we can use the pseudo-element */
+}
+
+.activeTab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--primary-green);
+  bottom: -1px; /* Moves the underline down relative to the text */
+}

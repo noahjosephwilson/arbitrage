@@ -15,20 +15,20 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  color: #777;
+  color: var(--text-muted);
   padding: 6px 8px;
   transition: background 0.2s ease, color 0.2s ease;
   border-radius: 20px;
 }
 
 .subcategoryItem:hover {
-  background-color: #f0f0f0;
-  color: #000;
+  background-color: var(--gray-light);
+  color: var(--black);
 }
 
 .activeSubcategory {
-  background-color: #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);
+  color: var(--white);
   font-weight: 500;
   border-radius: 50px;
   padding: 8px 16px;
@@ -37,6 +37,6 @@
 
 /* This rule ensures the active button stays green on hover */
 .activeSubcategory:hover {
-  background-color: #00c28e;
-  color: #fff;
+  background-color: var(--primary-green);
+  color: var(--white);
 }

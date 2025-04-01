@@ -1,12 +1,32 @@
 .outerContainer {
   position: relative;
-  width: 80%;
-  max-width: 1200px;
-  height: 70vh;
-  margin: 0 auto;
+  width: 90%;
+  margin: 0 auto; /* Centers the container */
+  padding: 60px 0px 150px 0px; /* Top:50px, Right:50px, Bottom:150px, Left:50px */
   box-sizing: border-box;
 }
 
+/* Flex container to hold both the graph and the positions/watchlist */
+.contentWrapper {
+  display: flex;
+  height: 100%;
+  gap: 40px; /* 40px gap between graph and watchlist */
+}
+
+/* Graph container takes about 70% of the available width */
+.graphWrapper {
+  flex: 7;
+  position: relative;
+}
+
+/* Positions and watchlist container takes about 30% of the available width */
+.positionsWrapper {
+  flex: 3;
+  position: relative;
+  overflow-y: auto; /* Allow scrolling if content overflows vertically */
+}
+
+/* (The rest of your styles below remain unchanged) */
 .bigNumber {
   font-size: 64px;
   font-weight: 600;
@@ -49,7 +69,7 @@
   right: 0;
   bottom: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 

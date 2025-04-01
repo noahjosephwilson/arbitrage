@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px; /* Adjust as needed */
+    padding: 24px 12px;
+    background-color: #fff;
+    border-radius: 6px;
+    font-family: sans-serif;
+  }
+  
+  /* Left section: Ticker */
+  .infoSection {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ticker (e.g. "TSLA") */
+  .ticker {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+  }
+  
+  /* Right section: Price and price change */
+  .priceSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Current share price */
+  .price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+  }
+  
+  /* Price change (green or red) */
+  .change {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .positiveChange {
+    color: #00c28e; /* Green for positive changes */
+  }
+  
+  .negativeChange {
+    color: #dc3545; /* Red for negative changes */
+  }
+  

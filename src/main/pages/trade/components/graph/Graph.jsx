@@ -58,17 +58,109 @@ const data1W = [
 ];
 
 const dataAll = [
-  { timestamp: '2025-03-01T10:00:00', price: 90 },
-  { timestamp: '2025-03-05T10:00:00', price: 95 },
-  { timestamp: '2025-03-10T10:00:00', price: 100 },
-  { timestamp: '2025-03-15T10:00:00', price: 105 },
-  { timestamp: '2025-03-20T10:00:00', price: 110 },
-  { timestamp: '2025-03-25T10:00:00', price: 115 },
-  { timestamp: '2025-03-30T10:00:00', price: 120 },
-  { timestamp: '2025-04-04T10:00:00', price: 125 },
-  { timestamp: '2025-04-09T10:00:00', price: 130 },
-  { timestamp: '2025-04-14T10:00:00', price: 135 },
+  { timestamp: '2025-03-01T10:00:00', price: 100 },
+  { timestamp: '2025-03-02T10:00:00', price: 102.5 },
+  { timestamp: '2025-03-03T10:00:00', price: 101.2 },
+  { timestamp: '2025-03-04T10:00:00', price: 104.0 },
+  { timestamp: '2025-03-05T10:00:00', price: 103.5 },
+  { timestamp: '2025-03-06T10:00:00', price: 105.1 },
+  { timestamp: '2025-03-07T10:00:00', price: 104.0 },
+  { timestamp: '2025-03-08T10:00:00', price: 106.7 },
+  { timestamp: '2025-03-09T10:00:00', price: 107.0 },
+  { timestamp: '2025-03-10T10:00:00', price: 105.8 },
+  { timestamp: '2025-03-11T10:00:00', price: 106.5 },
+  { timestamp: '2025-03-12T10:00:00', price: 108.0 },
+  { timestamp: '2025-03-13T10:00:00', price: 107.2 },
+  { timestamp: '2025-03-14T10:00:00', price: 108.5 },
+  { timestamp: '2025-03-15T10:00:00', price: 110.0 },
+  { timestamp: '2025-03-16T10:00:00', price: 109.2 },
+  { timestamp: '2025-03-17T10:00:00', price: 111.3 },
+  { timestamp: '2025-03-18T10:00:00', price: 110.7 },
+  { timestamp: '2025-03-19T10:00:00', price: 112.5 },
+  { timestamp: '2025-03-20T10:00:00', price: 113.0 },
+  { timestamp: '2025-03-21T10:00:00', price: 112.0 },
+  { timestamp: '2025-03-22T10:00:00', price: 113.7 },
+  { timestamp: '2025-03-23T10:00:00', price: 114.5 },
+  { timestamp: '2025-03-24T10:00:00', price: 113.2 },
+  { timestamp: '2025-03-25T10:00:00', price: 112.8 },
+  { timestamp: '2025-03-26T10:00:00', price: 114.0 },
+  { timestamp: '2025-03-27T10:00:00', price: 115.5 },
+  { timestamp: '2025-03-28T10:00:00', price: 114.8 },
+  { timestamp: '2025-03-29T10:00:00', price: 116.2 },
+  { timestamp: '2025-03-30T10:00:00', price: 117.0 },
+  { timestamp: '2025-03-31T10:00:00', price: 116.0 },
+  { timestamp: '2025-04-01T10:00:00', price: 117.5 },
+  { timestamp: '2025-04-02T10:00:00', price: 118.3 },
+  { timestamp: '2025-04-03T10:00:00', price: 117.7 },
+  { timestamp: '2025-04-04T10:00:00', price: 119.0 },
+  { timestamp: '2025-04-05T10:00:00', price: 118.5 },
+  { timestamp: '2025-04-06T10:00:00', price: 120.0 },
+  { timestamp: '2025-04-07T10:00:00', price: 121.2 },
+  { timestamp: '2025-04-08T10:00:00', price: 120.5 },
+  { timestamp: '2025-04-09T10:00:00', price: 122.0 },
+  { timestamp: '2025-04-10T10:00:00', price: 121.0 },
+  { timestamp: '2025-04-11T10:00:00', price: 122.5 },
+  { timestamp: '2025-04-12T10:00:00', price: 123.5 },
+  { timestamp: '2025-04-13T10:00:00', price: 122.8 },
+  { timestamp: '2025-04-14T10:00:00', price: 124.0 },
+  { timestamp: '2025-04-15T10:00:00', price: 125.5 },
+  { timestamp: '2025-04-16T10:00:00', price: 124.7 },
+  { timestamp: '2025-04-17T10:00:00', price: 126.0 },
+  { timestamp: '2025-04-18T10:00:00', price: 127.0 },
+  { timestamp: '2025-04-19T10:00:00', price: 126.5 },
+  { timestamp: '2025-04-20T10:00:00', price: 127.8 },
+  { timestamp: '2025-04-21T10:00:00', price: 128.5 },
+  { timestamp: '2025-04-22T10:00:00', price: 127.2 },
+  { timestamp: '2025-04-23T10:00:00', price: 128.0 },
+  { timestamp: '2025-04-24T10:00:00', price: 129.5 },
+  { timestamp: '2025-04-25T10:00:00', price: 130.0 },
+  { timestamp: '2025-04-26T10:00:00', price: 129.0 },
+  { timestamp: '2025-04-27T10:00:00', price: 130.5 },
+  { timestamp: '2025-04-28T10:00:00', price: 131.0 },
+  { timestamp: '2025-04-29T10:00:00', price: 130.2 },
+  { timestamp: '2025-04-30T10:00:00', price: 131.5 },
+  { timestamp: '2025-05-01T10:00:00', price: 132.2 },
+  { timestamp: '2025-05-02T10:00:00', price: 131.0 },
+  { timestamp: '2025-05-03T10:00:00', price: 133.0 },
+  { timestamp: '2025-05-04T10:00:00', price: 132.0 },
+  { timestamp: '2025-05-05T10:00:00', price: 134.5 },
+  { timestamp: '2025-05-06T10:00:00', price: 133.8 },
+  { timestamp: '2025-05-07T10:00:00', price: 135.0 },
+  { timestamp: '2025-05-08T10:00:00', price: 134.2 },
+  { timestamp: '2025-05-09T10:00:00', price: 136.0 },
+  { timestamp: '2025-05-10T10:00:00', price: 135.0 },
+  { timestamp: '2025-05-11T10:00:00', price: 136.5 },
+  { timestamp: '2025-05-12T10:00:00', price: 137.0 },
+  { timestamp: '2025-05-13T10:00:00', price: 136.2 },
+  { timestamp: '2025-05-14T10:00:00', price: 137.5 },
+  { timestamp: '2025-05-15T10:00:00', price: 138.0 },
+  { timestamp: '2025-05-16T10:00:00', price: 137.0 },
+  { timestamp: '2025-05-17T10:00:00', price: 138.5 },
+  { timestamp: '2025-05-18T10:00:00', price: 139.2 },
+  { timestamp: '2025-05-19T10:00:00', price: 138.0 },
+  { timestamp: '2025-05-20T10:00:00', price: 139.0 },
+  { timestamp: '2025-05-21T10:00:00', price: 140.0 },
+  { timestamp: '2025-05-22T10:00:00', price: 139.5 },
+  { timestamp: '2025-05-23T10:00:00', price: 141.0 },
+  { timestamp: '2025-05-24T10:00:00', price: 140.2 },
+  { timestamp: '2025-05-25T10:00:00', price: 142.0 },
+  { timestamp: '2025-05-26T10:00:00', price: 141.0 },
+  { timestamp: '2025-05-27T10:00:00', price: 142.5 },
+  { timestamp: '2025-05-28T10:00:00', price: 143.0 },
+  { timestamp: '2025-05-29T10:00:00', price: 142.0 },
+  { timestamp: '2025-05-30T10:00:00', price: 143.5 },
+  { timestamp: '2025-05-31T10:00:00', price: 144.0 },
+  { timestamp: '2025-06-01T10:00:00', price: 143.0 },
+  { timestamp: '2025-06-02T10:00:00', price: 144.5 },
+  { timestamp: '2025-06-03T10:00:00', price: 145.0 },
+  { timestamp: '2025-06-04T10:00:00', price: 144.2 },
+  { timestamp: '2025-06-05T10:00:00', price: 145.5 },
+  { timestamp: '2025-06-06T10:00:00', price: 146.0 },
+  { timestamp: '2025-06-07T10:00:00', price: 145.0 },
+  { timestamp: '2025-06-08T10:00:00', price: 146.5 }
 ];
+
+
 
 // Map intervals to datasets.
 const dataSets = {
@@ -125,25 +217,24 @@ export default function Graph() {
   const idealTicks = 6;
   const tickStep = niceNum((adjustedMax - adjustedMin) / (idealTicks - 1), true);
 
-  // Compute x‑axis boundaries.
+  // Compute x‑axis boundaries based on current dataset.
   const xValues = timeLabels.map(label => new Date(label).getTime());
   const xMin = Math.min(...xValues);
   const xMax = Math.max(...xValues);
   const xRange = xMax - xMin;
+  // Extend the right boundary by 3% of the x‑range.
   const extendedXMax = xMax + xRange * 0.03;
 
-  // Determine overall change from the start to the end of the data.
+  // Always use the first and last datapoints for overall color.
   const baseline = dataArray[0];
-  const endValue = dataArray[dataArray.length - 1];
-  const overallDiff = endValue - baseline;
-  const chartColor = overallDiff >= 0 ? '#00c28e' : '#dc3545';
+  const lastValue = dataArray[dataArray.length - 1];
+  const overallDelta = lastValue - baseline;
+  const overallColor = overallDelta >= 0 ? '#00c28e' : '#dc3545';
 
-  // Button color will mirror the overall graph change.
-  const buttonColor = chartColor;
-
-  // Set displayedValue with fallback in case dataArray is empty.
+  // For the info section, use the hovered datapoint if available.
   const currentIndex = dataArray.length > 0 ? (hoverIndex === null ? dataArray.length - 1 : hoverIndex) : 0;
   const displayedValue = dataArray.length > 0 ? dataArray[currentIndex] : 0;
+  const hoveredDelta = displayedValue - baseline;
 
   // Determine time scale options based on the selected interval.
   const isTimeScale = selectedInterval === "6H" || selectedInterval === "1D";
@@ -160,8 +251,8 @@ export default function Graph() {
       {
         data: dataArray,
         fill: false,
-        backgroundColor: chartColor,
-        borderColor: chartColor,
+        backgroundColor: overallColor,
+        borderColor: overallColor,
         stepped: true,
         tension: 0,
         // Only show a circle on the final datapoint.
@@ -171,11 +262,18 @@ export default function Graph() {
     ],
   };
 
+  // Configure the x‑axis to start at the first datapoint and extend slightly past the last.
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     backgroundColor: '#fff',
-    animation: false, // Disable animations
+    animation: false,
+    layout: {
+      padding: {
+        left: 20,
+        right: 20,
+      },
+    },
     scales: {
       x: {
         type: 'time',
@@ -186,9 +284,16 @@ export default function Graph() {
         },
         min: new Date(xMin),
         max: new Date(extendedXMax),
+        offset: false,
         title: { display: false },
         grid: { display: false, drawBorder: false },
-        ticks: { autoSkip: true, maxTicksLimit: isTimeScale ? 4 : 7, font: { size: 18 } },
+        ticks: { 
+          autoSkip: true, 
+          maxTicksLimit: isTimeScale ? 4 : 7, 
+          font: { size: 18 },
+          padding: 10,
+          align: 'start'
+        },
       },
       y: {
         title: { display: false },
@@ -229,10 +334,7 @@ export default function Graph() {
       const eventX = event.clientX - canvasRect.left;
 
       // Hide crosshair if mouse is outside chart area.
-      if (
-        eventX < chartArea.left ||
-        eventX > chartArea.right
-      ) {
+      if (eventX < chartArea.left || eventX > chartArea.right) {
         if (vLineRef.current) vLineRef.current.style.display = 'none';
         if (labelRef.current) labelRef.current.style.display = 'none';
         setHoverIndex(null);
@@ -275,7 +377,6 @@ export default function Graph() {
       const timeValue = new Date(scales.x.getValueForPixel(eventX));
       let formattedLabel;
       if (selectedInterval === '6H' || selectedInterval === '1D') {
-        // For 6H and 1D, show full date and time with minutes, seconds, and AM/PM.
         formattedLabel = timeValue.toLocaleString([], {
           month: 'short',
           day: 'numeric',
@@ -285,7 +386,6 @@ export default function Graph() {
           hour12: true,
         });
       } else {
-        // For 1W and All, show the date and the hour with AM/PM.
         const dateStr = timeValue.toLocaleDateString([], { month: 'short', day: 'numeric' });
         const timeStr = timeValue.toLocaleTimeString([], { hour: 'numeric', hour12: true });
         formattedLabel = `${dateStr} at ${timeStr}`;
@@ -321,12 +421,12 @@ export default function Graph() {
 
   return (
     <div className={styles.outerContainer}>
-      {/* Info section displaying the current stock value */}
+      {/* Info section displaying the current stock value and delta */}
       <div className={styles.infoContainer}>
         <span className={styles.bigNumber}>{displayedValue}</span>
         <span className={styles.forecastText}>forecast</span>
-        <span className={overallDiff >= 0 ? styles.deltaPositive : styles.deltaNegative}>
-          {overallDiff >= 0 ? '▲' : '▼'}{Math.abs(overallDiff).toFixed(1)}
+        <span className={hoveredDelta >= 0 ? styles.deltaPositive : styles.deltaNegative}>
+          {hoveredDelta >= 0 ? '▲' : '▼'}{Math.abs(hoveredDelta).toFixed(1)}
         </span>
       </div>
       {/* Chart container */}
@@ -344,8 +444,8 @@ export default function Graph() {
             onClick={() => handleIntervalChange(label)}
             style={
               selectedInterval === label
-                ? { backgroundColor: buttonColor, color: 'black', borderColor: buttonColor }
-                : { color: buttonColor }
+                ? { backgroundColor: overallColor, color: 'black', borderColor: overallColor }
+                : { color: overallColor }
             }
           >
             {label}

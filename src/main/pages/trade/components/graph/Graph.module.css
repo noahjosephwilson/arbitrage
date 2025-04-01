@@ -1,7 +1,7 @@
 .outerContainer {
   position: relative;
   width: 100%;
-  height: 65vh;
+  height: 60vh;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -10,7 +10,7 @@
   position: absolute;
   top: -10px;
   left: 20px;
-  z-index: 100; /* Increased value to ensure it stays on top */
+  z-index: 100;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -69,7 +69,7 @@
   position: absolute;
   pointer-events: none;
   background: rgba(255, 255, 255, 0.8);
-  padding: .5px 4px;
+  padding: 0.5px 4px;
   font-size: 18px;
   transform: translateX(-50%);
   z-index: 10;
@@ -80,7 +80,7 @@
 
 .intervalOptions {
   position: absolute;
-  bottom: -50px; /* Moved further down */
+  bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -105,7 +105,7 @@
   background-color: #00c28e;
   border-color: #00c28e;
   color: black;
-  font-weight: 600; /* Make the active interval button bold */
+  font-weight: 600;
 }
 
 .activeInterval:hover {

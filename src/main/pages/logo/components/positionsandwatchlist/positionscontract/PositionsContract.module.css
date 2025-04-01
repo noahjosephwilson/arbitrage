@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    align-items: center;
+    width: 300px; /* Adjust as needed */
+    padding: 14px 12px;
+    background-color: #fff;
+    border-radius: 6px;
+    font-family: sans-serif;
+}
+
+/* Left section grouping image and info */
+/* Removed flex: 1 to allow the left content to size to its content */
+.leftSection {
+    display: flex;
+    align-items: center;
+}
+
+/* Image section */
+.imageWrapper {
+    margin-right: 10px;
+}
+.imageWrapper img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Middle section: Ticker and shares */
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Ticker (e.g. "DMI") */
+.ticker {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+}
+
+/* Shares count (e.g. "20 Shares") */
+.shares {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Right section: Price info */
+.priceSection {
+    margin-left: auto;  /* Pushes the price section to the far right */
+    text-align: right;
+}
+  
+/* Current share price */
+.price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+}

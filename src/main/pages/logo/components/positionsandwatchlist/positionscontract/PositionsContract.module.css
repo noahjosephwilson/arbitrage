@@ -1,7 +1,7 @@
 .container {
     display: flex;
     align-items: center;
-    width: 300px; /* Adjust as needed */
+    width: 100%;
     padding: 14px 12px;
     background-color: #fff;
     border-radius: 6px;
@@ -9,7 +9,6 @@
 }
 
 /* Left section grouping image and info */
-/* Removed flex: 1 to allow the left content to size to its content */
 .leftSection {
     display: flex;
     align-items: center;
@@ -25,35 +24,50 @@
     object-fit: cover;
 }
 
-/* Middle section: Ticker and shares */
+/* Middle section: Contract Name and position/contract count */
 .infoSection {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-/* Ticker (e.g. "DMI") */
-.ticker {
+/* Contract Name with ellipsis for overflow */
+.contractName {
     font-size: 18px;
     font-weight: 600;
     color: #111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Adjust max-width as needed */
 }
 
-/* Shares count (e.g. "20 Shares") */
-.shares {
+/* Position and contract count text */
+.positionInfo {
     font-size: 14px;
     color: #666;
 }
 
-/* Right section: Price info */
+/* Right section: Price and delta change */
 .priceSection {
     margin-left: auto;  /* Pushes the price section to the far right */
     text-align: right;
 }
   
-/* Current share price */
 .price {
     font-size: 18px;
     font-weight: 600;
     color: #111;
+}
+
+/* Delta change styling */
+.delta {
+    font-size: 14px;
+    margin-top: 4px;
+}
+.deltaPositive {
+    color: #00c28e; /* Green for positive change */
+}
+.deltaNegative {
+    color: #f00; /* Red for negative change */
 }

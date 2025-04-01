@@ -1,32 +1,49 @@
 .outerContainer {
   position: relative;
-  width: 90%;
-  margin: 0 auto; /* Centers the container */
-  padding: 60px 0px 150px 0px; /* Top:50px, Right:50px, Bottom:150px, Left:50px */
+  width: 100%;
+  margin: 0 auto;
+  padding: 60px 60px 150px 60px;
   box-sizing: border-box;
 }
 
-/* Flex container to hold both the graph and the positions/watchlist */
 .contentWrapper {
   display: flex;
-  height: 100%;
-  gap: 40px; /* 40px gap between graph and watchlist */
+  gap: 40px;
 }
 
-/* Graph container takes about 70% of the available width */
 .graphWrapper {
-  flex: 7;
+  flex: 1;
   position: relative;
 }
 
-/* Positions and watchlist container takes about 30% of the available width */
+/* New wrapper for Graph and Todo */
+.graphTodoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 80px; /* Adjust this gap value to push Todo further down */
+}
+
 .positionsWrapper {
-  flex: 3;
+  width: 400px;
+  flex-shrink: 0;
   position: relative;
-  overflow-y: auto; /* Allow scrolling if content overflows vertically */
+  overflow-y: auto;
 }
 
-/* (The rest of your styles below remain unchanged) */
+@media (max-width: 1000px) {
+  .contentWrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .graphWrapper, .positionsWrapper {
+    width: 100%;
+  }
+  .positionsWrapper {
+    margin-top: 20px;
+  }
+}
+
+/* Additional styles remain unchanged */
 .bigNumber {
   font-size: 64px;
   font-weight: 600;
@@ -91,4 +108,9 @@
   transform: translateX(-50%);
   z-index: 10;
   display: none;
+}
+
+.newsStackContainer {
+  margin-top: -50px; /* Spacing between Todo and NewsStack */
+  width: 100%;      /* Ensures NewsStack matches the full width of its parent */
 }

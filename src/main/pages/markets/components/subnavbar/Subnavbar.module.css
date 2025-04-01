@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 24px 35px 0 35px;
+  padding: 24px 60px 0 60px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -47,9 +47,9 @@
 /* Full width line styles */
 .fullWidthLine {
   position: relative;
-  left: -35px;             /* Offset the left padding */
-  width: calc(100% + 70px);  /* Add back both left and right padding */
-  border-bottom: 2px solid var(--border-light); /* equals #e0e0e0 */
+  left: -90px;             /* Offset the left padding */
+  width: calc(100% + 180px);  /* Add back both left and right padding */
+  border-bottom: 2px solid #eee; /* equals #e0e0e0 */
   margin-top: 0px;         /* Adjust to move the line upward */
 }
 

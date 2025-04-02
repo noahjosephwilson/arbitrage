@@ -2,10 +2,10 @@
   Page Container
 *******************************/
 .container {
-  width: 100%;
+  max-width: 1700px;       /* Constrain container to 1700px max */
+  margin: 0 auto;          /* Center container horizontally */
   min-height: 100vh;
-  margin: 0;
-  padding: 24px 36px 24px 36px;
+  padding: 24px 36px;      /* Consistent padding */
   box-sizing: border-box;
   background-color: var(--white);
   font-family: var(--font-sans);

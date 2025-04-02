@@ -1,7 +1,15 @@
+/* Outer container spans full width */
 .subcategories {
+  width: 100%;
+}
+
+/* Inner container centers content and constrains width */
+.subcategoriesContent {
+  max-width: 1675px;
+  margin: 0 auto;
+  padding: 0 0px 12px 15px;  /* Increased left padding to 60px */
   display: flex;
   align-items: center;
-  padding: 0px 55px 12px 55px;
 }
 
 .subcategoryList {
@@ -35,7 +43,7 @@
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-/* This rule ensures the active button stays green on hover */
+/* Ensure the active button stays green on hover */
 .activeSubcategory:hover {
   background-color: var(--primary-green);
   color: var(--white);

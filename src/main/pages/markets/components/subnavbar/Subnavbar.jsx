@@ -59,21 +59,22 @@ function Subnavbar() {
 
   return (
     <div className={styles.subnavbar}>
-      <div className={styles.topRow}>
-        {categoryData.map((category) => (
-          <button
-            key={category.name}
-            className={`${styles.topRowItem} ${
-              activeCategory === category.name ? styles.activeCategory : ''
-            }`}
-            onClick={() => handleCategoryClick(category.name)}
-          >
-            {category.name}
-          </button>
-        ))}
+      <div className={styles.subnavbarContent}>
+        <div className={styles.topRow}>
+          {categoryData.map((category) => (
+            <button
+              key={category.name}
+              className={`${styles.topRowItem} ${
+                activeCategory === category.name ? styles.activeCategory : ''
+              }`}
+              onClick={() => handleCategoryClick(category.name)}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+        <div className={styles.fullWidthLine}></div>
       </div>
-      {/* Full width line replacing the topRow border */}
-      <div className={styles.fullWidthLine}></div>
     </div>
   );
 }

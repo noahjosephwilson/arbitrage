@@ -1,15 +1,21 @@
+/* Full-width navbar background */
 .navbar {
+  width: 100%;
+  background-color: var(--white);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Container for centered content with max width */
+.navbarContent {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 15px 60px; /* This padding defines spacing between the content elements */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--white);
-  font-family: sans-serif;
-  position: relative;
-  padding: 15px 60px 15px 60px;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE 10+ */
-  user-select: none;         /* Standard */
 }
 
 /* Left Section: Logo and Nav Links */
@@ -31,7 +37,7 @@
 }
 
 .navLinksContainer {
-  /* Make sure there's no forced width or flex that might shift things */
+  /* No forced width */
 }
 
 .navLinks {
@@ -44,7 +50,7 @@
 
 .navLinks li a {
   text-decoration: none;
-  color: var(--navlink-text); /* now uses #333 */
+  color: var(--navlink-text);
   font-size: 1.25rem;
   transition: color 0.3s ease;
 }
@@ -65,7 +71,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  width: 500px; /* Adjust as needed */
+  width: 500px;
   max-width: 800px;
   background-color: var(--search-bg);
   transition: background-color 0.3s ease;
@@ -130,8 +136,7 @@
   gap: 1rem;
 }
 
-/* IMPORTANT: This wrapper must be relative and inline-block 
-   so the submenu can be absolutely positioned inside. */
+/* IMPORTANT: Wrapper for submenu */
 .hamburgerWrapper {
   position: relative;
   display: inline-block;
@@ -162,4 +167,24 @@
 .hamburgerIcon {
   font-size: 1.8rem;
   color: var(--text-dark);
+}
+
+/* MEDIA QUERY FOR SMALL SCREENS */
+@media screen and (max-width: 1400px) {
+  /* Hide nav links, search input, and auth buttons */
+  .navLinksContainer,
+  .searchContainer,
+  .authButtons {
+    display: none;
+  }
+  
+  /* Hide the leaderboard icon in the hamburger container */
+  .hamburgerContainer > a {
+    display: none;
+  }
+  
+  /* Adjust padding on smaller screens */
+  .navbarContent {
+    padding: 15px 60px;
+  }
 }

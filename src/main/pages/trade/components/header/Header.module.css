@@ -9,8 +9,8 @@
 }
 
 .headerImage {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 10%;
   border: 1px solid var(--border-default);
@@ -19,7 +19,7 @@
 
 .headerTitle {
   flex: 1;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 600;
   color: var(--text-dark);
   margin: 0;

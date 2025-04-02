@@ -1,19 +1,23 @@
 .navbar {
+  width: 100%;
+  max-width: 1700px;        /* Constrain the navbar to 1700px */
+  margin: 0 auto;           /* Center the navbar horizontally */
   display: flex;
   gap: 2rem;
-  margin-bottom: 2rem; /* space for the underline */
-  position: relative;  /* needed for absolute positioning of the pseudo-element */
-  padding: 0 36px;
+  margin-bottom: 2rem;      /* Space for the underline */
+  position: relative;       /* For positioning the pseudo-element */
+  padding: 0 60px;          /* Inner horizontal padding */
+  border-bottom: 1px solid #eee; /* Optional border for visual separation */
 }
 
-/* Remove the border-bottom from .navbar and use a pseudo-element instead */
+/* Underline pseudo-element that spans within the padding limits */
 .navbar::after {
   content: "";
   position: absolute;
   left: 36px;
   right: 36px;
   bottom: 0;
-  height: 1px; /* adjust as needed */
+  height: 1px;              /* Adjust thickness as needed */
   background-color: var(--border);
 }
 
@@ -36,7 +40,6 @@
 .activeTab {
   color: var(--text-dark);
   font-weight: 600;
-  /* Remove the default border-bottom so we can use the pseudo-element */
 }
 
 .activeTab::after {
@@ -46,5 +49,5 @@
   right: 0;
   height: 4px;
   background-color: var(--primary-green);
-  bottom: -1px; /* Moves the underline down relative to the text */
+  bottom: -1px;             /* Position the underline just below the text */
 }

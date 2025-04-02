@@ -160,8 +160,6 @@ const dataAll = [
   { timestamp: '2025-06-08T10:00:00', price: 146.5 }
 ];
 
-
-
 // Map intervals to datasets.
 const dataSets = {
   "6H": data6H,
@@ -232,9 +230,16 @@ export default function Graph() {
   const overallColor = overallDelta >= 0 ? '#00c28e' : '#dc3545';
 
   // For the info section, use the hovered datapoint if available.
-  const currentIndex = dataArray.length > 0 ? (hoverIndex === null ? dataArray.length - 1 : hoverIndex) : 0;
+  const currentIndex = dataArray.length > 0
+    ? (hoverIndex === null ? dataArray.length - 1 : hoverIndex)
+    : 0;
   const displayedValue = dataArray.length > 0 ? dataArray[currentIndex] : 0;
   const hoveredDelta = displayedValue - baseline;
+
+  // Calculate percentage change relative to the baseline.
+  const percentageDelta = baseline !== 0
+    ? (hoveredDelta / baseline) * 100
+    : 0;
 
   // Determine time scale options based on the selected interval.
   const isTimeScale = selectedInterval === "6H" || selectedInterval === "1D";
@@ -317,7 +322,6 @@ export default function Graph() {
     },
     hover: { mode: 'nearest', intersect: false },
   };
-  
 
   // Chart crosshair functionality for interactivity.
   useEffect(() => {
@@ -388,7 +392,7 @@ export default function Graph() {
         const timeStr = timeValue.toLocaleTimeString([], { hour: 'numeric', hour12: true });
         formattedLabel = `${dateStr} at ${timeStr}`;
       }
-      
+
       if (labelRef.current) {
         labelRef.current.textContent = formattedLabel;
         labelRef.current.style.left = `${relativeX}px`;
@@ -417,22 +421,41 @@ export default function Graph() {
     setStockData(dataSets[label]);
   };
 
+  // Format current value as USD currency.
+  const formattedDisplayedValue = displayedValue.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  // Format absolute delta as USD currency (for second line).
+  const formattedDelta = Math.abs(hoveredDelta).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
   return (
     <div className={styles.outerContainer}>
-      {/* Info section displaying the current stock value and delta */}
+      {/* Info section with big top number and red/green change underneath */}
       <div className={styles.infoContainer}>
-        <span className={styles.bigNumber}>{displayedValue}</span>
-        <span className={styles.forecastText}>forecast</span>
-        <span className={hoveredDelta >= 0 ? styles.deltaPositive : styles.deltaNegative}>
-          {hoveredDelta >= 0 ? '▲' : '▼'}{Math.abs(hoveredDelta).toFixed(1)}
-        </span>
+        <div>
+          <span className={styles.bigNumber}>{formattedDisplayedValue}</span>
+        </div>
+        <div>
+          <span className={hoveredDelta >= 0 ? styles.deltaPositive : styles.deltaNegative}>
+            {hoveredDelta >= 0 ? '▲' : '▼'} {formattedDelta}
+            {' '}
+            ({Math.abs(percentageDelta).toFixed(2)}%)
+          </span>
+        </div>
       </div>
+
       {/* Chart container */}
       <div ref={containerRef} className={styles.chartContainer}>
         <Line ref={chartRef} data={chartData} options={chartOptions} />
         <div ref={vLineRef} className={styles.hoverLine} />
         <div ref={labelRef} className={styles.hoverLabel} />
       </div>
+
       {/* Interval options with dynamic colors */}
       <div className={styles.intervalOptions}>
         {["6H", "1D", "1W", "All"].map((label) => (

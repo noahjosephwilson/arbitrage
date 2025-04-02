@@ -37,7 +37,7 @@ const watchlistData = [
   { ticker: "Is the new economic policy beneficial for growth in the long term?", price: 700.50, change: 3.50, imageUrl: "path/to/tsla.jpg" },
   { ticker: "Is the new economic policy beneficial for growth in the long term?", price: 500.00, change: -1.00, imageUrl: "path/to/nflx.jpg" },
   { ticker: "Is the new economic policy beneficial for growth in the long term?", price: 3300.00, change: 0.75, imageUrl: "path/to/amzn.jpg" },
-  { ticker: "A VERY LONG TICKER NAME THAT SHOULD BE ELLIPSED", price: 250.00, change: 2.00, imageUrl: "path/to/longticker.jpg" },
+  { ticker: "Is the new economic policy beneficial for growth in the long term?", price: 250.00, change: 2.00, imageUrl: "path/to/longticker.jpg" },
 ];
 
 export default function Positionsandwatchlist() {

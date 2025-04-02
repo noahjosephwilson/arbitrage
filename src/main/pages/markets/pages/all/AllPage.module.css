@@ -1,21 +1,17 @@
+/* Main container to center content and constrain max-width */
 .container {
-  width: 100vw;
-  margin: 0;
-  padding: 0 36px 0 0;
+  width: 100%;
+  max-width: 1700px;         /* Restricts the maximum width */
+  margin: 170px auto 0;      /* 170px top margin; auto centers horizontally */
+  padding: 0 80px 0 40px;           /* Consistent side padding */
   box-sizing: border-box;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-  
-  /* Margin to offset fixed Navbar (60px) and Subnavbar (50px) */
-  margin-top: 170px;
 }
 
+/* Grid for cards with refined spacing */
 .itemsGrid {
   display: grid;
-  gap: 10px;
+  gap: 20px;                 /* Increased gap for better visual separation */
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  width: 100%;
-  padding: 0 10px;
+  padding: 20px 0;           /* Adds vertical padding to the grid */
 }

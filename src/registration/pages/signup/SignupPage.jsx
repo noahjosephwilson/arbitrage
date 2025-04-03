@@ -1,29 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // Import the hook
-import { auth } from "@/firebaseConfig"; // adjust the path as needed
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Amplify, Auth } from "aws-amplify";
+import awsconfig from "@/aws-exports";
 import styles from "./SignupPage.module.css";
+
+// Configure Amplify on the client side (only once)
+Amplify.configure(awsconfig);
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
+
+  useEffect(() => {
+    console.info("Amplify Auth object:", Auth);
+  }, []);
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setErrorMsg(""); // reset any previous errors
+    setErrorMsg("");
+    console.info(`Signup process initiated for email: ${email}`);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      // User created successfully. Navigate to the new page.
-      console.log("User created:", userCredential.user);
-      router.push("/main/logo"); // Replace with your desired route
+      const signUpResponse = await Auth.signUp({
+        username: email, // Cognito uses username (here set to email)
+        password,
+        attributes: { email },
+      });
+      console.info("User signed up successfully. Response:", signUpResponse);
+      router.push("/confirm-signup");
     } catch (error) {
-      console.error("Error creating user:", error);
-      setErrorMsg(error.message);
+      console.error("Signup process encountered an error:", error);
+      setErrorMsg(`Signup failed: ${error.message || error.toString()}`);
     }
   };
 

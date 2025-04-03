@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import Sidebar from './components/sidebar/Sidebar'; // Adjust the import path as needed
 import styles from './SocialPage.module.css';
@@ -30,53 +29,60 @@ const SocialPage = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <Sidebar />
-      <div className={styles.content}>
-        <h2 className={styles.title}>Create New Betting Market</h2>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <label className={styles.label}>
-            Market Name:
-            <input
-              type="text"
-              value={marketName}
-              onChange={(e) => setMarketName(e.target.value)}
-              className={styles.input}
-              placeholder="Enter market name"
-              required
-            />
-          </label>
-          <label className={styles.label}>
-            Description:
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className={styles.textarea}
-              placeholder="Enter market description"
-              required
-            />
-          </label>
-          <div className={styles.outcomesSection}>
-            <label className={styles.label}>Outcomes:</label>
-            {outcomes.map((outcome, index) => (
+    // Outer wrapper spans full width
+    <div className={styles.pageWrapper}>
+      {/* Gray horizontal line across the top */}
+      <div className={styles.topLine}></div>
+      
+      {/* Inner container centers content and limits max-width */}
+      <div className={styles.pageContainer}>
+        <Sidebar />
+        <div className={styles.content}>
+          <h2 className={styles.title}>Create New Betting Market</h2>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <label className={styles.label}>
+              Market Name:
               <input
-                key={index}
                 type="text"
-                value={outcome}
-                onChange={(e) => handleOutcomeChange(index, e.target.value)}
+                value={marketName}
+                onChange={(e) => setMarketName(e.target.value)}
                 className={styles.input}
-                placeholder={`Outcome ${index + 1}`}
+                placeholder="Enter market name"
                 required
               />
-            ))}
-            <button type="button" onClick={handleAddOutcome} className={styles.addButton}>
-              Add Outcome
+            </label>
+            <label className={styles.label}>
+              Description:
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={styles.textarea}
+                placeholder="Enter market description"
+                required
+              />
+            </label>
+            <div className={styles.outcomesSection}>
+              <label className={styles.label}>Outcomes:</label>
+              {outcomes.map((outcome, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  value={outcome}
+                  onChange={(e) => handleOutcomeChange(index, e.target.value)}
+                  className={styles.input}
+                  placeholder={`Outcome ${index + 1}`}
+                  required
+                />
+              ))}
+              <button type="button" onClick={handleAddOutcome} className={styles.addButton}>
+                Add Outcome
+              </button>
+            </div>
+            <button type="submit" className={styles.submitButton}>
+              Create Market
             </button>
-          </div>
-          <button type="submit" className={styles.submitButton}>
-            Create Market
-          </button>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

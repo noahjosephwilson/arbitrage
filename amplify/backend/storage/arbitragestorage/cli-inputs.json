@@ -1,0 +1,13 @@
+{
+  "resourceName": "arbitragestorage",
+  "policyUUID": "73b64f85",
+  "bucketName": "arbitragestorage",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

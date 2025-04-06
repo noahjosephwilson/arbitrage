@@ -4,15 +4,12 @@ import Link from 'next/link';
 import { AiOutlineSearch, AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { MdLeaderboard } from 'react-icons/md';
 import { useRouter, usePathname } from 'next/navigation';
-import { auth } from "@/firebaseConfig";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import Submenu from './components/submenu/Submenu'; // Adjust path if needed
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showMenu, setShowMenu] = useState(false);
-  const [user, setUser] = useState(null);
 
   // For navigation
   const router = useRouter();
@@ -43,13 +40,6 @@ const Navbar = () => {
     };
   }, [showMenu]);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
-
   const handleClear = () => setSearchValue('');
 
   const handleMarketsClick = (e) => {
@@ -62,12 +52,6 @@ const Navbar = () => {
   const handleAddFunds = () => {
     router.push('/add-funds');
     setShowMenu(false);
-  };
-
-  const handleLogout = async () => {
-    await signOut(auth);
-    setShowMenu(false);
-    router.push('/');
   };
 
   return (
@@ -114,11 +98,10 @@ const Navbar = () => {
             )}
           </div>
           <div className={styles.authButtons}>
-            {user && (
-              <button onClick={handleAddFunds} className={styles.addFundsBtn}>
-                Add Funds
-              </button>
-            )}
+            {/* The Add Funds button is now always shown */}
+            <button onClick={handleAddFunds} className={styles.addFundsBtn}>
+              Add Funds
+            </button>
           </div>
 
           <div className={styles.hamburgerContainer}>
@@ -141,10 +124,8 @@ const Navbar = () => {
 
               {showMenu && (
                 <Submenu
-                  user={user}
                   onClose={() => setShowMenu(false)}
                   handleAddFunds={handleAddFunds}
-                  handleLogout={handleLogout}
                 />
               )}
             </div>

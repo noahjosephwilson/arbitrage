@@ -1,10 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // for programmatic navigation
-import { auth } from "@/firebaseConfig"; // adjust the path as needed
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
+// Import Amplify from "aws-amplify" (this module exports configure)
+import { Amplify } from "aws-amplify";
+// Import signIn from "aws-amplify/auth"
+import { signIn } from "aws-amplify/auth";
+import awsconfig from "@/aws-exports";
 import styles from "./LoginPage.module.css";
+
+// Configure Amplify globally (ideally in a top-level file)
+Amplify.configure(awsconfig);
 
 const LoginPage = () => {
   const router = useRouter();
@@ -14,16 +20,16 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setErrorMsg(""); // Reset any previous errors
+    setErrorMsg("");
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User logged in:", userCredential.user);
-      // Redirect to the desired page after login; adjust route as needed.
+      // Call signIn from aws-amplify/auth
+      const user = await signIn({ username: email, password });
+      console.info("User signed in:", user);
       router.push("/main/logo");
     } catch (error) {
-      console.error("Error logging in:", error);
-      setErrorMsg(error.message);
+      console.error("Error signing in:", error);
+      setErrorMsg(error.message || error.toString());
     }
   };
 

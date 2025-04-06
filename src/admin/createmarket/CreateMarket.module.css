@@ -1,0 +1,251 @@
+/* Container centers the card with a full-page background */
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
+    padding: 2rem;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Card with rounded corners, subtle shadow, and smooth animation */
+  .card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    padding: 2.5rem 3rem;
+    width: 100%;
+    max-width: 650px;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Main title styling */
+  .title {
+    font-size: 2.75rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
+    font-weight: 700;
+  }
+  
+  /* Section title styling */
+  .sectionTitle {
+    font-size: 2rem;
+    margin: 2rem 0 1rem;
+    color: #444;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Form layout */
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Form group spacing */
+  .formGroup {
+    margin-bottom: 1.75rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label styling */
+  .label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+    font-size: 1.15rem;
+  }
+  
+  /* Input styling */
+  .input {
+    padding: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: border 0.3s, box-shadow 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #66a6ff;
+    box-shadow: 0 0 8px rgba(102, 166, 255, 0.5);
+  }
+  
+  /* Row for input and select, ensuring same row layout */
+  .inputRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: nowrap;
+  }
+  
+  /* Container for map and nested map inputs */
+  .mapContainer,
+  .nestedMapContainer {
+    flex: 1;
+  }
+  
+  /* Standard map key/value pair styling */
+  .mapPair {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+  
+  /* ---------------------------------------------------------------- */
+  /* Nested Map Styling                                               */
+  /* ---------------------------------------------------------------- */
+  
+  /* Container for each nested map group */
+  .nestedMapGroup {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Row 1: Master key row with delete button aligned on the right */
+  .nestedMapMasterRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Row 2: First inner pair (key and value side by side) */
+  .nestedMapFirstRow {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Row 3: Second inner pair (key and value side by side) */
+  .nestedMapSecondRow {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  /* The inner inputs in both inner rows share available space */
+  .nestedMapFirstRow .innerInput,
+  .nestedMapSecondRow .innerInput {
+    flex: 1;
+  }
+  
+  /* ---------------------------------------------------------------- */
+  /* Select & Link Styles                                             */
+  /* ---------------------------------------------------------------- */
+  
+  /* Type select dropdown styling, ensuring it stays to the right */
+  .select {
+    padding: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    background-color: #f9f9f9;
+    transition: border 0.3s;
+    margin-left: auto;
+  }
+  
+  .select:focus {
+    outline: none;
+    border-color: #66a6ff;
+  }
+  
+  /* Link for adding new pairs or nested maps */
+  .addPairLink {
+    font-size: 1rem;
+    color: #66a6ff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .addPairLink:hover {
+    text-decoration: underline;
+  }
+  
+  /* Standard delete button for map pairs and nested maps */
+  .deletePairButton {
+    background: transparent;
+    border: none;
+    color: #e74c3c;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    line-height: 1;
+  }
+  
+  .deletePairButton:hover {
+    color: #c0392b;
+  }
+  
+  /* ---------------------------------------------------------------- */
+  /* Button Group & Message Styles                                    */
+  /* ---------------------------------------------------------------- */
+  
+  /* Button group layout */
+  .buttonGroup {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  
+  /* Primary submit button */
+  .submitButton {
+    flex: 1;
+    padding: 1rem;
+    background-color: #66a6ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .submitButton:hover {
+    background-color: #559ee6;
+    transform: translateY(-2px);
+  }
+  
+  /* Secondary button styling */
+  .secondaryButton {
+    flex: 1;
+    padding: 1rem;
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .secondaryButton:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+  }
+  
+  /* Success/error message styling */
+  .message {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    font-size: 1.25rem;
+  }
+  

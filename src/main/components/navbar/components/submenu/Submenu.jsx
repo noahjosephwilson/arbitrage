@@ -2,8 +2,19 @@
 import React from "react";
 import Link from "next/link";
 import styles from "./Submenu.module.css";
+import { signOut } from "aws-amplify/auth";
 
-const Submenu = ({ user, onClose, handleAddFunds, handleLogout }) => {
+const Submenu = ({ user, onClose, handleAddFunds }) => {
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      // Redirect to the login page (adjust this path as needed)
+      window.location.href = "/landing/landingmarkets/all";
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+
   // Icons with custom CSS classes for separate sizing
   const trophyIcon = (
     <svg
@@ -56,14 +67,14 @@ const Submenu = ({ user, onClose, handleAddFunds, handleLogout }) => {
     </svg>
   );
 
-  // Top row: green circle + black icon, label underneath
+  // Top row items (icon above label)
   const topItems = [
     { label: "Leaderboard", icon: trophyIcon, link: "/leaderboard" },
     { label: "Add funds", icon: plusCircleIcon, onClick: handleAddFunds },
     { label: "Invite friends", icon: giftIcon, link: "/invite" },
   ];
 
-  // Bottom list items
+  // Bottom list items (links or buttons)
   const bottomItems = [
     { label: "Account & security", link: "/account" },
     { label: "Your activity", link: "/activity" },
@@ -75,7 +86,7 @@ const Submenu = ({ user, onClose, handleAddFunds, handleLogout }) => {
     { label: "Log out", onClick: handleLogout },
   ];
 
-  // Renders top-row items with icon over label
+  // Render top-row item
   const renderTopItem = (item, idx) => {
     const content = (
       <div className={styles.topItem}>
@@ -99,19 +110,14 @@ const Submenu = ({ user, onClose, handleAddFunds, handleLogout }) => {
       );
     } else {
       return (
-        <Link
-          key={idx}
-          href={item.link}
-          className={styles.topRowButton}
-          onClick={onClose}
-        >
+        <Link key={idx} href={item.link} className={styles.topRowButton} onClick={onClose}>
           {content}
         </Link>
       );
     }
   };
 
-  // Renders bottom list items (Link or button)
+  // Render bottom list item
   const renderBottomItem = (item, idx) => {
     if (item.onClick) {
       return (
@@ -126,23 +132,24 @@ const Submenu = ({ user, onClose, handleAddFunds, handleLogout }) => {
           {item.label}
         </button>
       );
-    } else {
+    } else if (item.link) {
       return (
-        <Link
-          key={idx}
-          href={item.link}
-          className={styles.menuItem}
-          onClick={onClose}
-        >
+        <Link key={idx} href={item.link} className={styles.menuItem} onClick={onClose}>
           {item.label}
         </Link>
+      );
+    } else {
+      return (
+        <button key={idx} className={styles.menuItem} onClick={onClose}>
+          {item.label}
+        </button>
       );
     }
   };
 
   return (
     <div className={styles.submenu}>
-      {/* Top row with 3 icon items */}
+      {/* Top row */}
       <div className={styles.topRow}>
         {topItems.map((item, idx) => renderTopItem(item, idx))}
       </div>

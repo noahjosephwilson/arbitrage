@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Amplify, Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
+import { signUp } from "aws-amplify/auth";
 import awsconfig from "@/aws-exports";
 import styles from "./SignupPage.module.css";
 
@@ -15,23 +16,27 @@ const SignupPage = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    console.info("Amplify Auth object:", Auth);
-  }, []);
-
   const handleSignup = async (e) => {
     e.preventDefault();
     setErrorMsg("");
     console.info(`Signup process initiated for email: ${email}`);
 
     try {
-      const signUpResponse = await Auth.signUp({
-        username: email, // Cognito uses username (here set to email)
+      // Updated signUp call using the options object for userAttributes and autoSignIn
+      const { isSignUpComplete, userId, nextStep } = await signUp({
+        username: email, // using email as the username
         password,
-        attributes: { email },
+        options: {
+          userAttributes: { email },
+          autoSignIn: true,
+        },
       });
-      console.info("User signed up successfully. Response:", signUpResponse);
-      router.push("/confirm-signup");
+      console.info("User signed up successfully. Response:", {
+        isSignUpComplete,
+        userId,
+        nextStep,
+      });
+      router.push("/main/markets/all");
     } catch (error) {
       console.error("Signup process encountered an error:", error);
       setErrorMsg(`Signup failed: ${error.message || error.toString()}`);

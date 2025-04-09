@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    background-color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  /* --- Top Row --- */
+  .topRow {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .searchInput {
+    width: 500px;
+    padding: 1rem 1.2rem;
+    font-size: 1.4rem;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+  }
+  
+  /* --- Column Labels aligned to FlaggedCardSet fields --- */
+  .columnLabels {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+  }
+  
+  .pictureLabel {
+    flex: 0.5;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .nameLabel {
+    flex: 2;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .columnLabel {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  /* Horizontal separator line below the column labels */
+  .separator {
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+  }
+  

@@ -72,9 +72,6 @@ const Navbar = () => {
               <li>
                 <Link href="/main/portfolio/positions">Portfolio</Link>
               </li>
-              <li>
-                <Link href="/main/social">Social</Link>
-              </li>
             </ul>
           </div>
         </div>

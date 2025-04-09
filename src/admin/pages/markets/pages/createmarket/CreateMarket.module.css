@@ -1,0 +1,477 @@
+/* Outer container: enables horizontal scrolling when content overflows */
+.outerContainer {
+  width: 100%;
+  overflow-x: auto;
+  background: linear-gradient(135deg, #00c28e, #66ffe0);
+  padding: 142px 60px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Fixed container: keeps a fixed 900px width and centers it */
+.fixedContainer {
+  width: 900px;
+  min-width: 900px;
+  margin: 0 auto;
+}
+
+/* Container for vertical centering */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Card: fixed width, white background */
+.card {
+  width: 900px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem 3rem;
+  animation: fadeIn 0.8s ease-in-out;
+  text-align: left;
+}
+
+/* Title: centered */
+.title {
+  font-size: 2.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333;
+  font-weight: 700;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  margin: 2rem 0 1rem;
+  text-align: left;
+  color: #444;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+/* Form Layout */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+  font-size: 1.15rem;
+}
+
+.input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #00c28e;
+  box-shadow: 0 0 8px rgba(0, 194, 142, 0.5);
+}
+
+.inputRow,
+.timelineRow,
+.dropdownRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+/* Toggle Button Group */
+.toggleGroup {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  justify-content: center;
+}
+
+.toggleButton {
+  flex: 1;
+  padding: 1rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
+}
+
+.activeToggle {
+  background-color: #00c28e !important;
+  color: #fff;
+  border-color: #00c28e;
+}
+
+.activeToggle:hover {
+  background-color: #00c28e;
+}
+
+.toggleButton:not(.activeToggle):hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.addPairLink {
+  font-size: 0.9rem;
+  color: #00c28e;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.addPairLink:hover {
+  text-decoration: underline;
+}
+
+.deletePairButton,
+.deleteOutcomeButton {
+  background: transparent;
+  border: none;
+  color: #e74c3c;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+}
+
+.deletePairButton:hover,
+.deleteOutcomeButton:hover {
+  color: #c0392b;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.submitButton {
+  flex: 1;
+  padding: 1rem;
+  background-color: #00c28e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.submitButton:hover {
+  background-color: #009e6a;
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  flex: 1;
+  padding: 1rem;
+  background-color: #f2f2f2;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.secondaryButton:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  font-size: 1.25rem;
+}
+
+/* File Upload Styling */
+.fileUploadContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.uploadButton {
+  background-color: #00c28e;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.uploadButton:hover {
+  background-color: #009e6a;
+  transform: translateY(-2px);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Image Upload Section */
+.imageUploadSection {
+  margin-bottom: 2rem;
+}
+
+.imagePreviewContainer {
+  margin-top: 1rem;
+  width: 600px;
+  height: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fileName {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+}
+
+/* Full Rules Section */
+.fullRulesSection {
+  margin-bottom: 2rem;
+}
+
+.fullRulesPreview {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.fileLink {
+  font-size: 0.9rem;
+  color: #00c28e;
+  text-decoration: none;
+}
+
+.fileLink:hover {
+  text-decoration: underline;
+}
+
+/* Nested Map for Options */
+.nestedMapContainer {
+  margin-top: 1rem;
+}
+
+.nestedMapGroup {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.nestedMapMasterRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.nestedToggleGroup {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.nestedExtraInputs {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Rules Summary Section */
+.rulesSummarySection {
+  margin-bottom: 2rem;
+}
+
+.resolutionRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.resolutionText {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.resolutionInput {
+  width: 250px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Outcomes Section */
+.outcomesSection {
+  margin-top: 1rem;
+}
+
+.outcomeRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Rules Clarification */
+.rulesClarificationSection {
+  margin-bottom: 2rem;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  resize: vertical;
+}
+
+/* Timeline Section */
+.timelineSection {
+  margin-bottom: 2rem;
+}
+
+.timelineGroup {
+  margin-bottom: 1rem;
+}
+
+/* Custom Dropdown Styles */
+.customDropdown {
+  position: relative;
+  width: 250px;
+}
+
+.dropdownHeader {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.dropdownList {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownListItem {
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdownListItem:hover {
+  background-color: #f0f0f0;
+}
+
+.disabledItem {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Large Dropdown Styles for Categories */
+.largeDropdown {
+  position: relative;
+  width: 300px;
+}
+
+.largeDropdownHeader {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.largeDropdownList {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 10;
+  /* Display at most 4 items before scrolling */
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.largeDropdownListItem {
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.largeDropdownListItem:hover {
+  background-color: #f0f0f0;
+}
+
+/* Categories Section */
+.categoriesSection {
+  margin-bottom: 2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

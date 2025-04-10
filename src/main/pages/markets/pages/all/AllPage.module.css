@@ -11,7 +11,7 @@
 /* Grid for cards with refined spacing */
 .itemsGrid {
   display: grid;
-  gap: 20px;                 /* Increased gap for better visual separation */
+  gap: 5px;                 /* Increased gap for better visual separation */
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   padding: 20px 0;           /* Adds vertical padding to the grid */
 }

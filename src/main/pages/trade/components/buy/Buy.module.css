@@ -2,8 +2,8 @@
   CONTAINER
 ***************************************/
 .container {
-  width: 100%;
-  max-width: 500px;
+  width: 475px;
+  max-width: 475px;
   border: 1px solid var(--border-light);
   border-radius: 12px;
   background-color: var(--white);
@@ -218,9 +218,10 @@
   PICK A SIDE
 ***************************************/
 .pickSideRow {
+  margin-top: 16px;
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .pickSideLabel {

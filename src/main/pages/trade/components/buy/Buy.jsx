@@ -3,11 +3,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Buy.module.css";
 
-const yesPrice = 0.46;
-const noPrice = 0.56;
-
 const Buy = () => {
-  const [side, setSide] = useState("Yes");
+  // State for dynamic market details from DynamoDB.
+  const [marketDetails, setMarketDetails] = useState({
+    imageURL: "",
+    marketName: "",
+    choice1: "Choice1",
+    choice2: "Choice2",
+    choice1Price: 0,
+    choice2Price: 0,
+  });
+
+  // Separate state for current selected side and buy/sell action.
+  const [side, setSide] = useState("choice1"); // default to first choice
   const [buyOrSell, setBuyOrSell] = useState("Buy");
 
   // Order type dropdown
@@ -15,23 +23,30 @@ const Buy = () => {
   const [showOrderTypeMenu, setShowOrderTypeMenu] = useState(false);
   const orderTypeRef = useRef(null);
 
+  // Fetch market details from DynamoDB on component mount.
+  useEffect(() => {
+    fetch("/api/market-details/") // Replace with your API endpoint
+      .then((response) => response.json())
+      .then((data) => {
+        setMarketDetails(data);
+        // Optionally, set the default side to match the fetched choice labels
+        setSide(data.choice1.toLowerCase());
+      })
+      .catch((error) => {
+        console.error("Error fetching market details:", error);
+      });
+  }, []);
+
   // Close dropdown if click happens outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        orderTypeRef.current &&
-        !orderTypeRef.current.contains(event.target)
-      ) {
+      if (orderTypeRef.current && !orderTypeRef.current.contains(event.target)) {
         setShowOrderTypeMenu(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  // Current holdings
-  const [currentHoldings, setCurrentHoldings] = useState(10);
 
   // Order-specific input states (stored as strings)
   const [marketContracts, setMarketContracts] = useState("");
@@ -83,8 +98,14 @@ const Buy = () => {
       <div className={styles.infoRow}>
         <span>
           Payout if{" "}
-          <span className={side === "Yes" ? styles.yesText : styles.noText}>
-            {side}
+          <span
+            className={
+              side === "choice1"
+                ? styles.yesText
+                : styles.noText
+            }
+          >
+            {side === "choice1" ? marketDetails.choice1 : marketDetails.choice2}
           </span>{" "}
           wins:
         </span>
@@ -100,7 +121,10 @@ const Buy = () => {
     let contracts, priceInfo;
     if (selectedOrderType === "Market Order") {
       contracts = marketContracts;
-      priceInfo = side === "Yes" ? yesPrice : noPrice;
+      priceInfo =
+        side === "choice1"
+          ? marketDetails.choice1Price
+          : marketDetails.choice2Price;
     } else if (selectedOrderType === "Limit Order") {
       contracts = limitContracts;
       priceInfo = limitPrice;
@@ -109,13 +133,18 @@ const Buy = () => {
       priceInfo = stopPrice;
     }
     alert(
-      `${buyOrSell}ing ${contracts} contract(s) for "${side}" at price ${priceInfo}`
+      `${buyOrSell}ing ${contracts} contract(s) for "${
+        side === "choice1" ? marketDetails.choice1 : marketDetails.choice2
+      }" at price ${priceInfo}`
     );
   };
 
   // --- MARKET ORDER ---
   const renderMarketOrderSection = () => {
-    const currentPrice = side === "Yes" ? yesPrice : noPrice;
+    const currentPrice =
+      side === "choice1"
+        ? marketDetails.choice1Price
+        : marketDetails.choice2Price;
     const contractsNum = parseInt(marketContracts, 10) || 0;
     if (buyOrSell === "Sell") {
       return (
@@ -322,7 +351,7 @@ const Buy = () => {
             />
           </label>
           <label className={styles.inputRow}>
-            <span className={styles.inputLabel}>Stop price</span>
+            <span className={styles.inputLabel}>Stop Price</span>
             <div className={styles.centsInputContainer}>
               <input
                 type="text"
@@ -368,16 +397,23 @@ const Buy = () => {
     <div className={styles.container}>
       {/* Top Header */}
       <div className={styles.topHeader}>
-        <img src="/trump-avatar.jpg" alt="User avatar" className={styles.avatar} />
+        <img
+          src={marketDetails.imageURL || "/default-avatar.jpg"}
+          alt="Market avatar"
+          className={styles.avatar}
+        />
         <div className={styles.titleWrapper}>
           <div className={styles.questionTitle}>
-            Will Trump declassify Epstein's records?
+            {marketDetails.marketName || "Market Name"}
           </div>
           <div
             className={styles.subTitle}
-            style={{ color: side === "Yes" ? "#00c28e" : "#dc3545" }}
+            style={{
+              color: side === "choice1" ? "#00c28e" : "#dc3545",
+            }}
           >
-            {buyOrSell} {side}
+            {buyOrSell}{" "}
+            {side === "choice1" ? marketDetails.choice1 : marketDetails.choice2}
           </div>
         </div>
       </div>
@@ -402,7 +438,10 @@ const Buy = () => {
             Sell
           </span>
         </div>
-        <div className={styles.orderTypeDropdownContainer} ref={orderTypeRef}>
+        <div
+          className={styles.orderTypeDropdownContainer}
+          ref={orderTypeRef}
+        >
           <div
             className={`${styles.orderTypeDropdown} ${
               showOrderTypeMenu ? styles.activeOption : ""
@@ -448,35 +487,31 @@ const Buy = () => {
         </div>
       </div>
 
-      {/* Current Holdings */}
-      <div className={styles.holdingsSection}>
-        Current Holdings: {currentHoldings} Contracts
-      </div>
-
       {/* Pick a side */}
       <div className={styles.pickSideRow}>
         <span className={styles.pickSideLabel}>Pick a side</span>
-        <span title="More info about picking a side">
-        </span>
+        <span title="More info about picking a side"></span>
       </div>
 
       {/* Side Selection */}
       <div className={styles.sideSelection}>
         <button
           className={`${styles.sideButton} ${
-            side === "Yes" ? styles.activeYes : styles.inactiveYes
+            side === "choice1" ? styles.activeYes : styles.inactiveYes
           }`}
-          onClick={() => setSide("Yes")}
+          onClick={() => setSide("choice1")}
         >
-          Yes {Math.round(yesPrice * 100)}¢
+          {marketDetails.choice1}{" "}
+          {Math.round(marketDetails.choice1Price * 100)}¢
         </button>
         <button
           className={`${styles.sideButton} ${
-            side === "No" ? styles.activeNo : styles.inactiveNo
+            side === "choice2" ? styles.activeNo : styles.inactiveNo
           }`}
-          onClick={() => setSide("No")}
+          onClick={() => setSide("choice2")}
         >
-          No {Math.round(noPrice * 100)}¢
+          {marketDetails.choice2}{" "}
+          {Math.round(marketDetails.choice2Price * 100)}¢
         </button>
       </div>
 
@@ -486,7 +521,7 @@ const Buy = () => {
       {/* Action Button */}
       <button
         className={`${styles.actionButton} ${
-          side === "Yes" ? styles.greenButton : styles.redButton
+          side === "choice1" ? styles.greenButton : styles.redButton
         }`}
         onClick={handleBuy}
       >

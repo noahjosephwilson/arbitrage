@@ -1,6 +1,6 @@
-/* Outer container spans full viewport width and ensures 60px padding on both sides */
 .container {
-  width: 100vw;
-  box-sizing: border-box;
-  padding: 0 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
 }

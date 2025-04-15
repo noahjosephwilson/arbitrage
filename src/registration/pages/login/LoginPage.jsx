@@ -36,7 +36,7 @@ const LoginPage = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.card}>
-        <a href="/landing/landingmarkets/all" className={styles.backButton}>
+        <a href="/landing" className={styles.backButton}>
           &larr; Back
         </a>
         <header className={styles.header}>

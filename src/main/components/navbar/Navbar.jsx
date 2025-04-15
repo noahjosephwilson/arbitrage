@@ -4,16 +4,14 @@ import Link from 'next/link';
 import { AiOutlineSearch, AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { MdLeaderboard } from 'react-icons/md';
 import { useRouter, usePathname } from 'next/navigation';
-import Submenu from './components/submenu/Submenu'; // Adjust path if needed
+import Submenu from './components/submenu/Submenu';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showMenu, setShowMenu] = useState(false);
 
-  // For navigation
   const router = useRouter();
-  const pathname = usePathname();
 
   // Ref to detect clicks outside the hamburger + submenu
   const hamburgerWrapperRef = useRef(null);
@@ -42,11 +40,10 @@ const Navbar = () => {
 
   const handleClear = () => setSearchValue('');
 
+  // Updated to always navigate to /main/markets when clicked
   const handleMarketsClick = (e) => {
-    if (pathname.startsWith('/main/markets')) {
-      e.preventDefault();
-      router.push('/main/markets/all');
-    }
+    e.preventDefault();
+    router.push('/main/markets');
   };
 
   const handleAddFunds = () => {
@@ -65,7 +62,7 @@ const Navbar = () => {
           <div className={styles.navLinksContainer}>
             <ul className={styles.navLinks}>
               <li>
-                <Link href="/main/markets/all" onClick={handleMarketsClick}>
+                <Link href="/main/markets" onClick={handleMarketsClick}>
                   Markets
                 </Link>
               </li>
@@ -108,17 +105,13 @@ const Navbar = () => {
               </div>
             </Link>
 
-            <div
-              className={styles.hamburgerWrapper}
-              ref={hamburgerWrapperRef}
-            >
+            <div className={styles.hamburgerWrapper} ref={hamburgerWrapperRef}>
               <div
                 className={styles.iconButton}
                 onClick={() => setShowMenu(!showMenu)}
               >
                 <AiOutlineMenu className={styles.hamburgerIcon} />
               </div>
-
               {showMenu && (
                 <Submenu
                   onClose={() => setShowMenu(false)}

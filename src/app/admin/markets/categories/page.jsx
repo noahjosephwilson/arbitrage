@@ -1,10 +1,10 @@
 import React from 'react';
-import MarketsPage from '@/main/pages/markets/MarketsPage';
+import Categories from  '@/admin/pages/markets/pages/categories/Categories';
 
 export default function Page() {
   return (
     <div>
-      <MarketsPage />
+      <Categories />
     </div>
   );
 }

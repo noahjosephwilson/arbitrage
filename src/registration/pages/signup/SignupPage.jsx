@@ -36,7 +36,7 @@ const SignupPage = () => {
         userId,
         nextStep,
       });
-      router.push("/main/markets/all");
+      router.push("/main/markets");
     } catch (error) {
       console.error("Signup process encountered an error:", error);
       setErrorMsg(`Signup failed: ${error.message || error.toString()}`);
@@ -46,7 +46,7 @@ const SignupPage = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.card}>
-        <a href="/landing/landingmarkets/all" className={styles.backButton}>
+        <a href="/landing" className={styles.backButton}>
           &larr; Back
         </a>
         <header className={styles.header}>

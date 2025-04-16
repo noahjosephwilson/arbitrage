@@ -1,6 +1,0 @@
-.newsStack {
-    display: flex;
-    flex-direction: column;
-    gap: 0px; /* Adjust spacing between News components */
-  }
-  

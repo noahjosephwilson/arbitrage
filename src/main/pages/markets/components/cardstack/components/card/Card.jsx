@@ -1,18 +1,9 @@
 "use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Card.module.css";
 
-function Card({
-  imageSrc,
-  title,
-  totalAmount,
-  items = [],
-  percentage,
-  yesInfo,
-  noInfo,
-}) {
+function Card({ imageSrc, title, totalAmount, items = [], percentage, yesInfo, noInfo }) {
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
   const isBinary = yesInfo !== undefined && noInfo !== undefined;
@@ -36,15 +27,11 @@ function Card({
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.card} onClick={() => router.push("/main/trade")}>
-        {/* CARD HEADER */}
+        {/* Card Header */}
         <div className={styles.cardHeader}>
           <div className={styles.headerLeft}>
             {imageSrc && (
-              <img
-                src={imageSrc}
-                alt="Card graphic"
-                className={styles.cardImage}
-              />
+              <img src={imageSrc} alt="Card graphic" className={styles.cardImage} />
             )}
             <h2 className={styles.cardTitle}>{title}</h2>
           </div>
@@ -52,8 +39,7 @@ function Card({
             <div className={styles.cardPercentage}>{percentage}%</div>
           )}
         </div>
-
-        {/* CARD BODY */}
+        {/* Card Body */}
         <div className={styles.cardBody}>
           {isBinary ? (
             <div className={styles.optionsRow}>
@@ -67,9 +53,7 @@ function Card({
                 >
                   Yes
                 </button>
-                <div className={styles.optionValue}>
-                  {renderMoneyInfo(yesInfo)}
-                </div>
+                <div className={styles.optionValue}>{renderMoneyInfo(yesInfo)}</div>
               </div>
               <div className={styles.optionColumn}>
                 <button
@@ -81,28 +65,20 @@ function Card({
                 >
                   No
                 </button>
-                <div className={styles.optionValue}>
-                  {renderMoneyInfo(noInfo)}
-                </div>
+                <div className={styles.optionValue}>{renderMoneyInfo(noInfo)}</div>
               </div>
             </div>
           ) : (
             items &&
             items.slice(0, 2).map((item, index) => (
               <div key={index} className={styles.itemRow}>
-                <div
-                  className={`${styles.itemName} ${
-                    index === 1 && items.length > 2 ? styles.withMore : ""
-                  }`}
-                >
+                <div className={`${styles.itemName} ${index === 1 && items.length > 2 ? styles.withMore : ""}`}>
                   {item.name}
                   {index === 1 && items.length > 2 && (
                     <span className={styles.moreText}>more</span>
                   )}
                 </div>
-                <div className={styles.itemPercentage}>
-                  {item.percentage}%
-                </div>
+                <div className={styles.itemPercentage}>{item.percentage}%</div>
                 <div className={styles.votingButtons}>
                   <button
                     className={styles.multiyesButton}
@@ -127,14 +103,11 @@ function Card({
             ))
           )}
         </div>
-
-        {/* CARD FOOTER */}
+        {/* Card Footer */}
         <div className={styles.cardFooter}>
           <span className={styles.totalAmount}>
             ${Number(totalAmount).toLocaleString()}
           </span>
-
-          {/* TOGGLE ICON */}
           <div
             className={styles.iconCircle}
             onClick={(e) => {

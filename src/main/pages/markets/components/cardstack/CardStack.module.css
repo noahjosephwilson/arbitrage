@@ -1,19 +1,16 @@
 .container {
-    padding: 16px;
-  }
-  
-  .itemsGrid {
-    display: grid;
-    /* Adjust grid columns as needed (min 300px wide cards) */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
-    margin-top: 16px;
-  }
-  
-  .message {
-    text-align: center;
-    padding: 20px;
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-  }
-  
+  padding: 16px;
+}
+
+.itemsGrid {
+  display: grid;
+  /* Adjust the grid settings as needed */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* The sentinel element; a small area that triggers the loading of more cards */
+.sentinel {
+  height: 20px;
+}

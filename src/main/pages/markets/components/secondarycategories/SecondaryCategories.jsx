@@ -1,35 +1,25 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import styles from './SecondaryCategories.module.css';
+import React from "react";
+import styles from "./SecondaryCategories.module.css";
 
-const SecondaryCategories = ({ subcategories, defaultActive, onSubcategoryChange }) => {
-  const [activeSubcategory, setActiveSubcategory] = useState(defaultActive || subcategories[0]);
-
-  // Sync with external default value when it changes.
-  useEffect(() => {
-    setActiveSubcategory(defaultActive);
-  }, [defaultActive]);
-
-  const handleSubcategoryClick = (subcat) => {
-    setActiveSubcategory(subcat);
-    if (onSubcategoryChange) {
-      onSubcategoryChange(subcat);
-    }
-  };
-
+const SecondaryCategories = ({ subcategories = [], activeSubcategory, onSubcategoryChange, animate }) => {
   return (
     <div className={styles.secondaryCategories}>
       <div className={styles.secondaryCategoriesContent}>
         <div className={styles.subcategoryList}>
-          {subcategories.map((subcat) => (
+          {subcategories.map((subcat, idx) => (
             <button
-              key={subcat}
+              key={subcat["Secondary ID"] || subcat["Secondary Name"] || idx}
               className={`${styles.subcategoryItem} ${
-                activeSubcategory === subcat ? styles.activeSubcategory : ''
+                activeSubcategory &&
+                activeSubcategory["Secondary ID"] === subcat["Secondary ID"]
+                  ? // Only add the animate class if the animate prop is true.
+                    `${styles.activeSubcategory} ${animate ? styles.animate : ""}`
+                  : ""
               }`}
-              onClick={() => handleSubcategoryClick(subcat)}
+              onClick={() => onSubcategoryChange(subcat)}
             >
-              {subcat}
+              {subcat["Secondary Name"]}
             </button>
           ))}
         </div>

@@ -6,7 +6,7 @@
 .secondaryCategoriesContent {
   max-width: 1675px;
   margin: 0 auto;
-  padding: 12px 0px 12px 24px;  /* Adjust left padding as needed */
+  padding: 12px 0px 12px 0px;  /* Adjust left padding as needed */
   display: flex;
   align-items: center;
 }

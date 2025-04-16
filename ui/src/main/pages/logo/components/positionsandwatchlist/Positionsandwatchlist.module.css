@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 400px; /* Fixed width so the box doesn't change size */
+    margin: 0 auto;
+    padding: 16px;
+    font-family: sans-serif;
+    border: 1px solid #eee; /* Optional: Add a border for better visibility */
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+}
+  
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+  
+.sectionHeader {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #eee;
+}
+  
+.itemsList {
+    display: flex;
+    flex-direction: column;
+}

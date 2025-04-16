@@ -1,0 +1,81 @@
+/*******************************
+  Page Container
+*******************************/
+.container {
+  max-width: 1700px;       /* Constrain container to 1700px max */
+  margin: 0 auto;          /* Center container horizontally */
+  min-height: 100vh;
+  padding: 24px 36px;      /* Consistent padding */
+  box-sizing: border-box;
+  background-color: var(--white);
+  font-family: var(--font-sans);
+  color: var(--text-dark);
+}
+
+/*******************************
+  Top Section (Stat Cards)
+*******************************/
+.topSection {
+  display: flex;
+  flex-wrap: nowrap;  /* Force all cards to be on one line */
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure each card takes equal space */
+.topSection > * {
+  flex: 1;
+}
+
+/*******************************
+  Tabs (Positions / Open Orders / History)
+*******************************/
+.tabs {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.5rem;
+}
+
+.tabButton {
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0 0.25rem 0;
+  outline: none;
+  transition: color 0.2s ease;
+}
+
+.tabButton:hover {
+  color: var(--text-dark);
+}
+
+.activeTab {
+  color: var(--text-dark);
+  font-weight: 600;
+  border-bottom: 3px solid var(--active-tab);
+}
+
+/*******************************
+  Positions Section
+*******************************/
+.positionsSection {
+  background-color: var(--white);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  min-height: 250px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.emptyState {
+  color: var(--empty-text);
+  font-size: 1.1rem;
+  text-align: center;
+}

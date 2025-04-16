@@ -1,0 +1,272 @@
+/* Wrapper now provides equal left/right padding */
+.cardWrapper {
+  padding: 0 8px;
+}
+
+/* Card styling: Use flex layout for vertical spacing */
+.card {
+  width: 100%;
+  max-width: 600px;
+  min-height: 300px; /* Adjust as needed */
+  background-color: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin: 16px; /* Consistent separation */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+/* Header */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px; /* Reduced padding */
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+.cardImage {
+  width: 50px;  /* Adjusted size for a smaller card */
+  height: 50px; /* Adjusted size for a smaller card */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+.cardTitle {
+  font-size: 1.2rem; /* Slightly reduced font size */
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.cardPercentage {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  padding-left: 10px;
+}
+
+/* Body */
+.cardBody {
+  padding: 12px; /* Reduced padding */
+  margin-top: 12px; /* Adjusted margin */
+}
+
+/* Binary layout styles */
+.optionsRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.optionColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.optionButton {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 14px 20px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background-color: var(--white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  text-align: center;
+}
+
+/* Updated button styles to match active green and red */
+.yesButton {
+  background-color: var(--primary-green);
+  border: 1px solid var(--primary-green);
+  color: var(--white);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.yesButton:hover {
+  background-color: var(--white);
+  border-color: var(--primary-green);
+  color: var(--primary-green);
+}
+
+.noButton {
+  background-color: var(--danger-red);
+  border: 1px solid var(--danger-red);
+  color: var(--white);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.noButton:hover {
+  background-color: var(--white);
+  border-color: var(--danger-red);
+  color: var(--danger-red);
+}
+
+.optionValue {
+  margin-top: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.startMoney {
+  color: var(--text-dark);
+}
+
+.endMoney {
+  color: var(--primary-green);
+}
+
+/* List layout styles */
+.itemRow {
+  display: grid;
+  grid-template-columns: 1fr 60px auto;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.itemName {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  position: relative;
+}
+
+.withMore {
+  height: 1.5em;
+}
+
+.moreText {
+  position: absolute;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  left: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  pointer-events: none;
+}
+
+.itemPercentage {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+.votingButtons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Multi-option button styles (updated) */
+.multiyesButton {
+  font-size: 1rem;
+  padding: 6px 12px;
+  border: 1px solid var(--primary-green);
+  border-radius: 8px;
+  background-color: var(--primary-green);
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  width: 60px;
+}
+
+.multiyesButton:hover {
+  background-color: var(--white);
+  border-color: var(--primary-green);
+  color: var(--primary-green);
+}
+
+.multinoButton {
+  font-size: 1rem;
+  padding: 6px 12px;
+  border: 1px solid var(--danger-red);
+  border-radius: 8px;
+  background-color: var(--danger-red);
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  width: 60px;
+}
+
+.multinoButton:hover {
+  background-color: var(--white);
+  border-color: var(--danger-red);
+  color: var(--danger-red);
+}
+
+/* Footer */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px; /* Reduced padding */
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  background-color: var(--white);
+}
+
+.totalAmount {
+  font-size: 1.1rem;
+}
+
+/* 
+  TOGGLE ICON 
+  We now use a separate container (.iconCircle) and inner icon (.plusIcon / .checkIcon)
+*/
+
+/* Outer circle: container for the icon */
+.iconCircle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--black);
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.iconCircle:hover {
+  background-color: var(--gray-light);
+}
+
+/* Inner icon: always stays black */
+.plusIcon,
+.checkIcon {
+  width: 80%;
+  height: 80%;
+  background-color: var(--black);
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Plus icon mask */
+.plusIcon {
+  mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2h6Z" /></svg>');
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2h6Z" /></svg>');
+}
+
+/* Check icon mask */
+.checkIcon {
+  mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23FFF" d="M9 16.172 4.929 12.1l-1.414 1.415L9 19 21 7l-1.414-1.414L9 16.172Z"/></svg>');
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23FFF" d="M9 16.172 4.929 12.1l-1.414 1.415L9 19 21 7l-1.414-1.414L9 16.172Z"/></svg>');
+}

@@ -1,0 +1,82 @@
+.newsContainer {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 6px;
+    width: 100%;
+    padding: 16px 0;
+    min-height: 250px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .imageWrapper {
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+  
+  .image {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  /* Container for text content with vertical layout */
+  .textContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between; /* Keeps top content at the top and bottom content at the bottom */
+  }
+  
+  /* Top content for header and description */
+  .topContent {
+    flex: 1;
+  }
+  
+  /* Header row: title on the left, time on the right */
+  .headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #333333;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: #555555;
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  /* Time element with hover effect */
+  .time {
+    font-size: 12px;
+    color: #999999;
+    cursor: pointer;
+    padding: 4px;
+  }
+  
+  .time:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Bottom content: publisher, justified to the bottom */
+  .bottomContent {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #999999;
+  }
+  
+  .publisher {
+    /* Additional styling for the publisher text can be added here */
+  }
+  

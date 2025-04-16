@@ -1,0 +1,89 @@
+/*******************************
+  Page Container
+*******************************/
+.container {
+    max-width: 1700px;      /* Constrain container to a maximum width */
+    min-width: 1200px;      /* Ensure it never shrinks below 1700px */
+    margin: 0 auto;
+    padding: 142px 60px;
+    box-sizing: border-box;
+    background-color: var(--white, #fff);
+    font-family: var(--font-sans, sans-serif);
+    color: var(--text-dark, #333);
+  }  
+  
+  /*******************************
+      Button Container
+  *******************************/
+  .buttonContainer {
+    display: flex;
+    gap: 10rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+  }
+  
+  /*******************************
+    Action Button Base
+  *******************************/
+  .actionButton {
+    padding: 1.25rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  /*******************************
+    Create Button (Blue)
+  *******************************/
+  .createButton {
+    background-color: #007bff;
+    color: white;
+    border-radius: 16px;
+  }
+  
+  .createButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /*******************************
+    Modify Button (Green)
+  *******************************/
+  .modifyButton {
+    background-color: #28a745;
+    color: white;
+    border-radius: 16px;
+  }
+  
+  .modifyButton:hover {
+    background-color: #218838;
+  }
+  
+  /*******************************
+    Resolve Button (Red)
+  *******************************/
+  .resolveButton {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 16px;
+  }
+  
+  .resolveButton:hover {
+    background-color: #c82333;
+  }
+  
+  /*******************************
+    View Button (Yellow)
+  *******************************/
+  .viewButton {
+    background-color: orange;
+    color: white;
+    border-radius: 16px;
+  }
+  
+  .viewButton:hover {
+    background-color: #e0a800;
+  }
+  

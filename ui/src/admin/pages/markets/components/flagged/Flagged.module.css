@@ -1,0 +1,5 @@
+.flaggedContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  

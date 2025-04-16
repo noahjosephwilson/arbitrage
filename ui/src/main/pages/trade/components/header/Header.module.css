@@ -1,0 +1,59 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5rem 35px 2rem;
+  background-color: var(--white);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+}
+
+.headerImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10%;
+  border: 1px solid var(--border-default);
+  margin-right: 1rem;
+}
+
+.headerTitle {
+  flex: 1;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.headerIcons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.icon {
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.icon:hover {
+  color: var(--active-tab);
+}
+
+/* Individual Icon Styles */
+.commentIcon {
+  /* Additional styles for comment icon (if needed) */
+}
+
+.heartIcon {
+  /* Additional styles for heart icon (if needed) */
+}
+
+.shareIcon {
+  /* Make the share icon slightly larger and bolder */
+  stroke-width: 3px; /* Make it bold to stand out */
+  /* Note: font-weight may not affect SVGs, so you might adjust the stroke if necessary */
+  /* For example, if your icon supports stroke-width, you could add: */
+  /* stroke-width: 1.5px; */
+}

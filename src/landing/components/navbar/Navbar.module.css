@@ -114,3 +114,75 @@
 .signupBtn:hover {
   background-color: var(--primary-green-hover);
 }
+
+/* Navbar Styling */
+.searchBarStack {
+  position: absolute;
+  top: 100%; /* Position directly below the search input */
+  left: 0; /* Align left edge with the search input */
+  width: 100%; /* Ensure it matches the width of the search input */
+  background-color: var(--white); /* Optional: Set background for results */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for a dropdown effect */
+  border-radius: 8px;
+  margin-top: 8px; /* Optional: Adjust space between input and results */
+  z-index: 999; /* Ensure the results appear above other elements */
+  display: flex;
+  flex-direction: column;
+}
+
+.searchBarCard {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space out the image, text, and number */
+  transition: background-color 0.3s ease;
+}
+
+.searchBarCard:hover {
+  background-color: #f2f2f2;
+}
+
+.searchCardImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Make the image circular */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+.searchCardText {
+  flex-grow: 1; /* Take up remaining space in the middle */
+  padding-left: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.searchCardNumber {
+  font-size: 1.2rem;
+  color: #001111; /* Use the green color */
+  font-weight: bold;
+}
+
+.clearIcon {
+  position: absolute;
+  right: 10px;
+  color: var(--black);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  color: var(--black);
+  font-size: 1.2rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1rem 3rem;
+  border: 1px solid var(--search-input-border);
+  border-radius: 8px;
+  font-size: 1.2rem;
+}

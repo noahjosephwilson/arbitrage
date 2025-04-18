@@ -10,6 +10,7 @@ import styles from './Navbar.module.css';
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showMenu, setShowMenu] = useState(false);
+  const [showSearchBarStack, setShowSearchBarStack] = useState(false);
 
   // For navigation
   const router = useRouter();
@@ -19,15 +20,14 @@ const Navbar = () => {
   const hamburgerWrapperRef = useRef(null);
 
   useEffect(() => {
-    // Listen for clicks outside the hamburgerWrapper when submenu is open
-    function handleClickOutside(event) {
+    const handleClickOutside = (event) => {
       if (
         hamburgerWrapperRef.current &&
         !hamburgerWrapperRef.current.contains(event.target)
       ) {
         setShowMenu(false);
       }
-    }
+    };
 
     if (showMenu) {
       document.addEventListener('mousedown', handleClickOutside);
@@ -40,7 +40,16 @@ const Navbar = () => {
     };
   }, [showMenu]);
 
-  const handleClear = () => setSearchValue('');
+  const handleClear = () => {
+    setSearchValue('');
+    setShowSearchBarStack(false);
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    setShowSearchBarStack(value.length > 0);
+  };
 
   const handleMarketsClick = (e) => {
     if (pathname.startsWith('/main/markets')) {
@@ -76,24 +85,48 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right Section: Search and Icons */}
+        {/* Right Section: Search, Auth Buttons, and Icons */}
         <div className={styles.rightSection}>
-          <div className={styles.searchContainer}>
-            <AiOutlineSearch className={styles.searchIcon} />
-            <input
-              type="text"
-              placeholder="Search markets"
-              className={styles.searchInput}
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
+        <div className={styles.searchWrapper}>
+          <AiOutlineSearch className={styles.searchIcon} />
+          <input
+            type="text"
+            placeholder="Search markets"
+            className={styles.searchInput}
+            value={searchValue}
+            onChange={handleSearchChange}
+            onFocus={() => setShowSearchBarStack(true)}
+          />
+          {searchValue && (
+            <AiOutlineClose
+              className={styles.clearIcon}
+              onClick={handleClear}
             />
-            {searchValue && (
-              <AiOutlineClose 
-                className={styles.clearIcon}
-                onClick={handleClear}
-              />
-            )}
-          </div>
+          )}
+
+    {showSearchBarStack && (
+      <div className={styles.searchBarStack}>
+        <div className={styles.searchBarCard}>
+          <img src="/sample1.png" alt="" className={styles.cardImage} />
+          <span className={styles.cardText}>Example #1</span>
+          <span className={styles.cardNumber}>40%</span>
+        </div>
+        <div className={styles.searchBarCard}>
+          <img src="/sample2.png" alt="" className={styles.cardImage} />
+          <span className={styles.cardText}>Example #2</span>
+          <span className={styles.cardNumber}>60%</span>
+        </div>
+        <div className={styles.searchBarCard}>
+          <img src="/sample3.png" alt="" className={styles.cardImage} />
+          <span className={styles.cardText}>Example #3</span>
+          <span className={styles.cardNumber}>80%</span>
+        </div>
+      </div>
+    )}
+
+        </div>
+
+
           <div className={styles.authButtons}>
             {/* The Add Funds button is now always shown */}
             <button onClick={handleAddFunds} className={styles.addFundsBtn}>
@@ -108,10 +141,7 @@ const Navbar = () => {
               </div>
             </Link>
 
-            <div
-              className={styles.hamburgerWrapper}
-              ref={hamburgerWrapperRef}
-            >
+            <div className={styles.hamburgerWrapper} ref={hamburgerWrapperRef}>
               <div
                 className={styles.iconButton}
                 onClick={() => setShowMenu(!showMenu)}

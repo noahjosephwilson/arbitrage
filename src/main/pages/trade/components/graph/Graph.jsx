@@ -294,23 +294,26 @@ export default function Graph() {
           padding: 10,
           align: 'start'
         },
+        border: { 
+          display: false,
+        },
       },
       y: {
         title: { display: false },
         suggestedMin: adjustedMin,
         suggestedMax: adjustedMax,
-        ticks: { stepSize: tickStep, font: { size: 18 } },
+        ticks: { stepSize: tickStep, font: { size: 18 }, color: '#000',},
         position: 'right',
         grid: {
           display: true,
           drawOnChartArea: true,
           drawTicks: false,
-          drawBorder: false,
-          borderColor: 'transparent',
-          borderDash: [5, 5],
-          borderDashOffset: 0,
           lineWidth: 1,
-          color: 'rgba(0, 0, 0, 0.1)',
+          color: 'rgba(0,0,0,0.3)', // lighter lines
+        },
+        border: { 
+          display: false, // Remove y-axis
+          dash: [2, 4],
         },
       },
     },

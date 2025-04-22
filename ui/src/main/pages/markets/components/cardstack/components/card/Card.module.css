@@ -1,23 +1,31 @@
-/* wrapper gives ZERO horizontal padding so it never widens the gap */
-.cardWrapper { padding: 0; }
+.cardWrapper {
+  padding: 0;
+}
 
-/* no margin anywhere on the card itself */
+/* Card Container */
 .card {
-  width: 100%;                /* fill the grid cell */
-  max-width: 600px;           /* cap so they don’t grow forever */
+  width: 100%;
+  max-width: 600px;
   min-height: 300px;
   background: var(--white);
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
   font-family: var(--font-sans);
+  font-weight: 400;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-  /* (margin removed) */
+
+  /* only shadow transitions now */
+  transition: box-shadow 0.2s ease;
+}
+.card:hover {
+  /* stronger, more spread-out shadow; no transform */
+  box-shadow: 0 0 48px rgba(0, 0, 0, 0.1);
 }
 
-/* ------------- header ------------- */
+/* Header */
 .cardHeader {
   display: flex;
   justify-content: space-between;
@@ -25,58 +33,239 @@
   padding: 12px;
 }
 
-.headerLeft { display: flex; align-items: center; }
-.cardImage  { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; margin-right: 12px; }
-.cardTitle  { font: 700 1.2rem/1 var(--font-sans); margin: 0; color: var(--text-dark); }
-.cardPercentage { font: 700 1.3rem/1 var(--font-sans); color: var(--text-dark); }
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
 
-/* ------------- body --------------- */
-.cardBody { padding: 12px; margin-top: 12px; }
+.cardImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin: 8px 12px 0 8px;
+}
 
-/* yes / no binary layout */
-.optionsRow { display: flex; gap: 16px; justify-content: space-between; }
-.optionColumn { flex: 1; display: flex; flex-direction: column; align-items: center; }
+/* Title: weight 550, clamp at 3 lines */
+.cardTitle {
+  font-weight: 550;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--text-dark);
 
-/* shared button base */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Percentage in header */
+.cardPercentage {
+  display: flex;
+  align-items: baseline;
+  font-weight: 550;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-left: 20px;
+}
+
+.percentageNumber { }
+.percentSign { margin-left: 1px; }
+
+/* Body */
+.cardBody {
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.optionsRow {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.optionColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .optionButton,
 .multiyesButton,
 .multinoButton {
+  font-weight: 550;
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background .2s, border-color .2s, color .2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
-/* binary yes/no buttons */
-.optionButton { width: 100%; font-size: 1.2rem; padding: 14px 20px; border: 1px solid var(--border-default); }
-.yesButton { background: var(--primary-green); border-color: var(--primary-green); color: var(--white); }
-.yesButton:hover { background: var(--white); color: var(--primary-green); }
-.noButton  { background: var(--danger-red); border-color: var(--danger-red); color: var(--white); }
-.noButton:hover  { background: var(--white); color: var(--danger-red); }
+.optionButton {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 14px 20px;
+  border: 1px solid var(--border-default);
+}
 
-.optionValue { margin-top: 8px; font-weight: 600; text-align: center; }
-.startMoney  { color: var(--text-dark); }
-.endMoney    { color: var(--primary-green); }
+.yesButton {
+  background: var(--primary-green);
+  border-color: var(--primary-green);
+  color: var(--white);
+}
+.yesButton:hover {
+  background: var(--white);
+  color: var(--primary-green);
+}
 
-/* multi‑option list layout */
-.itemRow { display: grid; grid-template-columns: 1fr 60px auto; align-items: center; margin-bottom: 12px; }
-.itemName   { font-size: 1.2rem; color: var(--text-secondary); position: relative; }
-.withMore   { height: 1.5em; }
-.moreText   { position: absolute; font-size: .8rem; color: var(--text-muted); top: 100%; }
-.itemPercentage { font: 600 1.2rem/1 var(--font-sans); color: var(--text-dark); text-align: center; }
-.votingButtons { display: flex; gap: 8px; }
-.multiyesButton { width: 60px; padding: 6px 12px; background: var(--primary-green); border: 1px solid var(--primary-green); color: var(--white); }
-.multiyesButton:hover { background: var(--white); color: var(--primary-green); }
-.multinoButton { width: 60px; padding: 6px 12px; background: var(--danger-red); border: 1px solid var(--danger-red); color: var(--white); }
-.multinoButton:hover { background: var(--white); color: var(--danger-red); }
+.noButton {
+  background: var(--danger-red);
+  border-color: var(--danger-red);
+  color: var(--white);
+}
+.noButton:hover {
+  background: var(--white);
+  color: var(--danger-red);
+}
 
-/* ------------- footer ------------- */
-.cardFooter { display: flex; justify-content: space-between; align-items: center; padding: 12px; font: 600 1rem/1 var(--font-sans); color: var(--text-dark); }
-.totalAmount { font-size: 1.1rem; }
+.optionValue {
+  margin-top: 8px;
+  font-weight: 550;
+  font-size: 1rem;
+  text-align: center;
+}
 
-.iconCircle { width: 28px; height: 28px; border: 1px solid var(--black); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s, border-color .2s; }
-.iconCircle:hover { background: var(--gray-light); }
+/* Money info */
+.startMoney {
+  color: #aaa;
+  font-size: 18px;
+  font-weight: 450;
+}
+.arrow {
+  margin: 0 4px;
+  color: #aaa;
+  font-size: 18px;
+  font-weight: 550;
+}
+.endMoney {
+  color: var(--primary-green);
+  font-size: 18px;
+  font-weight: 450;
+}
 
-.plusIcon, .checkIcon { width: 80%; height: 80%; background: var(--black); mask: center / contain no-repeat; -webkit-mask: center / contain no-repeat; }
-.plusIcon  { mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2h6Z" /></svg>'); }
-.checkIcon { mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M9 16.172 4.929 12.1l-1.414 1.415L9 19 21 7l-1.414-1.414L9 16.172Z"/></svg>'); }
+/* Multi-option list */
+.itemRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.itemName {
+  font-weight: 550;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  position: relative;
+}
+.withMore {
+  height: 1.5em;
+}
+.moreText {
+  position: absolute;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  top: 100%;
+}
+
+.itemPercentage {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  font-weight: 450;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--text-dark);
+}
+
+.votingButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.multiyesButton {
+  background: var(--primary-green);
+  border: 1px solid var(--primary-green);
+  color: var(--white);
+  width: 60px;
+  padding: 6px 12px;
+  font-weight: 550;
+  font-size: 1rem;
+}
+.multiyesButton:hover {
+  background: var(--white);
+  color: var(--primary-green);
+}
+
+.multinoButton {
+  background: var(--danger-red);
+  border: 1px solid var(--danger-red);
+  color: var(--white);
+  width: 60px;
+  padding: 6px 12px;
+  font-weight: 550;
+  font-size: 1rem;
+}
+.multinoButton:hover {
+  background: var(--white);
+  color: var(--danger-red);
+}
+
+/* Footer */
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  font-weight: 550;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--text-dark);
+}
+
+.totalAmount {
+  color: #aaa !important;
+  font-size: 18px;
+  font-weight: 450;
+  margin-left: 5px;
+}
+
+.iconCircle {
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid #aaa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.iconCircle:hover {
+  background: var(--gray-light);
+}
+
+.plusIcon,
+.checkIcon {
+  width: 80%;
+  height: 80%;
+  background: #aaa;
+  mask: center / contain no-repeat;
+  -webkit-mask: center / contain no-repeat;
+}
+.plusIcon {
+  mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2h6Z"/></svg>');
+}
+.checkIcon {
+  mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M9 16.172 4.929 12.1l-1.414 1.415L9 19 21 7l-1.414-1.414L9 16.172Z"/></svg>');
+}

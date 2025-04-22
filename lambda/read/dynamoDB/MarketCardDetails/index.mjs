@@ -1,148 +1,107 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
+// index.mjs  – Node.js 20.x, ES module
+import { DynamoDBClient }             from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient,
+         BatchGetCommand }            from "@aws-sdk/lib-dynamodb";
 
-/* ─────────── CONFIG ─────────── */
-const TABLE_NAME = "Markets";
-const ZERO_BINARY = Buffer.from([0]);
-
-/* ─────────── AWS SDK setup ─────────── */
-const client = new DynamoDBClient({ region: process.env.AWS_REGION });
-const ddb = DynamoDBDocumentClient.from(client);
-
-/* ─────────── helpers to convert Buffers ⇆ base64 ─────────── */
-const toB64 = (buf) => (Buffer.isBuffer(buf) ? buf.toString("base64") : buf);
-
-const convertToBase64 = (data) => {
-  if (Buffer.isBuffer(data)) return data.toString("base64");
-  if (data && typeof data === "object" && !Array.isArray(data)) {
-    const keys = Object.keys(data);
-    if (keys.every((k) => /^\d+$/.test(k))) {
-      const arr = keys.sort((a, b) => +a - +b).map((k) => data[k]);
-      return Buffer.from(arr).toString("base64");
-    }
-  }
-  return data;
+/* ────────── helpers ────────── */
+const toB64 = (bin) => Buffer.from(bin).toString("base64");
+const chunk = (arr, n = 100) => {
+  const out = [];
+  for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+  return out;
 };
 
-const deepConvert = (x) => {
-  if (Buffer.isBuffer(x)) return x.toString("base64");
-  if (Array.isArray(x)) return x.map(deepConvert);
-  if (x && typeof x === "object") {
-    const keys = Object.keys(x);
-    if (keys.every((k) => /^\d+$/.test(k))) {
-      const arr = keys.sort((a, b) => +a - +b).map((k) => x[k]);
-      return Buffer.from(arr).toString("base64");
-    }
-    return Object.fromEntries(keys.map((k) => [k, deepConvert(x[k])]));
-  }
-  return x;
+/* ────────── config ────────── */
+const TABLE_NAME  = "Markets";
+const ZERO_BINARY = Buffer.from([0]);                   // metadata sort key
+const client      = new DynamoDBClient({ region: process.env.AWS_REGION ?? "us-east-1" });
+const ddb         = DynamoDBDocumentClient.from(client);
+
+/* CORS */
+const CORS = {
+  "Access-Control-Allow-Origin":  "*",
+  "Access-Control-Allow-Methods": "POST,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
 };
 
-/* ─────────── Lambda handler ─────────── */
+/* ────────── handler ────────── */
 export const handler = async (event) => {
-  // Parse input
-  const isGet = event.httpMethod === "GET";
-  let payload;
-  try {
-    payload = isGet
-      ? event.queryStringParameters || {}
-      : typeof event.body === "string"
-      ? JSON.parse(event.body)
-      : event;
-  } catch (e) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: "Malformed JSON body", error: e.message }),
-    };
+  /* -- OPTIONS pre‑flight -- */
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 200, headers: CORS, body: "" };
   }
 
-  const { marketID } = payload;
-  if (!marketID || typeof marketID !== "string") {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: "Invalid marketID", received: marketID }),
-    };
-  }
-
-  // Decode base64 to Buffer
-  let buf;
   try {
-    buf = Buffer.from(marketID, "base64");
-    if (!buf.length) throw new Error("Decoded buffer is empty");
-  } catch (e) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: "marketID not Base64", error: e.message }),
-    };
-  }
-
-  // Fetch top-level item
-  let Item;
-  try {
-    const result = await ddb.send(
-      new GetCommand({ TableName: TABLE_NAME, Key: { MARKETID: buf, DATA: ZERO_BINARY } })
-    );
-    Item = result.Item;
-    if (!Item) {
-      return {
-        statusCode: 404,
-        body: JSON.stringify({ message: "Market not found", marketID }),
-      };
+    /* 1) parse input */
+    const payload   = typeof event.body === "string" ? JSON.parse(event.body) : event;
+    const marketIDs = payload?.body?.marketIDs;
+    if (!Array.isArray(marketIDs) || !marketIDs.length) {
+      return { statusCode: 200, headers: CORS, body: JSON.stringify({ error: "No marketIDs provided." }) };
     }
-  } catch (e) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: "Error fetching market", error: e.message }),
-    };
+
+    /* 2) get metadata rows (DATA = 0x00) */
+    const metaKeys = marketIDs.map((b64) => ({
+      MARKETID: Buffer.from(b64, "base64"), DATA: ZERO_BINARY,
+    }));
+
+    const metaRows = [];
+    for (const slice of chunk(metaKeys)) {
+      const resp = await ddb.send(new BatchGetCommand({
+        RequestItems: { [TABLE_NAME]: { Keys: slice } },
+      }));
+      metaRows.push(...(resp.Responses?.[TABLE_NAME] ?? []));
+    }
+
+    /* 3) collect option keys */
+    const optionKeys = [];
+    metaRows.forEach((row) => {
+      (row.Options || []).forEach((optBuf) =>
+        optionKeys.push({ MARKETID: row.MARKETID, DATA: optBuf })
+      );
+    });
+
+    /* 4) batch‑get option rows */
+    const optionRows = [];
+    for (const slice of chunk(optionKeys)) {
+      const resp = await ddb.send(new BatchGetCommand({
+        RequestItems: { [TABLE_NAME]: { Keys: slice } },
+      }));
+      optionRows.push(...(resp.Responses?.[TABLE_NAME] ?? []));
+    }
+
+    /* 5) map option rows → marketID → list */
+    const optionMap = new Map();      // base64MarketID  →  [ option objects ]
+    optionRows.forEach((r) => {
+      const mkID = toB64(r.MARKETID);
+      const opt = {
+        optionID:      toB64(r.DATA),
+        optionName:    r.OptionName,
+        choice1:       r.Choice1,
+        choice2:       r.Choice2,
+        choice1Value:  r.Choice1Value,
+        choice2Value:  r.Choice2Value,
+      };
+      if (!optionMap.has(mkID)) optionMap.set(mkID, []);
+      optionMap.get(mkID).push(opt);
+    });
+
+    /* 6) shape final response */
+    const markets = metaRows.map((m) => ({
+      marketID:  toB64(m.MARKETID),
+      name:      m.Name,
+      volume:    m.Volume ?? 0,
+      optionIDs: (m.Options || []).map(toB64),
+      options:   optionMap.get(toB64(m.MARKETID)) ?? [],
+    }));
+
+    /* keep caller order */
+    markets.sort((a, b) =>
+      marketIDs.indexOf(a.marketID) - marketIDs.indexOf(b.marketID)
+    );
+
+    return { statusCode: 200, headers: CORS, body: JSON.stringify({ markets }) };
+  } catch (err) {
+    console.error("Market fetch error:", err);
+    return { statusCode: 200, headers: CORS, body: JSON.stringify({ error: "Server error", detail: err.message }) };
   }
-
-  // Fetch option details
-  const rawOpts = Array.isArray(Item.Options) ? Item.Options : [];
-  let optionDetails = [];
-
-  try {
-    optionDetails = (
-      await Promise.all(
-        rawOpts.map(async (opt) => {
-          const keyBuf = Buffer.isBuffer(opt)
-            ? opt
-            : Buffer.from(
-                Object.keys(opt)
-                  .sort((a, b) => +a - +b)
-                  .map((k) => opt[k])
-              );
-
-          const res = await ddb.send(
-            new GetCommand({ TableName: TABLE_NAME, Key: { MARKETID: buf, DATA: keyBuf } })
-          );
-
-          if (res.Item) {
-            return { optionID: toB64(res.Item.DATA), ...res.Item };
-          } else {
-            return null;
-          }
-        })
-      )
-    ).filter(Boolean);
-  } catch (e) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ message: "Error fetching options", error: e.message }),
-    };
-  }
-
-  // Build and return response
-  const out = {
-    marketID,
-    name: Item.Name,
-    imageUrl: Item.ImageUrl,
-    volume: Item.Volume,
-    options: rawOpts.map(convertToBase64),
-    optionDetails,
-  };
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ market: deepConvert(out) }),
-  };
 };

@@ -2,15 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-// Import Amplify from "aws-amplify" (this module exports configure)
-import { Amplify } from "aws-amplify";
-// Import signIn from "aws-amplify/auth"
-import { signIn } from "aws-amplify/auth";
-import awsconfig from "@/aws-exports";
+import { signIn, getCurrentUser } from "aws-amplify/auth";
 import styles from "./LoginPage.module.css";
-
-// Configure Amplify globally (ideally in a top-level file)
-Amplify.configure(awsconfig);
 
 const LoginPage = () => {
   const router = useRouter();
@@ -23,13 +16,32 @@ const LoginPage = () => {
     setErrorMsg("");
 
     try {
-      // Call signIn from aws-amplify/auth
       const user = await signIn({ username: email, password });
-      console.info("User signed in:", user);
-      router.push("/main/logo");
+      console.info("=== Sign-in Response ===", user);
+
+      if (user?.nextStep?.signInStep === "DONE") {
+        console.log("✅ Sign-in complete!");
+
+        // Print the current authenticated user
+        try {
+          const currentUser = await getCurrentUser();
+          console.log("=== Current Authenticated User ===");
+          console.log(currentUser);
+        } catch (err) {
+          console.error("Failed to fetch current user after login:", err);
+        }
+
+        router.push("/main/logo");
+      } else if (user?.nextStep?.signInStep === "CONFIRM_SIGN_UP") {
+        console.warn("⚠️ User needs to confirm email.");
+        router.push(`/registration/confirmemail?email=${encodeURIComponent(email)}`);
+      } else {
+        console.warn("⚠️ Unexpected sign-in state:", user);
+        setErrorMsg("Unexpected sign-in status. Please contact support.");
+      }
     } catch (error) {
-      console.error("Error signing in:", error);
-      setErrorMsg(error.message || error.toString());
+      console.error("❌ Sign-in error:", error);
+      setErrorMsg(error.message || "Failed to sign in. Please try again.");
     }
   };
 
@@ -42,12 +54,12 @@ const LoginPage = () => {
         <header className={styles.header}>
           <h1 className={styles.logo}>Arbitrage</h1>
         </header>
+
         <h2 className={styles.title}>Log In</h2>
+
         <form className={styles.loginForm} onSubmit={handleLogin}>
           <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>
-              Email
-            </label>
+            <label htmlFor="email" className={styles.label}>Email</label>
             <input
               type="email"
               id="email"
@@ -58,10 +70,9 @@ const LoginPage = () => {
               required
             />
           </div>
+
           <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-              Password
-            </label>
+            <label htmlFor="password" className={styles.label}>Password</label>
             <input
               type="password"
               id="password"
@@ -72,16 +83,20 @@ const LoginPage = () => {
               required
             />
           </div>
-          {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+
+          {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
+
           <div className={styles.forgotPasswordContainer}>
             <a href="/registration/forgotpassword" className={styles.forgotPasswordLink}>
               Forgot Password?
             </a>
           </div>
+
           <button type="submit" className={styles.submitBtn}>
             Log In
           </button>
         </form>
+
         <p className={styles.noAccount}>
           Don't have an account?{" "}
           <a href="/registration/signup" className={styles.signupLink}>

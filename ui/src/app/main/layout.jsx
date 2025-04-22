@@ -2,9 +2,11 @@ import React from 'react';
 import Navbar from '@/main/components/navbar/Navbar';
 import Footer from '@/main/components/footer/Footer';
 import styles from './layout.module.css';
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const Layout = ({ children }) => {
   return (
+    <ProtectedRoute>
     <div>
       <header className={styles.header}>
         <Navbar />
@@ -16,6 +18,7 @@ const Layout = ({ children }) => {
         <Footer />
       </footer>
     </div>
+    </ProtectedRoute>
   );
 };
 

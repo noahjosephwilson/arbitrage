@@ -1,6 +1,7 @@
 /* outer strip (like navbar) */
 .section {
   width: 100%;
+  margin-top: -40px;
 }
 
 /* centered content limited to 1700 px */

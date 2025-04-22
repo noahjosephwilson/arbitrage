@@ -1,0 +1,45 @@
+<!-- orderbook/client/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Order</title>
+</head>
+<body>
+  <h1>Submit a New Order</h1>
+  <form id="order-form">
+    <label>Market ID: <input type="text" id="market-id" value="ETH-USD"></label><br>
+    <label>Order ID: <input type="text" id="order-id"></label><br>
+    <label>Side:
+      <select id="side">
+        <option value="buy">buy</option>
+        <option value="sell">sell</option>
+      </select>
+    </label><br>
+    <label>Price: <input type="number" id="price" step="0.01"></label><br>
+    <label>Quantity: <input type="number" id="quantity"></label><br>
+    <button type="submit">Submit Order</button>
+  </form>
+  <pre id="result"></pre>
+
+  <script>
+    document.getElementById('order-form').onsubmit = async e => {
+      e.preventDefault();
+      const marketId = document.getElementById('market-id').value;
+      const order = {
+        order_id: document.getElementById('order-id').value,
+        side: document.getElementById('side').value,
+        price: parseFloat(document.getElementById('price').value),
+        quantity: parseInt(document.getElementById('quantity').value),
+      };
+      const res = await fetch(`/markets/${marketId}/orders`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(order),
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>

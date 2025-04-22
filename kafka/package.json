@@ -1,0 +1,16 @@
+{
+    "name": "order-lambda",
+    "version": "1.0.0",
+    "description": "AWS Lambda for publishing orders to Kafka",
+    "main": "src/orderHandler.js",
+    "scripts": {
+      "build": "echo \"No build step\"",
+      "lint": "eslint ."
+    },
+    "dependencies": {
+      "kafkajs": "^2.2.4"
+    },
+    "engines": {
+      "node": "18.x"
+    }
+  }

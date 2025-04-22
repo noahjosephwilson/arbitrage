@@ -1,17 +1,20 @@
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 35px 15px 35px;
+  width: 100%;
   background-color: var(--white);
   font-family: sans-serif;
-  
-  /* Fixed at top */
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
   z-index: 1000;
+}
+
+.navbarContent {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 15px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .leftSection {
@@ -21,14 +24,14 @@
 }
 
 .logo {
-  color: var(--primary-green); /* equals #00c28e */
+  color: var(--primary-green);
   font-weight: bold;
   font-size: 2.5rem;
   cursor: pointer;
 }
 
 .logo:hover {
-  color: var(--primary-green-hover); /* now equals #00b17f */
+  color: var(--primary-green-hover);
 }
 
 .rightSection {
@@ -37,15 +40,16 @@
   gap: 1rem;
 }
 
+/* Search */
 .searchContainer {
   display: flex;
   align-items: center;
   position: relative;
   width: 500px;
   max-width: 800px;
-  background-color: var(--search-bg); /* equals #F5F5F5 */
-  transition: background-color 0.3s ease;
+  background-color: var(--search-bg);
   border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .searchContainer:hover,
@@ -71,11 +75,12 @@
 .searchInput {
   width: 100%;
   padding: 1rem 3rem;
-  border: 1px solid var(--search-input-border); /* equals #ccc */
+  border: 1px solid var(--search-input-border);
   border-radius: 8px;
   font-size: 1.2rem;
 }
 
+/* Buttons */
 .authButtons {
   display: flex;
   align-items: center;
@@ -95,13 +100,13 @@
 
 .loginBtn {
   background-color: transparent;
-  color: var(--login-text); /* equals #333 */
+  color: var(--login-text);
   width: 90px;
   height: 55px;
 }
 
 .loginBtn:hover {
-  background-color: var(--hover-bg); /* equals #f2f2f2 */
+  background-color: var(--hover-bg);
 }
 
 .signupBtn {
@@ -113,4 +118,16 @@
 
 .signupBtn:hover {
   background-color: var(--primary-green-hover);
+}
+
+/* MEDIA QUERY for RESPONSIVENESS */
+@media screen and (max-width: 1400px) {
+  /* Hide search input and auth buttons when shrinking */
+  .searchContainer{
+    display: none;
+  }
+
+  .navbarContent {
+    padding: 15px 60px;
+  }
 }

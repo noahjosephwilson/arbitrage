@@ -7,13 +7,23 @@ import { signOut } from "aws-amplify/auth";
 const Submenu = ({ user, onClose, handleAddFunds }) => {
   const handleLogout = async () => {
     try {
-      await signOut();
-      // Redirect to the login page (adjust this path as needed)
-      window.location.href = "/landing/landingmarkets/all";
+      await signOut({ global: true }); // Sign out everywhere
+      console.log("User signed out successfully.");
+  
+      try {
+        const userAfterLogout = await getCurrentUser();
+        console.log("User still signed in after logout:", userAfterLogout);
+      } catch (error) {
+        console.log("No user signed in after logout (expected):", error);
+      }
+  
+      window.location.href = "/landing"; // Force full reload to clear session
     } catch (error) {
-      console.error("Error signing out: ", error);
+      console.error("Error signing out:", error);
     }
   };
+  
+  
 
   // Icons with custom CSS classes for separate sizing
   const trophyIcon = (

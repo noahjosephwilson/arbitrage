@@ -4,7 +4,6 @@
   max-width: 1700px;       /* Limits the maximum width */
   margin: 0 auto;          /* Centers the page horizontally */
   background-color: #fff;
-  overflow-x: hidden;
   padding: 15px 40px 140px 30px;
 }
 
@@ -39,11 +38,20 @@
 .leftPanel {
   flex: 9;
   margin-left: -15px;
+  padding-bottom: 2000px;
 }
 
-/* Right panel remains unchanged */
 .rightPanel {
   flex: 3;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.stickyBuyWrapper {
+  position: sticky;
+  top: 140px; /* ⬆️ more space from the navbar */
+  transition: all 0.3s ease-in-out; /* Smooth transition when sticking */
+  z-index: 10;
+  align-self: flex-start;
 }

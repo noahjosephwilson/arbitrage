@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, getCurrentUser } from "aws-amplify/auth";
+import { signIn, getCurrentUser, signOut } from "aws-amplify/auth";
 import styles from "./LoginPage.module.css";
 
 const LoginPage = () => {
@@ -10,47 +10,70 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setErrorMsg("");
+    setLoading(true);
 
     try {
+      try {
+        const existingUser = await getCurrentUser();
+        if (existingUser) {
+          console.log("⚠️ Existing user found, signing out...");
+          await signOut({ global: true });
+        }
+      } catch (err) {
+        console.log("ℹ️ No existing user signed in.");
+      }
+
       const user = await signIn({ username: email, password });
       console.info("=== Sign-in Response ===", user);
 
       if (user?.nextStep?.signInStep === "DONE") {
-        console.log("✅ Sign-in complete!");
-
-        // Print the current authenticated user
-        try {
-          const currentUser = await getCurrentUser();
-          console.log("=== Current Authenticated User ===");
-          console.log(currentUser);
-        } catch (err) {
-          console.error("Failed to fetch current user after login:", err);
-        }
-
+        const currentUser = await getCurrentUser();
+        console.log("✅ Sign-in complete!", currentUser);
         router.push("/main/logo");
       } else if (user?.nextStep?.signInStep === "CONFIRM_SIGN_UP") {
-        console.warn("⚠️ User needs to confirm email.");
         router.push(`/registration/confirmemail?email=${encodeURIComponent(email)}`);
       } else {
-        console.warn("⚠️ Unexpected sign-in state:", user);
         setErrorMsg("Unexpected sign-in status. Please contact support.");
+        setLoading(false);
       }
     } catch (error) {
       console.error("❌ Sign-in error:", error);
       setErrorMsg(error.message || "Failed to sign in. Please try again.");
+      setLoading(false);
     }
+  };
+
+  const handleNavigate = (path) => {
+    if (!loading) router.push(path);
   };
 
   return (
     <div className={styles.pageContainer}>
       <div className={styles.card}>
-        <a href="/landing" className={styles.backButton}>
+        <button
+          onClick={() => handleNavigate("/landing")}
+          className={styles.backButton}
+          disabled={loading}
+          style={{
+            pointerEvents: loading ? "none" : "auto",
+            opacity: loading ? 0.6 : 1,
+            background: "none",
+            border: "none",
+            fontSize: "1rem",
+            cursor: "pointer",
+            color: "var(--primary-green)",
+          }}
+        >
           &larr; Back
-        </a>
+        </button>
+
         <header className={styles.header}>
           <h1 className={styles.logo}>Arbitrage</h1>
         </header>
@@ -68,6 +91,7 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
 
@@ -81,27 +105,54 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
 
           {errorMsg && <p className={styles.errorMsg}>{errorMsg}</p>}
 
           <div className={styles.forgotPasswordContainer}>
-            <a href="/registration/forgotpassword" className={styles.forgotPasswordLink}>
+            <button
+              type="button"
+              onClick={() => handleNavigate("/registration/forgotpassword")}
+              className={styles.forgotPasswordLink}
+              disabled={loading}
+              style={{
+                background: "none",
+                border: "none",
+                fontSize: "1rem",
+                textDecoration: "underline",
+                color: "var(--primary-green)",
+                cursor: loading ? "not-allowed" : "pointer",
+              }}
+            >
               Forgot Password?
-            </a>
+            </button>
           </div>
 
-          <button type="submit" className={styles.submitBtn}>
-            Log In
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
         <p className={styles.noAccount}>
-          Don't have an account?{" "}
-          <a href="/registration/signup" className={styles.signupLink}>
+          Don’t have an account?{" "}
+          <button
+            type="button"
+            onClick={() => handleNavigate("/registration/signup")}
+            className={styles.signupLink}
+            disabled={loading}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "1rem",
+              textDecoration: "underline",
+              color: "var(--primary-green)",
+              cursor: loading ? "not-allowed" : "pointer",
+            }}
+          >
             Sign Up
-          </a>
+          </button>
         </p>
       </div>
     </div>

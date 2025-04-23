@@ -10,7 +10,7 @@
   --primary-green: #00c28e;
   /* Update the hover green to match the original: #00b17f */
   --primary-green-hover: #00b17f; 
-  --danger-red: #dc3545;
+  --danger-red: #FF0000;
   --danger-red-hover: #c02d3c;
   /* Update border-light to match original when needed */
   --border-light: #e0e0e0;

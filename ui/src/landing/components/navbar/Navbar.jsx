@@ -1,25 +1,25 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
 
-  const handleClear = () => {
-    setSearchValue('');
-  };
+  const handleClear = () => setSearchValue('');
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarContent}>
-        {/* Left Section: Logo */}
+
+        {/* Left Section: Static Logo */}
         <div className={styles.leftSection}>
-          <Link href="/landing">
-            <span className={styles.logo}>Arbitrage</span>
-          </Link>
+          <span className={styles.logoStatic}>
+            Arbitrage
+          </span>
         </div>
 
         {/* Right Section: Search and Auth Buttons */}
@@ -34,19 +34,26 @@ const Navbar = () => {
               onChange={(e) => setSearchValue(e.target.value)}
             />
             {searchValue && (
-              <AiOutlineClose 
+              <AiOutlineClose
                 className={styles.clearIcon}
                 onClick={handleClear}
               />
             )}
           </div>
+
           <div className={styles.authButtons}>
-            <Link href="/registration/login">
-              <button className={styles.loginBtn}>Log in</button>
-            </Link>
-            <Link href="/registration/signup">
-              <button className={styles.signupBtn}>Sign up</button>
-            </Link>
+            <button
+              className={styles.loginBtn}
+              onClick={() => router.push('/registration/login')}
+            >
+              Log in
+            </button>
+            <button
+              className={styles.signupBtn}
+              onClick={() => router.push('/registration/signup')}
+            >
+              Sign up
+            </button>
           </div>
         </div>
       </div>

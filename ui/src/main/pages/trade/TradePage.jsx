@@ -15,8 +15,13 @@ const TradePage = () => {
       <div className={styles.pageContainer}>
         <div className={styles.leftPanel}>
           <Graph />
+          <Graph />
+          <Graph />
+          <Graph />
+          <Graph />
+          <Graph />
         </div>
-        <div className={styles.rightPanel}>
+        <div className={styles.stickyBuyWrapper}>
           <Buy />
         </div>
       </div>

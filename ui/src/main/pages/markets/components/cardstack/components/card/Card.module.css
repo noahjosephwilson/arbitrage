@@ -99,7 +99,14 @@
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.optionButton:hover,
+.multiyesButton:hover,
+.multinoButton:hover {
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
 }
 
 .optionButton {
@@ -154,12 +161,11 @@
   font-weight: 450;
 }
 
-/* Multi-option list */
-.itemRow {
+.itemsGrid {
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  margin-bottom: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  width: 100%;
 }
 
 .itemName {
@@ -268,4 +274,11 @@
 }
 .checkIcon {
   mask-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="%23000" d="M9 16.172 4.929 12.1l-1.414 1.415L9 19 21 7l-1.414-1.414L9 16.172Z"/></svg>');
+}
+
+@media (max-width: 900px) {
+  /* Card Container */
+.card {
+  max-width: 100%;
+}
 }

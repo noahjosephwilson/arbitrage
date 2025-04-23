@@ -3,11 +3,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Amplify } from "aws-amplify";
-import { signUp, getCurrentUser } from "aws-amplify/auth";
+import { signUp, getCurrentUser, signOut } from "aws-amplify/auth";
 import awsconfig from "@/aws-exports";
 import styles from "./SignupPage.module.css";
 
-// Configure Amplify once
 Amplify.configure(awsconfig);
 
 const SignupPage = () => {
@@ -15,12 +14,23 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setErrorMsg("");
+    setLoading(true);
 
     try {
+      try {
+        const existingUser = await getCurrentUser();
+        if (existingUser) {
+          await signOut({ global: true });
+        }
+      } catch (_) {}
+
       const { isSignUpComplete, userId, nextStep } = await signUp({
         username: email,
         password,
@@ -30,34 +40,46 @@ const SignupPage = () => {
         },
       });
 
-      console.info("=== Sign-up Response ===", { isSignUpComplete, userId, nextStep });
-
-      // Try printing current user after signup if autoSignIn worked
-      try {
-        const currentUser = await getCurrentUser();
-        console.log("=== Current Authenticated User after signup ===");
-        console.log(currentUser);
-      } catch (err) {
-        console.warn("User not signed in yet after signup (needs confirmation):", err);
-      }
-
+      sessionStorage.setItem("signupEmail", email);
+      sessionStorage.setItem("signupPassword", password);
       router.push(`/registration/confirmemail?email=${encodeURIComponent(email)}`);
     } catch (error) {
       console.error("❌ Signup error:", error);
-      setErrorMsg(`Signup failed: ${error.message || error.toString()}`);
+      setErrorMsg(error.message || "Signup failed.");
+      setLoading(false);
     }
+  };
+
+  const handleNavigate = (path) => {
+    if (!loading) router.push(path);
   };
 
   return (
     <div className={styles.pageContainer}>
       <div className={styles.card}>
-        <a href="/landing" className={styles.backButton}>
+        <button
+          onClick={() => handleNavigate("/landing")}
+          className={styles.backButton}
+          disabled={loading}
+          style={{
+            pointerEvents: loading ? "none" : "auto",
+            opacity: loading ? 0.6 : 1,
+            background: "none",
+            border: "none",
+            fontSize: "1rem",
+            cursor: "pointer",
+            color: "var(--primary-green)",
+          }}
+        >
           &larr; Back
-        </a>
+        </button>
+
         <header className={styles.header}>
           <h1 className={styles.logo}>Arbitrage</h1>
         </header>
+
         <h2 className={styles.title}>Sign Up</h2>
+
         <form className={styles.signupForm} onSubmit={handleSignup}>
           <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.label}>Email</label>
@@ -69,6 +91,7 @@ const SignupPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           <div className={styles.formGroup}>
@@ -81,18 +104,33 @@ const SignupPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
           {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
-          <button type="submit" className={styles.submitBtn}>
-            Sign Up
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
+
         <p className={styles.alreadyAccount}>
           Already have an account?{" "}
-          <a href="/registration/login" className={styles.loginLink}>
+          <button
+            type="button"
+            onClick={() => handleNavigate("/registration/login")}
+            className={styles.loginLink}
+            disabled={loading}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "1rem",
+              textDecoration: "underline",
+              color: "var(--primary-green)",
+              cursor: loading ? "not-allowed" : "pointer",
+            }}
+          >
             Log In
-          </a>
+          </button>
         </p>
       </div>
     </div>

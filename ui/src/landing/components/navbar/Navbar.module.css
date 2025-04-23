@@ -30,9 +30,20 @@
   cursor: pointer;
 }
 
-.logo:hover {
-  color: var(--primary-green-hover);
+/* Remove hover and click from the logo entirely */
+.logoStatic {
+  color: var(--primary-green);
+  font-weight: bold;
+  font-size: 2.5rem;
+  pointer-events: none;      /* not clickable */
+  cursor: default;           /* no pointer cursor */
 }
+
+/* Override the old hover rule (if present) */
+.logoStatic:hover {
+  color: var(--primary-green);
+}
+
 
 .rightSection {
   display: flex;

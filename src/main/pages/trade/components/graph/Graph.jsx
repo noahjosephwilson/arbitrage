@@ -180,8 +180,14 @@ export default function Graph() {
   const [selectedInterval, setSelectedInterval] = useState('All');
   const [stockData, setStockData] = useState(dataSets['All']);
   const [hoverIndex, setHoverIndex] = useState(null);
+  const [startIndex, setStartIndex] = useState(null);
+  const [endIndex, setEndIndex] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const getChartArrays = useCallback(() => {
+    if (!stockData || !Array.isArray(stockData)) {
+      return { dataArray: [], timeLabels: [] };
+    }
     const dataArray = stockData.map(item => item.price);
     const timeLabels = stockData.map(item => item.timestamp);
     return { dataArray, timeLabels };
@@ -196,7 +202,7 @@ export default function Graph() {
   const adjustedMin = minValue - range * 0.03;
   const adjustedMax = maxValue + range * 0.03;
 
-  // Helper to calculate a “nice” tick step.
+  // Helper to calculate a "nice" tick step.
   const niceNum = (range, round) => {
     const exponent = Math.floor(Math.log10(range));
     const fraction = range / Math.pow(10, exponent);
@@ -234,7 +240,78 @@ export default function Graph() {
   // For the info section, use the hovered datapoint if available.
   const currentIndex = dataArray.length > 0 ? (hoverIndex === null ? dataArray.length - 1 : hoverIndex) : 0;
   const displayedValue = dataArray.length > 0 ? dataArray[currentIndex] : 0;
-  const hoveredDelta = displayedValue - baseline;
+
+  // Calculate the percent change for the full dataset when no selection is made
+  useEffect(() => {
+    if (dataArray.length > 0 && startIndex === null && endIndex === null) {
+      // Default to the entire range - first and last points
+      setStartIndex(0);
+      setEndIndex(dataArray.length - 1);
+    }
+  }, [dataArray, startIndex, endIndex]);
+
+  // Update chart data when a different interval is selected.
+  const handleIntervalChange = (label) => {
+    setSelectedInterval(label);
+    setStockData(dataSets[label]);
+    // Reset the selection but it will be set to default range by the useEffect
+    setStartIndex(null);
+    setEndIndex(null);
+    setIsDragging(false);
+  };
+
+  let percentChangeText = '';
+  if (startIndex !== null && endIndex !== null) {
+    const start = Math.min(startIndex, endIndex);
+    const end = Math.max(startIndex, endIndex);
+    const startPrice = dataArray[start];
+    const endPrice = dataArray[end];
+    const percentChange = ((endPrice - startPrice) / startPrice) * 100;
+    const symbol = percentChange >= 0 ? '▲' : '▼';
+    const formatted = Math.abs(percentChange).toFixed(2);
+    percentChangeText = `${symbol}${formatted}% from index ${start} to ${end}`;
+  }
+  
+  const formatDateRange = (startDate, endDate, interval) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    if (interval === '6H' || interval === '1D') {
+      return `${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} – ${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    } else if (interval === '1W') {
+      return `${start.toLocaleDateString([], { month: 'short', day: 'numeric' })} – ${end.toLocaleDateString([], { month: 'short', day: 'numeric' })}`;
+    } else {
+      return `${start.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })} – ${end.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}`;
+    }
+  };
+
+  // Calculate the hoveredDelta based on selection or full range
+  let hoveredDelta = 0;
+  let symbol = '▲';
+
+  if (startIndex !== null && endIndex !== null) {
+    let fromIdx = startIndex;
+    let toIdx = endIndex;
+
+    if (startIndex > endIndex) {
+      fromIdx = endIndex;
+      toIdx = startIndex;
+    }
+
+    const startPrice = dataArray[fromIdx];
+    const endPrice = dataArray[toIdx];
+
+    const delta = ((endPrice - startPrice) / startPrice) * 100;
+    hoveredDelta = delta;
+    symbol = delta >= 0 ? '▲' : '▼';
+  } else if (dataArray.length > 0) {
+    // Fallback if startIndex and endIndex are somehow null
+    const startPrice = dataArray[0];
+    const endPrice = dataArray[dataArray.length - 1];
+    const delta = ((endPrice - startPrice) / startPrice) * 100;
+    hoveredDelta = delta;
+    symbol = delta >= 0 ? '▲' : '▼';
+  }
 
   // Determine time scale options based on the selected interval.
   const isTimeScale = selectedInterval === "6H" || selectedInterval === "1D";
@@ -253,10 +330,15 @@ export default function Graph() {
         fill: false,
         backgroundColor: overallColor,
         borderColor: overallColor,
-        stepped: true,
+        stepped: true, // Changing this to false to fix shading under graphs
         tension: 0,
         // Only show a circle on the final datapoint.
-        pointRadius: dataArray.map((_, idx) => (idx === dataArray.length - 1 ? 5 : 0)),
+        pointRadius: dataArray.map((_, idx) => {
+          if (startIndex !== null && endIndex !== null) {
+            return idx === endIndex ? 5 : 0;
+          }
+          return idx === dataArray.length - 1 ? 5 : 0;
+        }),        
         pointHoverRadius: dataArray.map((_, idx) => (idx === dataArray.length - 1 ? 5 : 0)),
       },
     ],
@@ -320,9 +402,81 @@ export default function Graph() {
     plugins: {
       tooltip: { enabled: false },
       legend: { display: false },
+      regionShading: {
+        startIndex,
+        endIndex
+      }
     },
     hover: { mode: 'nearest', intersect: false },
   };
+
+  ChartJS.register({
+    id: 'regionShading',
+    beforeDraw: (chart) => {
+      const {ctx, chartArea} = chart;
+      const pluginOptions = chart.options.plugins.regionShading;
+      const meta = chart.getDatasetMeta(0);
+  
+      if (
+        pluginOptions.startIndex !== null &&
+        pluginOptions.endIndex !== null &&
+        meta.data.length > 0
+      ) {
+        const start = Math.min(pluginOptions.startIndex, pluginOptions.endIndex);
+        const end = Math.max(pluginOptions.startIndex, pluginOptions.endIndex);
+        const startPrice = chart.data.datasets[0].data[start];
+        const endPrice = chart.data.datasets[0].data[end];
+        const isUp = endPrice > startPrice;
+        ctx.save();
+        ctx.fillStyle = isUp ? 'rgba(0, 194, 142, 0.2)' : 'rgba(220, 53, 69, 0.2)';
+  
+        const path = new Path2D();
+        const firstPoint = meta.data[start];
+        path.moveTo(firstPoint.x, chartArea.bottom);
+  
+        // Draw stepped path
+        let currentX = firstPoint.x;
+        path.lineTo(currentX, meta.data[start].y);
+
+        for (let i = start; i < end; i++) {
+          const currentPoint = meta.data[i];
+          const nextPoint = meta.data[i + 1];
+          
+          // Draw horizontal line to the next x position
+          path.lineTo(nextPoint.x, currentPoint.y);
+          // Draw vertical line to the next y position
+          path.lineTo(nextPoint.x, nextPoint.y);
+        }
+  
+        const lastPoint = meta.data[end];
+        path.lineTo(lastPoint.x, lastPoint.y);
+        path.lineTo(lastPoint.x, chartArea.bottom);
+        path.closePath();
+  
+        ctx.fill(path);
+
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = 'gray';
+        ctx.lineWidth = 1;
+
+        // Left dashed line
+        ctx.beginPath();
+        ctx.moveTo(firstPoint.x, chartArea.top);
+        ctx.lineTo(firstPoint.x, chartArea.bottom);
+        ctx.stroke();
+
+        // Right dashed line
+        ctx.beginPath();
+        ctx.moveTo(lastPoint.x, chartArea.top);
+        ctx.lineTo(lastPoint.x, chartArea.bottom);
+        ctx.stroke();
+
+        ctx.setLineDash([]); // reset dash
+        ctx.restore();
+      }
+    }
+  });  
+  
 
   // Chart crosshair functionality for interactivity.
   useEffect(() => {
@@ -340,7 +494,7 @@ export default function Graph() {
       if (eventX < chartArea.left || eventX > chartArea.right) {
         if (vLineRef.current) vLineRef.current.style.display = 'none';
         if (labelRef.current) labelRef.current.style.display = 'none';
-        setHoverIndex(null);
+        if (!isDragging) setHoverIndex(null);
         return;
       }
 
@@ -352,7 +506,7 @@ export default function Graph() {
       if (eventX >= lastDataPointX) {
         if (vLineRef.current) vLineRef.current.style.display = 'none';
         if (labelRef.current) labelRef.current.style.display = 'none';
-        setHoverIndex(null);
+        if (!isDragging) setHoverIndex(null);
         return;
       }
 
@@ -374,7 +528,12 @@ export default function Graph() {
           break;
         }
       }
-      setHoverIndex(snappedIndex);
+
+      if (isDragging) {
+        setEndIndex(snappedIndex);
+      } else {
+        setHoverIndex(snappedIndex);
+      }
 
       // Format the hover label based on the selected interval.
       const timeValue = new Date(scales.x.getValueForPixel(eventX));
@@ -402,25 +561,42 @@ export default function Graph() {
       }
     };
 
+    const handleMouseDown = (event) => {
+      const chartInstance = chartRef.current;
+      if (!chartInstance) return;
+    
+      const points = chartInstance.getElementsAtEventForMode(event, 'nearest', { intersect: false }, true);
+      if (points.length === 0) return;
+    
+      const clickedIndex = points[0].index;
+      setStartIndex(clickedIndex);
+      setEndIndex(clickedIndex);
+      setIsDragging(true);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
     const handleMouseLeave = () => {
-      if (vLineRef.current) vLineRef.current.style.display = 'none';
-      if (labelRef.current) labelRef.current.style.display = 'none';
-      setHoverIndex(null);
+      if (!isDragging) {
+        if (vLineRef.current) vLineRef.current.style.display = 'none';
+        if (labelRef.current) labelRef.current.style.display = 'none';
+        setHoverIndex(null);
+      }
     };
 
     canvas.addEventListener('mousemove', updateCrosshair);
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mouseup', handleMouseUp);
     canvas.addEventListener('mouseleave', handleMouseLeave);
     return () => {
       canvas.removeEventListener('mousemove', updateCrosshair);
+      canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('mouseup', handleMouseUp);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [chartData, selectedInterval]);
-
-  // Update chart data when a different interval is selected.
-  const handleIntervalChange = (label) => {
-    setSelectedInterval(label);
-    setStockData(dataSets[label]);
-  };
+  }, [chartData, selectedInterval, isDragging]);
 
   return (
     <div className={styles.outerContainer}>
@@ -429,8 +605,13 @@ export default function Graph() {
         <span className={styles.bigNumber}>{displayedValue}</span>
         <span className={styles.forecastText}>forecast</span>
         <span className={hoveredDelta >= 0 ? styles.deltaPositive : styles.deltaNegative}>
-          {hoveredDelta >= 0 ? '▲' : '▼'}{Math.abs(hoveredDelta).toFixed(1)}
+          {symbol}{Math.abs(hoveredDelta).toFixed(1)}%
         </span>
+        {startIndex !== null && endIndex !== null && timeLabels.length > 0 && (
+          <span className={styles.dateRange}>
+            {formatDateRange(timeLabels[Math.min(startIndex, endIndex)], timeLabels[Math.max(startIndex, endIndex)], selectedInterval)}
+          </span>
+        )}
       </div>
       {/* Chart container */}
       <div ref={containerRef} className={styles.chartContainer}>
@@ -438,6 +619,8 @@ export default function Graph() {
         <div ref={vLineRef} className={styles.hoverLine} />
         <div ref={labelRef} className={styles.hoverLabel} />
       </div>
+
+
       {/* Interval options with dynamic colors */}
       <div className={styles.intervalOptions}>
         {["6H", "1D", "1W", "All"].map((label) => (

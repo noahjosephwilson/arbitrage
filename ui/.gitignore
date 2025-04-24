@@ -1,77 +1,22 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Root-level ignore
 /node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# production
-/build
 /.next
-/.turbo
 
-# output from Next.js export (if used)
-out/
+# Ignore node_modules and build inside ui
+ui/node_modules/
+ui/.next/
+ui/out/
+ui/.turbo/
 
-# misc
-*.pem
+# DO NOT IGNORE these inside ui
+!ui/package.json
+!ui/package-lock.json
+!ui/next.config.js
+!ui/pages/
+!ui/public/
+!ui/components/
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# environment variables
+# Other common ignores
 .env*
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# IDE/editor
-.vscode/
-.idea/
 .DS_Store
-
-# vercel
-.vercel/
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# AWS Amplify
-amplify/#current-cloud-backend
-amplify/.config/local-*
-amplify/logs
-amplify/mock-data
-amplify/mock-api-resources
-amplify/backend/amplify-meta.json
-amplify/backend/.temp
-
-# Amplify artifacts & configs (optional, if you don’t want them tracked)
-awsconfiguration.json
-amplifyconfiguration.json
-amplifyconfiguration.dart
-amplify-build-config.json
-amplify-gradle-config.json
-amplifytools.xcconfig
-
-# Amplify secrets
-.secret-*
-**.sample
-
-# Build folders (if created in subfolders like ui/)
-ui/.next
-ui/out
-ui/.turbo
-ui/node_modules
+.vscode/

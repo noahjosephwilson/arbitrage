@@ -1,0 +1,101 @@
+.filterContainer {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    /* Adjust spacing, border, or background to match your design */
+  }
+  
+  /* Search Section */
+  .searchContainer {
+    flex: 1; /* makes the search area grow to fill space */
+    max-width: 300px;
+    margin-right: 1rem;
+  }
+  
+  .searchInput {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  /* Middle Filters (Dropdown or Tabs) */
+  .filters {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Dropdown Container */
+  .dropdownContainer {
+    position: relative; /* Needed if you want an absolute-positioned menu */
+  }
+  
+  .dropdownButton {
+    background: transparent;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem;
+  }
+  
+  .arrowDown {
+    margin-left: 0.25rem;
+    font-size: 0.7rem;
+  }
+  
+  /* Example hidden dropdown menu */
+  .dropdownMenu {
+    display: none; /* Hidden by default. You could add a show/hide toggle logic in JS. */
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 120px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .dropdownItem {
+    display: block;
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .dropdownItem:hover {
+    background: #f0f0f0;
+  }
+  
+  /* Right Section: Action Buttons */
+  .actionButtons {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* pushes these buttons to the far right */
+  }
+  
+  .filterButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+    margin-left: 0.5rem;
+    border-radius: 4px;
+  }
+  
+  .filterButton:hover {
+    background-color: #f0f0f0;
+  }
+  

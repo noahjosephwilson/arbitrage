@@ -1,0 +1,57 @@
+/* Main page container now constrained to 1700px and centered */
+.tradePage {
+  width: 100%;
+  max-width: 1700px;       /* Limits the maximum width */
+  margin: 0 auto;          /* Centers the page horizontally */
+  background-color: #fff;
+  padding: 15px 40px 140px 30px;
+}
+
+/* Main container to center content and constrain max-width */
+.container {
+  width: 100%;
+  max-width: 1700px;         /* Restricts the maximum width */
+  margin: 170px auto 0;       /* 170px top margin; auto centers horizontally */
+  padding: 0 0 0 0;      /* Consistent side padding */
+  box-sizing: border-box;
+  user-select: none;
+}
+
+/* Grid for cards with refined spacing */
+.itemsGrid {
+  display: grid;
+  gap: 20px;                 /* Increased gap for better visual separation */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  padding: 20px 0;           /* Adds vertical padding to the grid */
+}
+
+/* Container for the page panels */
+.pageContainer {
+  display: flex;
+  width: 100%;
+  padding: 0 35px;
+  gap: 64px; /* Reduced gap between panels */
+}
+
+/* Increase the flex value for the left panel to make it wider,
+   and remove any left margin to push it further left */
+.leftPanel {
+  flex: 9;
+  margin-left: -15px;
+  padding-bottom: 2000px;
+}
+
+.rightPanel {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.stickyBuyWrapper {
+  position: sticky;
+  top: 140px; /* ⬆️ more space from the navbar */
+  transition: all 0.3s ease-in-out; /* Smooth transition when sticking */
+  z-index: 10;
+  align-self: flex-start;
+}

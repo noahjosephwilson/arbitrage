@@ -1,0 +1,137 @@
+.filterContainer {
+  max-width: 1700px;          /* Constrain the container to a maximum width */
+  margin: 0 auto;             /* Center the container horizontally */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 60px;         /* Vertical & horizontal padding */
+  font-family: sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+
+/* Pseudo-element for the bottom underline with 36px padding */
+.filterContainer::after {
+  content: "";
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  bottom: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* -----------------------------
+   Top Row 
+------------------------------ */
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px; /* Increased space between top and bottom rows */
+}
+
+/* Search Box */
+.searchBox {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 10px 12px;       /* Increased padding for a larger search bar */
+  width: 500px;             /* Slightly wider search box */
+}
+
+.searchIcon {
+  margin-right: 8px;
+  color: #999;
+  font-size: 1.2rem;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  font-size: 1.1rem;       /* Larger font for input */
+  width: 100%;
+  height: 32px;            /* Ensure height consistency */
+}
+
+/* Button Group (Right side) */
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;               /* Increased gap between buttons */
+}
+
+/* Icon Button (e.g., "=" or "⋯") */
+.iconButton {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px 16px;      /* Increased padding for a larger button */
+  font-size: 1.1rem;
+}
+
+.iconButton:hover {
+  background-color: #f9f9f9;
+}
+
+.menuIcon {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+/* Filter Buttons (e.g., "CurrentValue", "All ▾") */
+.filterButton {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px 16px;      /* Increased padding */
+  font-size: 1.1rem;
+}
+
+.filterButton:hover {
+  background-color: #f9f9f9;
+}
+
+/* -----------------------------
+   Bottom Row 
+------------------------------ */
+.bottomRow {
+  display: flex;
+  gap: 24px;
+  margin-left: 2px;
+}
+
+/* Link Buttons */
+.linkButton {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.linkButton::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.linkButton:hover {
+  color: #000;
+}
+
+.linkButton:hover::after {
+  background-color: #000;
+}

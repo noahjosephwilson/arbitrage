@@ -1,0 +1,34 @@
+/* outer strip (like navbar) */
+.section {
+  width: 100%;
+  margin-top: -40px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* centered content limited to 1700 px */
+.sectionContent {
+  max-width: 1610px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.itemsGrid {
+  display: grid;
+
+  /* 320 px‑wide tracks, as many as fit — even if some stay empty */
+  /* (adjust 320px to whatever width you want)                       */
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+
+  gap: 24px;           /* fixed gap; never changes */
+  justify-content: start;   /* rows always begin at the left edge */
+  margin-top: 16px;
+}
+
+.sentinel { height: 20px; }
+
+/* debug box */
+.debugSection { margin-top: 32px; font-size: 0.9rem; }
+.error        { color: var(--danger-red); }
+
+

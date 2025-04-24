@@ -1,0 +1,51 @@
+.secondaryCategories {
+  width: 100%;
+  margin-top: 80px;
+  margin-left: 40px;
+}
+
+/* Inner container centers content and constrains width */
+.secondaryCategoriesContent {
+  max-width: 1670px;
+  margin: 0 auto;
+  padding: 12px 0px 12px 0px;  /* Adjust left padding as needed */
+  display: flex;
+  align-items: center;
+}
+
+.subcategoryList {
+  display: flex;
+  gap: 16px;
+}
+
+.subcategoryItem {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-muted);
+  padding: 6px 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 20px;
+}
+
+.subcategoryItem:hover {
+  background-color: var(--gray-light);
+  color: var(--black);
+}
+
+.activeSubcategory {
+  background-color: var(--primary-green);
+  color: var(--white);
+  font-weight: 500;
+  border-radius: 50px;
+  padding: 8px 16px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Ensure the active button stays styled on hover */
+.activeSubcategory:hover {
+  background-color: var(--primary-green);
+  color: var(--white);
+}
+

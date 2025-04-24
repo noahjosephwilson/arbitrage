@@ -1,0 +1,53 @@
+.navbar {
+  width: 100%;
+  max-width: 1700px;        /* Constrain the navbar to 1700px */
+  margin: 0 auto;           /* Center the navbar horizontally */
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;      /* Space for the underline */
+  position: relative;       /* For positioning the pseudo-element */
+  padding: 0 60px;          /* Inner horizontal padding */
+  border-bottom: 1px solid #eee; /* Optional border for visual separation */
+}
+
+/* Underline pseudo-element that spans within the padding limits */
+.navbar::after {
+  content: "";
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  bottom: 0;
+  height: 1px;              /* Adjust thickness as needed */
+  background-color: var(--border);
+}
+
+.tabButton {
+  position: relative;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0 0.25rem 0;
+  outline: none;
+  transition: color 0.2s ease;
+}
+
+.tabButton:hover {
+  color: var(--text-dark);
+}
+
+.activeTab {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.activeTab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--primary-green);
+  bottom: -1px;             /* Position the underline just below the text */
+}

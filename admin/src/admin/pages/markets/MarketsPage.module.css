@@ -1,0 +1,88 @@
+/* ---------- Root wrapper ---------- */
+.wrapper {
+  --blue: #007bff;
+  --blue-dark: #0056b3;
+  --green: #28a745;
+  --green-dark: #218838;
+  --red: #dc3545;
+  --red-dark: #c82333;
+  --yellow: #ffb400;
+  --yellow-dark: #e0a800;
+
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 6rem 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  font-family: var(--font-sans, sans-serif);
+  color: var(--text-dark, #333);
+  background: var(--white, #fff);
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+/* ---------- Button grid ---------- */
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+/* ---------- Base button ---------- */
+.actionButton {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2.25rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 16px;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.actionButton:hover,
+.actionButton:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+}
+
+/* ---------- Color variants ---------- */
+.createButton  { background: var(--blue);   }
+.createButton:hover  { background: var(--blue-dark); }
+
+.resolveButton { background: var(--red);    }
+.resolveButton:hover { background: var(--red-dark); }
+
+.modifyButton  { background: var(--green);  }
+.modifyButton:hover  { background: var(--green-dark); }
+
+.viewButton    { background: var(--yellow); color:#333; }
+.viewButton:hover    { background: var(--yellow-dark); }
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 768px) {
+  .wrapper   { padding: 4rem 1rem 2rem; }
+  .title     { font-size: 2rem; }
+}

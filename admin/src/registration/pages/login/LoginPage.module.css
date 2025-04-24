@@ -1,0 +1,220 @@
+.pageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--primary-green); /* Solid green */
+    padding: 2rem;
+    font-family: var(--font-sans);
+  }
+  
+  /* Centered card with increased padding and modern shadow */
+  .card {
+    position: relative;
+    background-color: var(--white);
+    max-width: 500px;
+    width: 100%;
+    padding: 3rem 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Back button in the top left corner of the card */
+  .backButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+  }
+  
+  .backButton:hover {
+    color: var(--primary-green-darker);
+  }
+  
+  /* Header styling */
+  .header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .logo {
+    color: var(--primary-green);
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+  }
+  
+  /* Form title styling with increased size */
+  .title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+  }
+  
+  /* Login form layout with extra spacing */
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .formGroup {
+    text-align: left;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+  
+  /* Input fields with larger padding and font */
+  .inputField {
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    font-size: 1.2rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .inputField:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 10px var(--primary-green-shadow);
+  }
+  
+  /* Primary submit button with larger dimensions */
+  .submitBtn {
+    width: 100%;
+    padding: 1.2rem;
+    background-color: var(--primary-green);
+    color: var(--white);
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .submitBtn:hover {
+    background-color: var(--primary-green-hover);
+    transform: translateY(-3px);
+  }
+  
+  /* Divider between form and social login with balanced spacing */
+  .dividerContainer {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+  }
+  
+  .divider {
+    flex: 1;
+    height: 1px;
+    background: var(--border-default);
+  }
+  
+  .dividerText {
+    margin: 0 1.2rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+  
+  /* Social sign-up buttons with larger sizes */
+  .socialContainer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .socialBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: var(--social-btn-bg);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    font-size: 1.1rem;
+  }
+  
+  .socialBtn:hover {
+    background-color: var(--social-btn-hover);
+  }
+  
+  /* Google button with a darker, richer orange */
+  .googleBtn {
+    color: var(--black);
+    border-color: var(--black);
+  }
+  
+  /* Apple button: text and border set to black */
+  .appleBtn {
+    color: var(--black);
+    border-color: var(--black);
+  }
+  .appleBtn .socialIcon {
+    /* Apple icon will be black (or adjust if desired) */
+    color: var(--black);
+  }
+  
+  /* PayPal button: text and border set to black, with the icon retaining a distinct color */
+  .paypalBtn {
+    color: var(--black);
+    border-color: var(--black);
+  }
+  .paypalBtn .socialIcon {
+    /* Using PayPal blue for the icon */
+    color: var(--paypal-icon);
+  }
+  
+  .socialIcon {
+    font-size: 1.4rem;
+  }
+  
+  .forgotPasswordContainer {
+    text-align: right;
+    margin-bottom: 0rem;
+  }
+  
+  .forgotPasswordLink {
+    font-size: 1.2rem;
+    color: var(--primary-green);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .forgotPasswordLink:hover {
+    color: var(--primary-green-darker);
+  }
+  
+  .noAccount {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+  }
+  
+  .signupLink {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .signupLink:hover {
+    color: var(--primary-green-darker);
+  }
+  

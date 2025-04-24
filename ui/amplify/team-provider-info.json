@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-arbitrage-dev-40a52-authRole",
+      "UnauthRoleArn": "arn:aws:iam::307946671320:role/amplify-arbitrage-dev-40a52-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::307946671320:role/amplify-arbitrage-dev-40a52-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-arbitrage-dev-40a52-deployment",
+      "UnauthRoleName": "amplify-arbitrage-dev-40a52-unauthRole",
+      "StackName": "amplify-arbitrage-dev-40a52",
+      "StackId": "arn:aws:cloudformation:us-east-1:307946671320:stack/amplify-arbitrage-dev-40a52/c32dfeb0-20bb-11f0-87c3-124edefb5985",
+      "AmplifyAppId": "d3jned7dse83xo"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d3jned7dse83xo",
+          "type": "cicd"
+        }
+      },
+      "auth": {
+        "arbitrageb643402d": {}
+      }
+    }
+  }
+}

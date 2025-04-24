@@ -1,10 +1,8 @@
-import React from 'react';
-import MarketsPage from '@/main/pages/markets/MarketsPage';
-
-export default function Page() {
+export default function HomePage() {
   return (
-    <div>
-      <MarketsPage />
-    </div>
+    <main style={{ padding: '2rem', textAlign: 'center' }}>
+      <h1>Hello, World! 👋</h1>
+      <p>Welcome to your Next.js app.</p>
+    </main>
   );
 }

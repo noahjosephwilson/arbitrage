@@ -1,18 +1,9 @@
 'use client';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React from 'react';
 
-export default function Home() {
-  const router = useRouter();
+const LandingPage = () => {
+  console.log("🚀 LandingPage rendered");
+  return <div>Welcome to the Landing Page</div>;
+};
 
-  useEffect(() => {
-    console.log("🏠 Redirecting to /landing");
-    router.push('/landing');
-  }, [router]);
-
-  return (
-    <div>
-      <p>Redirecting...</p>
-    </div>
-  );
-}
+export default LandingPage;

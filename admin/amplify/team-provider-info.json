@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-arbitrageadmin-dev-51bde-authRole",
+      "UnauthRoleArn": "arn:aws:iam::307946671320:role/amplify-arbitrageadmin-dev-51bde-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::307946671320:role/amplify-arbitrageadmin-dev-51bde-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-arbitrageadmin-dev-51bde-deployment",
+      "UnauthRoleName": "amplify-arbitrageadmin-dev-51bde-unauthRole",
+      "StackName": "amplify-arbitrageadmin-dev-51bde",
+      "StackId": "arn:aws:cloudformation:us-east-1:307946671320:stack/amplify-arbitrageadmin-dev-51bde/86d1d560-204b-11f0-b47c-0efab9cacd29",
+      "AmplifyAppId": "d3h2duh0wlebdh"
+    },
+    "categories": {
+      "auth": {
+        "arbitrageadmin74fabef2": {}
+      }
+    }
+  }
+}

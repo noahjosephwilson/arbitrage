@@ -1,9 +1,10 @@
-'use client';
 import React from 'react';
+import MarketsPage from '@/main/pages/markets/MarketsPage';
 
-const LandingPage = () => {
-  console.log("🚀 LandingPage rendered");
-  return <div>Welcome to the Landing Page</div>;
-};
-
-export default LandingPage;
+export default function Page() {
+  return (
+    <div>
+      <MarketsPage />
+    </div>
+  );
+}

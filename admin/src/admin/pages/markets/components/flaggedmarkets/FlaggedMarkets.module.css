@@ -60,3 +60,76 @@
     border-bottom: 1px solid #ccc;
   }
   
+  .flaggedMarkets {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .marketList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .marketItem {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .marketItem:hover {
+    background-color: #e9ecef;
+  }
+  
+  .marketTitle {
+    flex: 2;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .marketStatus {
+    flex: 1;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .marketStatus[data-status="Pending Review"] {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .marketStatus[data-status="Needs Moderation"] {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .marketStatus[data-status="Under Review"] {
+    background-color: #cce5ff;
+    color: #004085;
+  }
+  
+  .marketDate {
+    flex: 1;
+    text-align: right;
+    color: #666;
+    font-size: 0.9rem;
+  }
+  

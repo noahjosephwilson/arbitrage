@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <div>
       <header className={styles.header}>
-        <Navbar profileImageUrl="/knight.jpg" />
+        <Navbar profileImageUrl="https://via.placeholder.com/50" />
       </header>
       <main className={styles.main}>
         {children}

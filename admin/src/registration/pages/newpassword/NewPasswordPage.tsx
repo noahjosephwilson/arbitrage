@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, confirmSignIn, signOut } from "aws-amplify/auth";
+import { signIn, confirmSignIn, signOut, SignInOutput } from "aws-amplify/auth";
 import styles from "./NewPasswordPage.module.css";
 
-const NewPasswordPage = () => {
+const NewPasswordPage: React.FC = () => {
   const router = useRouter();
-  const [user, setUser] = useState(null);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<SignInOutput | null>(null);
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const url = new URLSearchParams(window.location.search);
@@ -39,7 +39,7 @@ const NewPasswordPage = () => {
     })();
   }, [router]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
 
@@ -52,12 +52,11 @@ const NewPasswordPage = () => {
     setLoading(true);
     try {
         await confirmSignIn({
-            challengeResponse: newPassword,
-            user,
+            challengeResponse: newPassword
           });
           
       router.push("/admin/markets");
-    } catch (err) {
+    } catch (err: any) {
       console.error("New password error:", err);
       setErrorMsg(err.message || "Failed to set new password.");
     } finally {
@@ -69,7 +68,7 @@ const NewPasswordPage = () => {
     try {
       await signOut({ global: true });
       router.push("/registration/login");
-    } catch (err) {
+    } catch (err: any) {
       console.error("Logout error:", err);
     }
   };
@@ -132,4 +131,4 @@ const NewPasswordPage = () => {
   );
 };
 
-export default NewPasswordPage;
+export default NewPasswordPage; 

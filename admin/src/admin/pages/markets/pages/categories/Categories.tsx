@@ -6,11 +6,22 @@ import styles from './Categories.module.css';
 // Replace with your actual API Gateway endpoint URL.
 const API_URL = "https://lxqyajwdrd.execute-api.us-east-1.amazonaws.com/dev/readcategories";
 
+interface Category {
+  "Primary Name": string;
+  "Primary ID": string | { [key: string]: number };
+  "Secondary Categories"?: SecondaryCategory[];
+}
+
+interface SecondaryCategory {
+  "Secondary Name": string;
+  "Secondary ID": string | { [key: string]: number };
+}
+
 /**
  * Converts an object representation of binary bytes into a 16-byte hex string.
  */
-function objectIdToHex(obj) {
-  let bytes = [];
+function objectIdToHex(obj: { [key: string]: number }): string {
+  let bytes: number[] = [];
   for (let i = 0; i < 16; i++) {
     const key = i.toString();
     let byteVal = obj.hasOwnProperty(key) ? obj[key] : 0;
@@ -23,26 +34,26 @@ function objectIdToHex(obj) {
  * If idValue is a string, we assume it's already in Base64.
  * Otherwise, if it's an object, we convert it to a hex string.
  */
-function getDisplayId(idValue) {
+function getDisplayId(idValue: string | { [key: string]: number }): string {
   if (typeof idValue === "string") {
     return idValue;
   } else if (typeof idValue === "object" && idValue !== null) {
     return objectIdToHex(idValue);
   }
-  return idValue;
+  return String(idValue);
 }
 
-const Categories = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const Categories: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   
   // Dropdown states.
-  const [activeMenu, setActiveMenu] = useState(null);
-  const [selectedPrimary, setSelectedPrimary] = useState(null);
-  const [selectedSecondary, setSelectedSecondary] = useState(null);
+  const [activeMenu, setActiveMenu] = useState<'primary' | 'secondary' | null>(null);
+  const [selectedPrimary, setSelectedPrimary] = useState<Category | null>(null);
+  const [selectedSecondary, setSelectedSecondary] = useState<SecondaryCategory | null>(null);
   
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch(API_URL)
@@ -53,7 +64,7 @@ const Categories = () => {
         return response.json();
       })
       .then((data) => {
-        let categoriesFromAPI = null;
+        let categoriesFromAPI: Category[] | null = null;
         if (data && data["Primary Categories"]) {
           categoriesFromAPI = data["Primary Categories"];
         } else if (Array.isArray(data)) {
@@ -79,8 +90,8 @@ const Categories = () => {
 
   // Close dropdown if clicking outside.
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setActiveMenu(null);
       }
     };
@@ -88,17 +99,17 @@ const Categories = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const toggleMenu = (menuName) => {
+  const toggleMenu = (menuName: 'primary' | 'secondary') => {
     setActiveMenu((prevMenu) => (prevMenu === menuName ? null : menuName));
   };
 
-  const handlePrimarySelect = (primary) => {
+  const handlePrimarySelect = (primary: Category) => {
     setSelectedPrimary(primary);
     setSelectedSecondary(null);
     setActiveMenu(null);
   };
 
-  const handleSecondarySelect = (secondary) => {
+  const handleSecondarySelect = (secondary: SecondaryCategory) => {
     setSelectedSecondary(secondary);
     setActiveMenu(null);
   };
@@ -191,4 +202,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Categories; 

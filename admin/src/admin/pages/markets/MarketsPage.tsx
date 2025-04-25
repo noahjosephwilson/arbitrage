@@ -6,8 +6,15 @@ import styles from "./MarketsPage.module.css";
 import { FaPlusCircle, FaCheckCircle, FaEdit, FaSearch } from "react-icons/fa";
 import Flagged from "./components/flagged/Flagged";
 
+interface Action {
+  label: string;
+  icon: React.ReactNode;
+  className: string;
+  go: (router: ReturnType<typeof useRouter>) => void;
+}
+
 /* ─────────── Action definitions ─────────── */
-const ACTIONS = [
+const ACTIONS: Action[] = [
   {
     label: "Create Market",
     icon: <FaPlusCircle />,
@@ -34,7 +41,7 @@ const ACTIONS = [
   },
 ];
 
-const MarketsPage = () => {
+const MarketsPage: React.FC = () => {
   const router = useRouter();
 
   return (
@@ -69,4 +76,4 @@ const MarketsPage = () => {
   );
 };
 
-export default MarketsPage;
+export default MarketsPage; 

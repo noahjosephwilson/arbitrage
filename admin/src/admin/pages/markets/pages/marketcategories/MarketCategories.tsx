@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import styles from './MarketCategories.module.css';
 
+interface PrimaryCategories {
+  [key: string]: string[];
+}
+
 // Primary categories with their corresponding secondary options.
-const primaryCategories = {
+const primaryCategories: PrimaryCategories = {
   All: ["Trending", "Latest", "Popular"],
   Politics: ["Elections", "Policy", "Government", "Diplomacy"],
   Sports: ["Soccer", "Basketball", "Baseball", "Tennis"],
@@ -19,25 +23,25 @@ const primaryCategories = {
   World: ["International", "Diplomacy", "Conflicts", "Global News"],
 };
 
-function MarketCategories() {
-  const [primary, setPrimary] = useState("");
-  const [secondary, setSecondary] = useState("");
-  const [market, setMarket] = useState("");
-  const [markets, setMarkets] = useState([]);
+const MarketCategories: React.FC = () => {
+  const [primary, setPrimary] = useState<string>("");
+  const [secondary, setSecondary] = useState<string>("");
+  const [market, setMarket] = useState<string>("");
+  const [markets, setMarkets] = useState<string[]>([]);
 
-  const handlePrimaryChange = (e) => {
+  const handlePrimaryChange = (e: ChangeEvent<HTMLSelectElement>): void => {
     setPrimary(e.target.value);
     setSecondary("");
   };
 
-  const handleAddMarket = () => {
+  const handleAddMarket = (): void => {
     if (market.trim() !== "") {
       setMarkets([...markets, market.trim()]);
       setMarket("");
     }
   };
 
-  const handleDeleteMarkets = () => {
+  const handleDeleteMarkets = (): void => {
     setMarkets([]);
   };
 
@@ -106,6 +110,6 @@ function MarketCategories() {
       </div>
     </div>
   );
-}
+};
 
-export default MarketCategories;
+export default MarketCategories; 

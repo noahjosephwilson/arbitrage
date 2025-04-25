@@ -1,28 +1,28 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
 import styles from './FindMarketPage.module.css';
 
-const FindMarketPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedOption, setSelectedOption] = useState('Name');
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+const FindMarketPage: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<string>('Name');
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
-  const options = ['Name', 'Number', 'Option'];
+  const options: string[] = ['Name', 'Number', 'Option'];
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (): void => {
     setDropdownOpen((prevOpen) => !prevOpen);
   };
 
-  const handleOptionSelect = (option) => {
+  const handleOptionSelect = (option: string): void => {
     setSelectedOption(option);
     setDropdownOpen(false);
   };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setSearchTerm(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     // Replace with your search logic.
     console.log(`Searching for "${searchTerm}" by ${selectedOption}`);
@@ -68,4 +68,4 @@ const FindMarketPage = () => {
   );
 };
 
-export default FindMarketPage;
+export default FindMarketPage; 

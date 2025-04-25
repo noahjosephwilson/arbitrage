@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, getCurrentUser, signOut } from "aws-amplify/auth";
+import { signIn, getCurrentUser, signOut, SignInOutput } from "aws-amplify/auth";
 import styles from "./LoginPage.module.css";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
 
@@ -28,7 +28,7 @@ const LoginPage = () => {
         // No one was signed in
       }
 
-      const user = await signIn({ username: email, password });
+      const user: SignInOutput = await signIn({ username: email, password });
       console.info("SignIn result:", user);
 
       const step = user?.nextStep?.signInStep;
@@ -42,7 +42,7 @@ const LoginPage = () => {
         setLoading(false);
       }
       
-    } catch (err) {
+    } catch (err: any) {
       console.error("Sign-in error:", err);
       setErrorMsg(err.message || "Failed to sign in. Please try again.");
       setLoading(false);
@@ -102,4 +102,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginPage; 

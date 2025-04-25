@@ -1,17 +1,21 @@
 "use client";
 
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import Link from 'next/link';
 import { FaUserCircle } from 'react-icons/fa';
 import { useRouter, usePathname } from 'next/navigation';
 import { signOut } from 'aws-amplify/auth';
 import styles from './Navbar.module.css';
 
-const Navbar = ({ profileImageUrl }) => {
+interface NavbarProps {
+  profileImageUrl?: string;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ profileImageUrl }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleMarketsClick = (e) => {
+  const handleMarketsClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (pathname.startsWith('/main/markets')) {
       e.preventDefault();
       router.push('/main/markets/all');
@@ -22,7 +26,7 @@ const Navbar = ({ profileImageUrl }) => {
     try {
       await signOut({ global: true });
       router.push('/registration/login');
-    } catch (err) {
+    } catch (err: any) {
       console.error("Sign out error:", err);
     }
   };
@@ -65,4 +69,4 @@ const Navbar = ({ profileImageUrl }) => {
   );
 };
 
-export default Navbar;
+export default Navbar; 

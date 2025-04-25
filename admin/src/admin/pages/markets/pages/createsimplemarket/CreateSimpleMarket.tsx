@@ -1,25 +1,46 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ChangeEvent, FormEvent } from "react";
 import styles from "./CreateSimpleMarket.module.css";
 
 // Single market-creation endpoint (uploads image + metadata)
 const API_GATEWAY_URL = "https://of4p5kgo9l.execute-api.us-east-1.amazonaws.com/dev/create-market";
 
-export default function CreateSimpleMarket() {
-  const [name, setName] = useState("");
-  const [marketType, setMarketType] = useState("Yes/No");
-  const [metadata, setMetadata] = useState({
+interface Option {
+  option: string;
+  nestedToggle: "Yes/No" | "Custom Choices";
+  choice1: string;
+  choice2: string;
+}
+
+interface Metadata {
+  Options: {
+    value: Option[];
+  };
+}
+
+interface MarketOption {
+  OptionName: string;
+  ChoiceName1: string;
+  ChoiceName2: string;
+  Choice1Value: number;
+  Choice2Value: number;
+}
+
+const CreateSimpleMarket: React.FC = () => {
+  const [name, setName] = useState<string>("");
+  const [marketType, setMarketType] = useState<"Yes/No" | "Custom Options">("Yes/No");
+  const [metadata, setMetadata] = useState<Metadata>({
     Options: { value: [{ option: "", nestedToggle: "Yes/No", choice1: "Yes", choice2: "No" }] },
   });
-  const [uploadedImageBlob, setUploadedImageBlob] = useState(null);
-  const [uploadedImageDataUrl, setUploadedImageDataUrl] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [submissionSuccess, setSubmissionSuccess] = useState(false);
-  const imageInputRef = useRef(null);
+  const [uploadedImageBlob, setUploadedImageBlob] = useState<File | null>(null);
+  const [uploadedImageDataUrl, setUploadedImageDataUrl] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [submissionSuccess, setSubmissionSuccess] = useState<boolean>(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   // Handle market type toggles
-  const handleMarketTypeSelect = (type) => {
+  const handleMarketTypeSelect = (type: "Yes/No" | "Custom Options"): void => {
     setMarketType(type);
     if (type === "Custom Options") {
       setMetadata({ Options: { value: [{ option: "", nestedToggle: "Yes/No", choice1: "", choice2: "" }] } });
@@ -27,13 +48,13 @@ export default function CreateSimpleMarket() {
   };
 
   // Handle nested/custom options
-  const handleNestedEntryChange = (idx, field, val) => {
+  const handleNestedEntryChange = (idx: number, field: keyof Option, val: string): void => {
     setMetadata((prev) => {
       const opts = [...prev.Options.value];
       if (field === "nestedToggle") {
         opts[idx] = {
           ...opts[idx],
-          nestedToggle: val,
+          nestedToggle: val as "Yes/No" | "Custom Choices",
           choice1: val === "Yes/No" ? "Yes" : "",
           choice2: val === "Yes/No" ? "No" : "",
         };
@@ -43,7 +64,8 @@ export default function CreateSimpleMarket() {
       return { Options: { value: opts } };
     });
   };
-  const addNestedOption = () =>
+
+  const addNestedOption = (): void =>
     setMetadata((prev) => ({
       Options: {
         value: [
@@ -52,7 +74,8 @@ export default function CreateSimpleMarket() {
         ],
       },
     }));
-  const removeNestedOption = (idx) =>
+
+  const removeNestedOption = (idx: number): void =>
     setMetadata((prev) => {
       const opts = [...prev.Options.value];
       if (opts.length > 1) opts.splice(idx, 1);
@@ -60,12 +83,12 @@ export default function CreateSimpleMarket() {
     });
 
   // Crop image to square via canvas, return DataURL
-  const processImageToDataUrl = (file) =>
+  const processImageToDataUrl = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
       const img = new Image();
       const reader = new FileReader();
       reader.onload = (e) => {
-        img.src = e.target.result;
+        img.src = e.target?.result as string;
       };
       reader.onerror = reject;
       img.onload = () => {
@@ -74,6 +97,7 @@ export default function CreateSimpleMarket() {
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext("2d");
+        if (!ctx) return reject(new Error("Could not get canvas context"));
         const sx = (img.width - size) / 2;
         const sy = (img.height - size) / 2;
         ctx.drawImage(img, sx, sy, size, size, 0, 0, size, size);
@@ -81,7 +105,7 @@ export default function CreateSimpleMarket() {
           (blob) => {
             if (!blob) return reject(new Error("Canvas toBlob failed"));
             const fr = new FileReader();
-            fr.onload = () => resolve(fr.result);
+            fr.onload = () => resolve(fr.result as string);
             fr.onerror = reject;
             fr.readAsDataURL(blob);
           },
@@ -93,34 +117,34 @@ export default function CreateSimpleMarket() {
     });
 
   // Handle file input change
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const file = e.target.files?.[0];
     if (!file) return;
     try {
       const dataUrl = await processImageToDataUrl(file);
       setUploadedImageDataUrl(dataUrl);
       setUploadedImageBlob(file);
     } catch (err) {
-      setErrorMessage("Image processing error: " + err.message);
+      setErrorMessage("Image processing error: " + (err as Error).message);
       setUploadedImageDataUrl(null);
       setUploadedImageBlob(null);
     }
   };
 
-  const deleteImage = () => {
+  const deleteImage = (): void => {
     setUploadedImageDataUrl(null);
     setUploadedImageBlob(null);
     if (imageInputRef.current) imageInputRef.current.value = "";
   };
 
   // Submission handler: send metadata + imageBase64
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setErrorMessage("");
     setSubmissionSuccess(false);
 
     // Build options array
-    let optionsArray = [];
+    let optionsArray: MarketOption[] = [];
     if (marketType === "Yes/No") {
       optionsArray = [
         { OptionName: "Yes/No", ChoiceName1: "Yes", ChoiceName2: "No", Choice1Value: 0, Choice2Value: 0 },
@@ -141,7 +165,7 @@ export default function CreateSimpleMarket() {
         MarketName: name,
         Volume: 0,
         Options: optionsArray,
-        ...(uploadedImageDataUrl && {
+        ...(uploadedImageDataUrl && imageInputRef.current?.files?.[0] && {
           imageBase64: uploadedImageDataUrl,
           imageName: imageInputRef.current.files[0].name,
           imageType: imageInputRef.current.files[0].type,
@@ -158,7 +182,7 @@ export default function CreateSimpleMarket() {
       if (!res.ok) throw new Error(await res.text());
       setSubmissionSuccess(true);
     } catch (err) {
-      setErrorMessage(err.message);
+      setErrorMessage((err as Error).message);
     }
   };
 
@@ -255,30 +279,28 @@ export default function CreateSimpleMarket() {
                     />
                   </>
                 )}
-                {metadata.Options.value.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeNestedOption(idx)}
-                    className={styles.deletePairButton}
-                  >
-                    &times;
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => removeNestedOption(idx)}
+                  className={styles.removeButton}
+                >
+                  Remove
+                </button>
               </div>
             ))}
-            <button type="button" onClick={addNestedOption} className={styles.addPairLink}>
-              + Add another
+            <button
+              type="button"
+              onClick={addNestedOption}
+              className={styles.addButton}
+            >
+              Add Option
             </button>
           </div>
         )}
         {/* Image Upload */}
         <div className={styles.formGroup}>
-          <label className={styles.label}>Image</label>
-          <label htmlFor="imageUpload" className={styles.uploadButton}>
-            Select Image
-          </label>
+          <label className={styles.label}>Market Image</label>
           <input
-            id="imageUpload"
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
@@ -286,40 +308,35 @@ export default function CreateSimpleMarket() {
             className={styles.fileInput}
           />
           {uploadedImageDataUrl && (
-            <div className={styles.imageContainer}>
-              <div className={styles.imagePreviewContainer}>
-                <img
-                  src={uploadedImageDataUrl}
-                  alt="Preview"
-                  className={styles.imagePreview}
-                />
-              </div>
-              <button type="button" onClick={deleteImage} className={styles.deleteButton}>
+            <div className={styles.imagePreview}>
+              <img src={uploadedImageDataUrl} alt="Preview" />
+              <button
+                type="button"
+                onClick={deleteImage}
+                className={styles.deleteButton}
+              >
                 Delete Image
               </button>
             </div>
           )}
         </div>
         {/* Submit Button */}
-        <div className={styles.formGroup}>
-          <button type="submit" className={styles.submitButton}>
-            Submit
-          </button>
-        </div>
-        {/* Error & Success Messages */}
+        <button type="submit" className={styles.submitButton}>
+          Create Market
+        </button>
+        {/* Error Message */}
         {errorMessage && (
-          <div className={styles.errorMessage} style={{ color: "red", marginTop: "1em" }}>
-            <strong>Error:</strong> {errorMessage}
-          </div>
+          <div className={styles.errorMessage}>{errorMessage}</div>
         )}
+        {/* Success Message */}
         {submissionSuccess && (
-          <div className={styles.successMessage} style={{ color: "green", marginTop: "1em" }}>
+          <div className={styles.successMessage}>
             Market created successfully!
           </div>
         )}
       </form>
     </div>
   );
-}
+};
 
-
+export default CreateSimpleMarket; 
